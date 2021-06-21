@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Box, Button, Card, CardActions, CardContent, Grid, Tab, Tabs, Typography } from "@material-ui/core";
-import { Gtextfield } from "../FormElements";
+import { Box, Card, CardContent, Grid, Tab, Tabs, Typography } from "@material-ui/core";
+import Login from "./Login";
+import Signup from "./Signup";
 import tkLogo from "../../../src/logo lgu new 12x12 inches 300px.png";
 
 export default function Auth() {
@@ -36,44 +37,17 @@ export default function Auth() {
                 <Tab label="Sign-Up" />
               </Tabs>
 
-              <div>
-                <TabPanel index={tabState} />
-              </div>
+              {tabState === 0 ? <Login /> : <Signup />}
             </CardContent>
 
-            <CardActions>
+            {/* <CardActions>
               <Button variant="contained" fullWidth color="primary">
                 {tabState === 0 ? "log-in" : "sign-up"}
               </Button>
-            </CardActions>
+            </CardActions> */}
           </Card>
         </Box>
       </Grid>
     </Grid>
   );
-}
-
-function TabPanel(props) {
-  const { index } = props;
-
-  switch (index) {
-    case 0:
-      return (
-        <div>
-          <Gtextfield label="Username or E-mail" />
-          <Gtextfield type="password" label="Password" />
-        </div>
-      );
-    case 1:
-      return (
-        <div>
-          <Gtextfield type="text" label="Username" />
-          <Gtextfield type="email" label="E-mail" />
-          <Gtextfield type="password" label="Password" />
-          <Gtextfield type="password" label="Confirm Password" />
-        </div>
-      );
-    default:
-      return;
-  }
 }

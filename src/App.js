@@ -1,10 +1,9 @@
 // import logo from "./logo.svg";
 import "./App.css";
-
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./components/home/Home";
 import Auth from "./components/auth/Auth";
-import NotFound from "./components/NotFound";
+import NotFound from "./components/shared/NotFound";
 
 function App() {
   return (
