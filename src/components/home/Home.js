@@ -1,17 +1,18 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { Typography } from "@material-ui/core";
 import TokenVerifier from "../shared/TokenVerifier";
 import Navbar from "../shared/Navbar";
+import HomeBody from "./HomeBody";
 
 export default function Home() {
   let history = useHistory();
   if (!TokenVerifier(0, history)) history.push("/");
 
   return (
-    <div>
+    <div style={{ backgroundColor: "#eeeeee" }}>
       <Navbar />
-      <Typography>Home</Typography>
+
+      <HomeBody />
     </div>
   );
 }
