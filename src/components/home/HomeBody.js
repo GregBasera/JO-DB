@@ -12,16 +12,16 @@ export default function HomeBody() {
   }, []);
 
   return (
-    <React.Fragment>
+    <div style={{ width: "100vw" }}>
       <TopControls />
 
-      <Grid container spacing={1} style={{ marginTop: "8px", width: "100vw" }}>
+      <Grid container spacing={1} style={{ margin: "0px", width: "100vw", backgroundColor: "#eeeeee" }}>
         {data.map((personel) => (
           <Grid item xs={12} md={2}>
             <PersonelCard data={personel} />
           </Grid>
         ))}
       </Grid>
-    </React.Fragment>
+    </div>
   );
 }

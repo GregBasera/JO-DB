@@ -9,7 +9,7 @@ export default function Home() {
   if (!TokenVerifier(0, history)) history.push("/");
 
   return (
-    <div style={{ backgroundColor: "#eeeeee" }}>
+    <div>
       <Navbar />
 
       <HomeBody />
