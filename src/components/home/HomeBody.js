@@ -17,7 +17,7 @@ export default function HomeBody() {
 
       <Grid container spacing={1} style={{ margin: "0px", width: "100vw", backgroundColor: "#eeeeee" }}>
         {data.map((personel) => (
-          <Grid item xs={12} md={2}>
+          <Grid key={personel._id} item xs={12} md={2}>
             <PersonelCard data={personel} />
           </Grid>
         ))}

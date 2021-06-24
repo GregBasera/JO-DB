@@ -2,9 +2,23 @@ import React from "react";
 import { TextField, FormControl, Select, InputLabel, MenuItem, Button } from "@material-ui/core";
 
 function Gtextfield(props) {
-  const { type, label, id, value, onChange, error, size } = props;
+  const { type, label, id, value, onChange, error, size, InputLabelProps } = props;
 
-  return <TextField id={id} type={type} label={label} value={value} onChange={onChange} error={error} size={size} variant="outlined" fullWidth style={{ marginTop: "8px" }} />;
+  return (
+    <TextField
+      id={id}
+      type={type}
+      label={label}
+      value={value}
+      onChange={onChange}
+      error={error}
+      size={size}
+      variant="outlined"
+      fullWidth
+      style={{ marginTop: "8px" }}
+      InputLabelProps={InputLabelProps}
+    />
+  );
 }
 
 function Gdropdown(props) {
@@ -14,22 +28,21 @@ function Gdropdown(props) {
     <FormControl variant="outlined" size="small" fullWidth style={{ marginTop: "8px" }}>
       <InputLabel>{label}</InputLabel>
       <Select value={value} onChange={onChange} label={label}>
-        <MenuItem value="">
-          <em>None</em>
-        </MenuItem>
-        <MenuItem value={10}>Ten</MenuItem>
-        <MenuItem value={20}>Twenty</MenuItem>
-        <MenuItem value={30}>Thirty</MenuItem>
+        {(menuItems ?? []).map((dept) => (
+          <MenuItem key={dept._id} value={dept.name}>
+            {dept.name}
+          </MenuItem>
+        ))}
       </Select>
     </FormControl>
   );
 }
 
 function Gbutton(props) {
-  const { text, color, icon } = props;
+  const { text, color, icon, onClick, fullWidth } = props;
 
   return (
-    <Button startIcon={icon} disableElevation color={color} variant="contained" style={{ margin: "8px" }}>
+    <Button startIcon={icon} disableElevation color={color} variant="contained" style={{ margin: "8px" }} onClick={onClick} fullWidth={fullWidth}>
       {text}
     </Button>
   );

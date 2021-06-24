@@ -44,27 +44,27 @@ export default function PersonelCard({ data }) {
             />
           </ListItem>
           <Divider component="li" />
-          <ListItem key={data._id} alignItems="flex-start" disableGutters>
+          <ListItem key={data._id + "sex"} alignItems="flex-start" disableGutters>
             <ListItemText primary={<Typography title="Sex">{data.sex}</Typography>} />
           </ListItem>
           <Divider component="li" />
-          <ListItem key={data._id} alignItems="flex-start" disableGutters>
+          <ListItem key={data._id + "designation"} alignItems="flex-start" disableGutters>
             <ListItemText primary={<Typography title="Designation">{designation}</Typography>} />
           </ListItem>
           <Divider component="li" />
-          <ListItem key={data._id} alignItems="flex-start" disableGutters>
+          <ListItem key={data._id + "rate_per_day"} alignItems="flex-start" disableGutters>
             <ListItemText primary={<Typography title="Rate per day">{rate_per_day}</Typography>} />
           </ListItem>
           <Divider component="li" />
-          <ListItem key={data._id} alignItems="flex-start" disableGutters>
+          <ListItem key={data._id + "employment_period"} alignItems="flex-start" disableGutters>
             <ListItemText primary={<Typography title="Employment Period">{dateRange(employment_period)}</Typography>} />
           </ListItem>
           <Divider component="li" />
-          <ListItem key={data._id} alignItems="flex-start" disableGutters>
+          <ListItem key={data._id + "office_assignment"} alignItems="flex-start" disableGutters>
             <ListItemText primary={<Typography title="Office Assignment">{office_assignment}</Typography>} />
           </ListItem>
           <Divider component="li" />
-          <ListItem key={data._id} alignItems="flex-start" disableGutters>
+          <ListItem key={data._id + "status"} alignItems="flex-start" disableGutters>
             <ListItemText primary={<Typography>{statusNode(status)}</Typography>} />
           </ListItem>
         </List>
