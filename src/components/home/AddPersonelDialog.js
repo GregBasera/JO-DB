@@ -32,18 +32,51 @@ const DialogTitle = withStyles(styles)((props) => {
   );
 });
 
-export default function AddPersonelDialog({ handleClose, open }) {
-  const [servHisArray, setServHisArray] = useState([ServHisSet()]);
+export default function AddPersonelDialog({ handleClose, open, depts }) {
+  const [servHisArray, setServHisArray] = useState(["set"]);
   const addNewSet = () => {
-    setServHisArray([...servHisArray, ServHisSet()]);
+    setNewPersonelData({ ...newPersonelData, service_history: [...newPersonelData.service_history, []] });
+    setServHisArray([...servHisArray, "set"]);
+  };
+
+  const [newPersonelData, setNewPersonelData] = useState({
+    name: "",
+    sex: "",
+    service_history: [{}],
+  });
+  const handlePersonelDataChanges = (e, indx) => {
+    let { name, id, value } = e.target;
+
+    switch (id ?? name) {
+      case "name":
+      case "sex":
+        setNewPersonelData({ ...newPersonelData, [id ?? name]: value });
+        break;
+      case "designation":
+        let iDontLikeThisLongWay = newPersonelData.service_history;
+        iDontLikeThisLongWay[indx] = { ...iDontLikeThisLongWay[indx], [id ?? name]: value };
+        setNewPersonelData({ ...newPersonelData, service_history: iDontLikeThisLongWay });
+        break;
+      default:
+        console.log("error");
+    }
   };
 
   return (
     <Dialog onClose={handleClose} open={open}>
       <DialogTitle onClose={handleClose}>Add a Personel</DialogTitle>
       <DialogContent dividers>
-        <Gtextfield size="small" label="Name" />
-        <Gtextfield size="small" label="Sex" />
+        <Gtextfield id="name" size="small" label="Name" value={newPersonelData.name} onChange={handlePersonelDataChanges} />
+        <Gdropdown
+          name="sex"
+          label="Sex"
+          value={newPersonelData.sex}
+          onChange={handlePersonelDataChanges}
+          menuItems={[
+            { _id: "Male", value: "Male" },
+            { _id: "Female", value: "Female" },
+          ]}
+        />
 
         <Typography style={{ marginTop: "8px" }}>Service History</Typography>
         <Typography variant="caption" color="textSecondary">
@@ -51,7 +84,7 @@ export default function AddPersonelDialog({ handleClose, open }) {
         </Typography>
 
         {servHisArray.map((node, index) => (
-          <div key={index}>{node}</div>
+          <div key={index}>{<ServHisSet depts={depts} data={newPersonelData} index={index} onChange={(e) => handlePersonelDataChanges(e, index)} />}</div>
         ))}
 
         <Gbutton text="add" onClick={addNewSet} />
@@ -66,12 +99,14 @@ export default function AddPersonelDialog({ handleClose, open }) {
   );
 }
 
-function ServHisSet() {
+function ServHisSet(props) {
+  let { depts, data, index, onChange } = props;
+
   return (
     <Paper variant="outlined" style={{ padding: "8px", paddingLeft: "16px", marginBottom: "8px", borderColor: "black" }}>
       <Grid container spacing={1}>
         <Grid item xs={12} md={8}>
-          <Gtextfield size="small" label="Designation" />
+          <Gtextfield id="designation" indx={index} size="small" label="Designation" value={data.service_history[index].designation ?? ""} onChange={onChange} />
         </Grid>
         <Grid item xs={12} md={4}>
           <Gtextfield type="number" size="small" label="Rate per Day" />
@@ -97,7 +132,7 @@ function ServHisSet() {
           />
         </Grid>
         <Grid item xs={12} md={12}>
-          <Gdropdown label="Office Assignment" />
+          <Gdropdown label="Office Assignment" menuItems={depts} />
         </Grid>
         <Grid item xs={12} md={12}>
           <Gtextfield size="small" label="Status / Remarks" />

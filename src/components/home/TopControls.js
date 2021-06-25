@@ -33,7 +33,7 @@ export default function TopControls() {
         </Grid>
       </Grid>
 
-      <AddPersonelDialog open={addPersonelDialog} handleClose={() => setAddPersonelDialog(false)} />
+      <AddPersonelDialog open={addPersonelDialog} handleClose={() => setAddPersonelDialog(false)} depts={depts} />
     </React.Fragment>
   );
 }

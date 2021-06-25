@@ -28,7 +28,7 @@ function statusNode(value) {
 }
 
 export default function PersonelCard({ data }) {
-  let { designation, rate_per_day, employment_period, office_assignment, status } = data.service_history.history[0];
+  let { designation, rate_per_day, employment_period, office_assignment, status } = data.service_history[0];
 
   return (
     <Card>

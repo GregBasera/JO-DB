@@ -22,15 +22,15 @@ function Gtextfield(props) {
 }
 
 function Gdropdown(props) {
-  const { label, value, onChange, menuItems } = props;
+  const { name, label, value, onChange, menuItems } = props;
 
   return (
     <FormControl variant="outlined" size="small" fullWidth style={{ marginTop: "8px" }}>
       <InputLabel>{label}</InputLabel>
-      <Select value={value} onChange={onChange} label={label}>
-        {(menuItems ?? []).map((dept) => (
-          <MenuItem key={dept._id} value={dept.name}>
-            {dept.name}
+      <Select name={name} value={value} onChange={onChange} label={label}>
+        {(menuItems ?? []).map((item) => (
+          <MenuItem key={item._id} value={item.name ?? item.value}>
+            {item.name ?? item.value}
           </MenuItem>
         ))}
       </Select>
