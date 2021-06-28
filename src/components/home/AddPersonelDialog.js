@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Button, Dialog, DialogContent, Typography, DialogActions, IconButton, Paper, Grid } from "@material-ui/core";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
-import { Gtextfield, Gbutton, Gdropdown } from "../shared/FormElements";
+import { Gtextfield, Gdropdown } from "../shared/FormElements";
+import { newPersonel } from "./APIcalls";
 import CloseIcon from "@material-ui/icons/Close";
+import AddIcon from "@material-ui/icons/Add";
+import RemoveIcon from "@material-ui/icons/Remove";
 
 const styles = (theme) => ({
   root: {
@@ -32,11 +35,19 @@ const DialogTitle = withStyles(styles)((props) => {
   );
 });
 
-export default function AddPersonelDialog({ handleClose, open, depts }) {
-  const [servHisArray, setServHisArray] = useState(["set"]);
+export default function AddPersonelDialog({ handleClose, open, depts, append }) {
+  const [servHisArray, setServHisArray] = useState(["set"]); // this state is only used as a reference to render elements
   const addNewSet = () => {
     setNewPersonelData({ ...newPersonelData, service_history: [...newPersonelData.service_history, []] });
     setServHisArray([...servHisArray, "set"]);
+  };
+  const removeSet = () => {
+    let temp = servHisArray;
+    temp.pop();
+    setServHisArray(temp);
+    temp = newPersonelData.service_history;
+    temp.pop();
+    setNewPersonelData({ ...newPersonelData, service_history: temp });
   };
 
   const [newPersonelData, setNewPersonelData] = useState({
@@ -53,6 +64,12 @@ export default function AddPersonelDialog({ handleClose, open, depts }) {
         setNewPersonelData({ ...newPersonelData, [id ?? name]: value });
         break;
       case "designation":
+      case "rate_per_day":
+      case "ep_start":
+      case "ep_end":
+      case "office_assignment":
+      case "status":
+        // service_history contains deeply nested values. idk if this way is better
         let iDontLikeThisLongWay = newPersonelData.service_history;
         iDontLikeThisLongWay[indx] = { ...iDontLikeThisLongWay[indx], [id ?? name]: value };
         setNewPersonelData({ ...newPersonelData, service_history: iDontLikeThisLongWay });
@@ -60,6 +77,12 @@ export default function AddPersonelDialog({ handleClose, open, depts }) {
       default:
         console.log("error");
     }
+  };
+
+  const handleSubmit = () => {
+    // console.log(newPersonelData);
+    newPersonel(newPersonelData, append);
+    handleClose();
   };
 
   return (
@@ -87,11 +110,15 @@ export default function AddPersonelDialog({ handleClose, open, depts }) {
           <div key={index}>{<ServHisSet depts={depts} data={newPersonelData} index={index} onChange={(e) => handlePersonelDataChanges(e, index)} />}</div>
         ))}
 
-        <Gbutton text="add" onClick={addNewSet} />
-        <Gbutton text="remove" onClick={null} />
+        <IconButton size="small" onClick={addNewSet}>
+          <AddIcon />
+        </IconButton>
+        <IconButton size="small" onClick={removeSet}>
+          <RemoveIcon />
+        </IconButton>
       </DialogContent>
       <DialogActions>
-        <Button autoFocus onClick={handleClose} color="primary">
+        <Button onClick={handleSubmit} color="primary">
           Save changes
         </Button>
       </DialogActions>
@@ -106,16 +133,19 @@ function ServHisSet(props) {
     <Paper variant="outlined" style={{ padding: "8px", paddingLeft: "16px", marginBottom: "8px", borderColor: "black" }}>
       <Grid container spacing={1}>
         <Grid item xs={12} md={8}>
-          <Gtextfield id="designation" indx={index} size="small" label="Designation" value={data.service_history[index].designation ?? ""} onChange={onChange} />
+          <Gtextfield size="small" label="Designation" id="designation" value={data.service_history[index].designation ?? ""} onChange={onChange} />
         </Grid>
         <Grid item xs={12} md={4}>
-          <Gtextfield type="number" size="small" label="Rate per Day" />
+          <Gtextfield type="number" size="small" label="Rate per Day" id="rate_per_day" value={data.service_history[index].rate_per_day ?? ""} onChange={onChange} />
         </Grid>
         <Grid item xs={12} md={6}>
           <Gtextfield
             type="date"
             size="small"
             label="Employment Period: Start"
+            id="ep_start"
+            value={data.service_history[index].ep_start ?? ""}
+            onChange={onChange}
             InputLabelProps={{
               shrink: true,
             }}
@@ -126,16 +156,19 @@ function ServHisSet(props) {
             type="date"
             size="small"
             label="Employment Period: End"
+            id="ep_end"
+            value={data.service_history[index].ep_end ?? ""}
+            onChange={onChange}
             InputLabelProps={{
               shrink: true,
             }}
           />
         </Grid>
         <Grid item xs={12} md={12}>
-          <Gdropdown label="Office Assignment" menuItems={depts} />
+          <Gdropdown label="Office Assignment" menuItems={depts} name="office_assignment" value={data.service_history[index].office_assignment ?? ""} onChange={onChange} />
         </Grid>
         <Grid item xs={12} md={12}>
-          <Gtextfield size="small" label="Status / Remarks" />
+          <Gtextfield size="small" label="Status / Remarks" id="status" value={data.service_history[index].status ?? ""} onChange={onChange} />
         </Grid>
       </Grid>
     </Paper>

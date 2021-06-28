@@ -5,7 +5,7 @@ import AddPersonelDialog from "./AddPersonelDialog";
 import { getOffices } from "./APIcalls";
 import AddIcon from "@material-ui/icons/Add";
 
-export default function TopControls() {
+export default function TopControls({ append }) {
   const [addPersonelDialog, setAddPersonelDialog] = useState(false);
   const [depts, setDepts] = useState([]);
   useEffect(() => {
@@ -15,15 +15,21 @@ export default function TopControls() {
 
   return (
     <React.Fragment>
-      <Grid container spacing={2} style={{ margin: "0px", width: "100vw" }}>
-        <Grid item xs={12} md={3}>
+      <Grid container spacing={1} style={{ margin: "0px", width: "100vw" }}>
+        <Grid item xs={6} md={3}>
           <Gtextfield type="text" label="Search" size="small" />
         </Grid>
-        <Grid item xs={6} md={3}>
-          <Gdropdown label="Office Assignment" menuItems={depts} />
-        </Grid>
         <Grid item xs={6} md={2}>
-          <Gdropdown label="Status" />
+          <Gdropdown
+            label="Status"
+            menuItems={[
+              { _id: "Male", value: "Male" },
+              { _id: "Female", value: "Female" },
+            ]}
+          />
+        </Grid>
+        <Grid item xs={12} md={3}>
+          <Gdropdown label="Office Assignment" menuItems={depts} />
         </Grid>
         <Grid item xs={12} md={4}>
           <Box display="flex" flexDirection="row-reverse">
@@ -33,7 +39,7 @@ export default function TopControls() {
         </Grid>
       </Grid>
 
-      <AddPersonelDialog open={addPersonelDialog} handleClose={() => setAddPersonelDialog(false)} depts={depts} />
+      <AddPersonelDialog open={addPersonelDialog} handleClose={() => setAddPersonelDialog(false)} depts={depts} append={append} />
     </React.Fragment>
   );
 }

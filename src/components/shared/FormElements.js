@@ -12,7 +12,7 @@ function Gtextfield(props) {
       value={value}
       onChange={onChange}
       error={error}
-      size={size}
+      size={size ?? "small"}
       variant="outlined"
       fullWidth
       style={{ marginTop: "8px" }}

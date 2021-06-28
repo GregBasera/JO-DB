@@ -1,11 +1,8 @@
-import React from "react";
-import { Card, CardContent, CardActions, Button, Typography, ListItem, ListItemText, Divider, List } from "@material-ui/core";
+import React, { useState } from "react";
 import moment from "moment";
+import { Card, CardContent, CardActions, Button, Typography, ListItem, ListItemText, Divider, List } from "@material-ui/core";
+import MoreInfoDialog from "./MoreInfoDialog";
 
-function dateRange(str) {
-  // return a modified string; separated this for cleaner render function
-  return `${moment(str.substr(0, 10)).format("MMM DD, YYYY")} to ${moment(str.substr(14, 10)).format("MMM DD, YYYY")}`;
-}
 function statusNode(value) {
   // separated this for cleaner render function
   switch (value.toLowerCase()) {
@@ -28,7 +25,9 @@ function statusNode(value) {
 }
 
 export default function PersonelCard({ data }) {
-  let { designation, rate_per_day, employment_period, office_assignment, status } = data.service_history[0];
+  let { designation, rate_per_day, ep_start, ep_end, office_assignment, status } = data.service_history[0];
+
+  const [showMoreOpen, setShowMoreOpen] = useState(false);
 
   return (
     <Card>
@@ -57,7 +56,7 @@ export default function PersonelCard({ data }) {
           </ListItem>
           <Divider component="li" />
           <ListItem key={data._id + "employment_period"} alignItems="flex-start" disableGutters>
-            <ListItemText primary={<Typography title="Employment Period">{dateRange(employment_period)}</Typography>} />
+            <ListItemText primary={<Typography title="Employment Period">{moment(ep_start).format("MMM DD, YYYY") + " to " + moment(ep_end).format("MMM DD, YYYY")}</Typography>} />
           </ListItem>
           <Divider component="li" />
           <ListItem key={data._id + "office_assignment"} alignItems="flex-start" disableGutters>
@@ -70,8 +69,12 @@ export default function PersonelCard({ data }) {
         </List>
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+        <Button size="small" onClick={() => setShowMoreOpen(true)}>
+          Show More
+        </Button>
       </CardActions>
+
+      <MoreInfoDialog handleClose={() => setShowMoreOpen(false)} open={showMoreOpen} data={data} />
     </Card>
   );
 }

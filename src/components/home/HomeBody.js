@@ -11,9 +11,13 @@ export default function HomeBody() {
     return () => {};
   }, []);
 
+  const appendData = (newElem) => {
+    setData([...data, newElem]);
+  };
+
   return (
     <div style={{ width: "100vw" }}>
-      <TopControls />
+      <TopControls append={appendData} />
 
       <Grid container spacing={1} style={{ margin: "0px", width: "100vw", backgroundColor: "#eeeeee" }}>
         {data.map((personel) => (
