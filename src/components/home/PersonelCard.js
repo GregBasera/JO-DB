@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import moment from "moment";
-import { Card, CardContent, CardActions, Button, Typography, ListItem, ListItemText, Divider, List } from "@material-ui/core";
+import { Card, CardContent, CardActions, IconButton, Typography, ListItem, ListItemText, Divider, List, Box } from "@material-ui/core";
 import MoreInfoDialog from "./MoreInfoDialog";
+import { Gbutton } from "../shared/FormElements";
+import AddIcon from "@material-ui/icons/Add";
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 function statusNode(value) {
   // separated this for cleaner render function
@@ -69,9 +73,19 @@ export default function PersonelCard({ data }) {
         </List>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={() => setShowMoreOpen(true)}>
-          Show More
-        </Button>
+        <Gbutton text="More" onClick={() => setShowMoreOpen(true)} />
+
+        <Box display="flex" flexDirection="row-reverse" style={{ width: "100%" }}>
+          <IconButton size="small">
+            <DeleteIcon />
+          </IconButton>
+          <IconButton size="small">
+            <EditIcon />
+          </IconButton>
+          <IconButton size="small">
+            <AddIcon />
+          </IconButton>
+        </Box>
       </CardActions>
 
       <MoreInfoDialog handleClose={() => setShowMoreOpen(false)} open={showMoreOpen} data={data} />
