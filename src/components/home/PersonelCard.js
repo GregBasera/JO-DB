@@ -3,6 +3,9 @@ import moment from "moment";
 import { Card, CardContent, CardActions, IconButton, Typography, ListItem, ListItemText, Divider, List, Box } from "@material-ui/core";
 import MoreInfoDialog from "./MoreInfoDialog";
 import { Gbutton } from "../shared/FormElements";
+import AddAppointDialog from "./AddAppointDialog";
+import EditAppointsDialog from "./EditAppointsDialog";
+import DeletePersonelDialog from "./DeletePersonelDialog";
 import AddIcon from "@material-ui/icons/Add";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -28,10 +31,13 @@ function statusNode(value) {
   }
 }
 
-export default function PersonelCard({ data }) {
+export default function PersonelCard({ data, deleteOne }) {
   let { designation, rate_per_day, ep_start, ep_end, office_assignment, status } = data.service_history[0];
 
   const [showMoreOpen, setShowMoreOpen] = useState(false);
+  const [addDialog, setAddDialog] = useState(false);
+  const [editDialog, setEditDialog] = useState(false);
+  const [deleteDialog, setDeleteDialog] = useState(false);
 
   return (
     <Card>
@@ -76,19 +82,22 @@ export default function PersonelCard({ data }) {
         <Gbutton text="More" onClick={() => setShowMoreOpen(true)} />
 
         <Box display="flex" flexDirection="row-reverse" style={{ width: "100%" }}>
-          <IconButton size="small">
+          <IconButton size="small" title="Delete Personel Record" onClick={() => setDeleteDialog(true)}>
             <DeleteIcon />
           </IconButton>
-          <IconButton size="small">
+          <IconButton size="small" title="Edit Existing Appointments" onClick={() => setEditDialog(true)}>
             <EditIcon />
           </IconButton>
-          <IconButton size="small">
+          <IconButton size="small" title="Add Lastest Appointment" onClick={() => setAddDialog(true)}>
             <AddIcon />
           </IconButton>
         </Box>
       </CardActions>
 
       <MoreInfoDialog handleClose={() => setShowMoreOpen(false)} open={showMoreOpen} data={data} />
+      <AddAppointDialog handleClose={() => setAddDialog(false)} open={addDialog} />
+      <EditAppointsDialog handleClose={() => setEditDialog(false)} open={editDialog} />
+      <DeletePersonelDialog handleClose={() => setDeleteDialog(false)} open={deleteDialog} data={{ name: data.name, id: data._id }} deleteOne={deleteOne} />
     </Card>
   );
 }

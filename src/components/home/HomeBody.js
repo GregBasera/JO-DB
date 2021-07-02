@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Grid } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import TopControls from "./TopControls";
 import PersonelCard from "./PersonelCard";
 import { initialize } from "./APIcalls";
-import { Typography } from "@material-ui/core";
 
 export default function HomeBody() {
   const [data, setData] = useState([]);
@@ -16,6 +15,13 @@ export default function HomeBody() {
     setData([...data, newElem]);
   };
 
+  const popOneOut = (id) => {
+    let mutable = data;
+    mutable.splice(mutable.map((q) => q._id).indexOf(id), 1);
+    console.log(mutable);
+    setData(mutable); // its not working :(
+  };
+
   return (
     <div style={{ width: "100vw" }}>
       <TopControls append={appendData} setData={setData} />
@@ -24,7 +30,7 @@ export default function HomeBody() {
         {data.length !== 0 ? (
           data.map((personel) => (
             <Grid key={personel._id} item xs={12} md={2}>
-              <PersonelCard data={personel} />
+              <PersonelCard data={personel} deleteOne={popOneOut} />
             </Grid>
           ))
         ) : (

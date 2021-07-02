@@ -47,15 +47,39 @@ function search(searchTerm, callback) {
 }
 
 function filter(data, callback) {
-  let query = qs.stringify({ _where: [{ service_history_in: [{ designation: "asd" }] }] });
-
-  Axios.get(`${JOs}?${query}`, headers())
+  Axios.get(JOs, headers())
     .then((res) => {
-      console.log(res);
+      if (data[1] !== "all") {
+        // we filter all personel only looking on thier lastest appointment
+        callback(res.data.filter((person) => person.service_history[0][data[0]] === data[1]));
+      } else {
+        callback(res.data);
+      }
     })
     .catch((err) => {
       console.log(err);
     });
 }
 
-export { initialize, getOffices, newPersonel, search, filter };
+function addDept(data, callback) {
+  Axios.post(Departments, data, headers())
+    .then((res) => {
+      console.log(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+function deletePersonel(id, callback) {
+  Axios.delete(`${JOs}/${id}`, headers())
+    .then((res) => {
+      callback(res.data._id);
+      // console.log(res.data._id);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+export { initialize, getOffices, newPersonel, search, filter, addDept, deletePersonel };
