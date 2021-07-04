@@ -13,7 +13,7 @@ export default function Auth() {
   return (
     <Grid container spacing={0}>
       {/* decoration: logo */}
-      <Grid item md={8} sm={12} style={{ height: "100vh", backgroundColor: "#004e80" }}>
+      <Grid item md={8} sm={false} style={{ height: "100vh", backgroundColor: "#004e80" }}>
         <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column" style={{ height: "100vh" }}>
           <img src={tkLogo} alt="Tagkawayan Logo" style={{ height: "250px" }} />
 
@@ -27,10 +27,9 @@ export default function Auth() {
       </Grid>
 
       {/* loging form */}
-      <Grid item md={4} sm={12} style={{ height: "100vh", backgroundColor: "#eeeeee" }}>
+      <Grid item md={4} sm="auto" style={{ height: "100vh", backgroundColor: "#eeeeee" }}>
         <Box display="flex" justifyContent="center" alignItems="center" style={{ height: "100vh" }}>
           <Card elevation={2} style={{ width: "350px" }}>
-            {/* <CardHeader title="Login / Signup" /> */}
             <CardContent>
               <Tabs value={tabState} onChange={handleTabChange} indicatorColor="primary" textColor="primary" centered>
                 <Tab label="Log-In" />
@@ -39,12 +38,6 @@ export default function Auth() {
 
               {tabState === 0 ? <Login /> : <Signup />}
             </CardContent>
-
-            {/* <CardActions>
-              <Button variant="contained" fullWidth color="primary">
-                {tabState === 0 ? "log-in" : "sign-up"}
-              </Button>
-            </CardActions> */}
           </Card>
         </Box>
       </Grid>

@@ -18,8 +18,7 @@ export default function HomeBody() {
   const popOneOut = (id) => {
     let mutable = data;
     mutable.splice(mutable.map((q) => q._id).indexOf(id), 1);
-    console.log(mutable);
-    setData(mutable); // its not working :(
+    setData([...mutable]); // "setData(mutable)" doesnt work, youll need to deconstruct it :(
   };
 
   return (

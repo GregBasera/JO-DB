@@ -34,7 +34,6 @@ const DialogTitle = withStyles(styles)((props) => {
 export default function DeletePersonelDialog({ handleClose, open, data, deleteOne }) {
   const handleDelete = () => {
     deletePersonel(data.id, deleteOne);
-    // deleteOne(data.id);
     handleClose();
   };
 

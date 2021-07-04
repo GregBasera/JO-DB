@@ -37,7 +37,7 @@ export default function TopControls({ append, setData }) {
           <Gtextfield type="text" label="Search a Name" value={searchTerm ?? ""} onChange={handleSearch} onKeyDown={handleSearch} />
         </Grid>
         <Grid item xs={6} md={3}>
-          <Gdropdown name="office_assignment" label="Office Assignment" menuItems={depts} value={offAssign ?? ""} onChange={handleOAchange} />
+          <Gdropdown name="office_assignment" label="Office Assignment" menuItems={depts} value={offAssign ?? ""} onChange={handleOAchange} allOpt />
         </Grid>
         <Grid item xs={12} md={6}>
           <Box display="flex" flexDirection="row-reverse">
