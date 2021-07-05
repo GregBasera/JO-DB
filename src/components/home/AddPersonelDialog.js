@@ -71,7 +71,7 @@ export default function AddPersonelDialog({ handleClose, open, depts, append }) 
       case "status":
         // service_history contains deeply nested values. idk if this way is better
         let iDontLikeThisLongWay = newPersonelData.service_history;
-        iDontLikeThisLongWay[indx] = { ...iDontLikeThisLongWay[indx], [id ?? name]: value };
+        iDontLikeThisLongWay[indx] = { ...iDontLikeThisLongWay[indx], [id ?? name]: id === "rate_per_day" ? parseInt(value) : value };
         setNewPersonelData({ ...newPersonelData, service_history: iDontLikeThisLongWay });
         break;
       default:

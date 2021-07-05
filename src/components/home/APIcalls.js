@@ -75,11 +75,20 @@ function deletePersonel(id, callback) {
   Axios.delete(`${JOs}/${id}`, headers())
     .then((res) => {
       callback(res.data._id);
-      // console.log(res.data._id);
     })
     .catch((err) => {
       console.log(err);
     });
 }
 
-export { initialize, getOffices, newPersonel, search, filter, addDept, deletePersonel };
+function pushNewAppoint(id, data, callback) {
+  Axios.put(`${JOs}/${id}`, data, headers())
+    .then((res) => {
+      console.log(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+export { initialize, getOffices, newPersonel, search, filter, addDept, deletePersonel, pushNewAppoint };

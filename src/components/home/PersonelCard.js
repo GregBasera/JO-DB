@@ -95,7 +95,7 @@ export default function PersonelCard({ data, deleteOne }) {
       </CardActions>
 
       <MoreInfoDialog handleClose={() => setShowMoreOpen(false)} open={showMoreOpen} data={data} />
-      <AddAppointDialog handleClose={() => setAddDialog(false)} open={addDialog} />
+      <AddAppointDialog handleClose={() => setAddDialog(false)} open={addDialog} data={data} />
       <EditAppointsDialog handleClose={() => setEditDialog(false)} open={editDialog} />
       <DeletePersonelDialog handleClose={() => setDeleteDialog(false)} open={deleteDialog} data={{ name: data.name, id: data._id }} deleteOne={deleteOne} />
     </Card>
