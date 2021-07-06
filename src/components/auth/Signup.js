@@ -31,7 +31,7 @@ export default function Signup() {
       <Gtextfield error={confirmation} type="password" label="Confirm Password" onChange={handleChange} />
 
       <Button onClick={() => SignupLogic(signupData, history, onSubmit)} variant="contained" fullWidth color="primary" style={{ marginTop: "16px" }}>
-        log-in
+        sign-in
       </Button>
 
       {showAlert[0] ? <AlertMaker msg={showAlert[1]} /> : null}
