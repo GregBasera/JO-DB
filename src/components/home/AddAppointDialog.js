@@ -32,7 +32,7 @@ const DialogTitle = withStyles(styles)((props) => {
   );
 });
 
-export default function AddAppointDialog({ handleClose, open, data }) {
+export default function AddAppointDialog({ handleClose, open, data, newHistory }) {
   const [offices, setOffices] = useState(null);
   useEffect(() => {
     getOffices(setOffices);
@@ -43,12 +43,13 @@ export default function AddAppointDialog({ handleClose, open, data }) {
     service_history: [{}],
   });
   const handleChanges = (e) => {
-    setNewAppoint({ service_history: [{ ...newAppoint.service_history[0], [e.target.id ?? e.target.name]: e.target.value }] });
+    setNewAppoint({
+      service_history: [{ ...newAppoint.service_history[0], [e.target.id ?? e.target.name]: e.target.id === "rate_per_day" ? parseInt(e.target.value) : e.target.value }],
+    });
   };
 
   const onSubmit = () => {
-    // console.log({ ...data, service_history: [...newAppoint.service_history, ...data.service_history] });
-    pushNewAppoint(data._id, { ...data, service_history: [...newAppoint.service_history, ...data.service_history] });
+    pushNewAppoint(data._id, { ...data, service_history: [...newAppoint.service_history, ...data.service_history] }, newHistory);
     handleClose();
   };
 

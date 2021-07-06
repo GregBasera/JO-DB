@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { Button, Dialog, DialogContent, Typography, DialogActions, IconButton } from "@material-ui/core";
+import { Button, Dialog, DialogContent, Typography, DialogActions, IconButton, Grid, Paper } from "@material-ui/core";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
+import { getOffices } from "./APIcalls";
+import { Gtextfield, Gdropdown } from "../shared/FormElements";
 import CloseIcon from "@material-ui/icons/Close";
 
 const styles = (theme) => ({
@@ -30,24 +32,39 @@ const DialogTitle = withStyles(styles)((props) => {
   );
 });
 
-export default function EditAppointsDialog({ handleClose, open }) {
+export default function EditAppointsDialog({ handleClose, open, data }) {
+  const [depts, setDepts] = useState([]);
+  useEffect(() => {
+    getOffices(setDepts);
+    return () => {};
+  }, []);
+
   return (
     <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
       <DialogTitle id="customized-dialog-title" onClose={handleClose}>
         Edit a Personel's Existing Appointment History
       </DialogTitle>
       <DialogContent dividers>
-        <Typography gutterBottom>
-          Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at
-          eros.
+        <Gtextfield id="name" size="small" label="Name" value={data.name} onChange={null} />
+        <Gdropdown
+          name="sex"
+          label="Sex"
+          value={data.sex}
+          onChange={null}
+          menuItems={[
+            { _id: "Male", value: "Male" },
+            { _id: "Female", value: "Female" },
+          ]}
+        />
+
+        <Typography style={{ marginTop: "8px" }}>Service History</Typography>
+        <Typography variant="caption" color="textSecondary">
+          from lastest to oldest
         </Typography>
-        <Typography gutterBottom>
-          Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-        </Typography>
-        <Typography gutterBottom>
-          Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
-          auctor fringilla.
-        </Typography>
+
+        {data.service_history.map((node, index) => (
+          <div key={index}>{<ServHisSet depts={depts} data={data} index={index} onChange={null} />}</div>
+        ))}
       </DialogContent>
       <DialogActions>
         <Button autoFocus onClick={handleClose} color="primary">
@@ -55,5 +72,54 @@ export default function EditAppointsDialog({ handleClose, open }) {
         </Button>
       </DialogActions>
     </Dialog>
+  );
+}
+
+function ServHisSet(props) {
+  let { depts, data, index, onChange } = props;
+
+  return (
+    <Paper variant="outlined" style={{ padding: "8px", paddingLeft: "16px", marginBottom: "8px", borderColor: "black" }}>
+      <Grid container spacing={1}>
+        <Grid item xs={12} md={8}>
+          <Gtextfield size="small" label="Designation" id="designation" value={data.service_history[index].designation ?? ""} onChange={onChange} />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Gtextfield type="number" size="small" label="Rate per Day" id="rate_per_day" value={data.service_history[index].rate_per_day ?? ""} onChange={onChange} />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Gtextfield
+            type="date"
+            size="small"
+            label="Employment Period: Start"
+            id="ep_start"
+            value={data.service_history[index].ep_start ?? ""}
+            onChange={onChange}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Gtextfield
+            type="date"
+            size="small"
+            label="Employment Period: End"
+            id="ep_end"
+            value={data.service_history[index].ep_end ?? ""}
+            onChange={onChange}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+        </Grid>
+        <Grid item xs={12} md={12}>
+          <Gdropdown label="Office Assignment" menuItems={depts} name="office_assignment" value={data.service_history[index].office_assignment ?? ""} onChange={onChange} />
+        </Grid>
+        <Grid item xs={12} md={12}>
+          <Gtextfield size="small" label="Status / Remarks" id="status" value={data.service_history[index].status ?? ""} onChange={onChange} />
+        </Grid>
+      </Grid>
+    </Paper>
   );
 }

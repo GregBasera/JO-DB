@@ -85,6 +85,7 @@ function pushNewAppoint(id, data, callback) {
   Axios.put(`${JOs}/${id}`, data, headers())
     .then((res) => {
       console.log(res.data);
+      callback(id, data);
     })
     .catch((err) => {
       console.log(err);

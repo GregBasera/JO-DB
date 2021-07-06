@@ -21,6 +21,12 @@ export default function HomeBody() {
     setData([...mutable]); // "setData(mutable)" doesnt work, youll need to deconstruct it :(
   };
 
+  const addNewAppoint = (id, newdata) => {
+    let mutable = data;
+    mutable.splice(mutable.map((q) => q._id).indexOf(id), 1, newdata);
+    setData([...mutable]);
+  };
+
   return (
     <div style={{ width: "100vw" }}>
       <TopControls append={appendData} setData={setData} />
@@ -29,7 +35,7 @@ export default function HomeBody() {
         {data.length !== 0 ? (
           data.map((personel) => (
             <Grid key={personel._id} item xs={12} md={2}>
-              <PersonelCard data={personel} deleteOne={popOneOut} />
+              <PersonelCard data={personel} deleteOne={popOneOut} newHistory={addNewAppoint} />
             </Grid>
           ))
         ) : (
