@@ -39,18 +39,47 @@ export default function EditAppointsDialog({ handleClose, open, data }) {
     return () => {};
   }, []);
 
+  const [altered, setAltered] = useState({ name: data.name, sex: data.sex, service_history: data.service_history });
+  const handleAlterations = (e, indx) => {
+    let { name, id, value } = e.target;
+
+    switch (id ?? name) {
+      case "name":
+      case "sex":
+        setAltered({ ...altered, [id ?? name]: value });
+        break;
+      case "designation":
+      case "rate_per_day":
+      case "ep_start":
+      case "ep_end":
+      case "office_assignment":
+      case "status":
+        // service_history contains deeply nested values. idk if this way is better
+        let iDontLikeThisLongWay = altered.service_history;
+        iDontLikeThisLongWay[indx] = { ...iDontLikeThisLongWay[indx], [id ?? name]: id === "rate_per_day" ? parseInt(value) : value };
+        setAltered({ ...altered, service_history: iDontLikeThisLongWay });
+        break;
+      default:
+        console.log("error");
+    }
+  };
+
+  const handleSubmit = () => {
+    // api call
+  };
+
   return (
     <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
       <DialogTitle id="customized-dialog-title" onClose={handleClose}>
         Edit a Personel's Existing Appointment History
       </DialogTitle>
       <DialogContent dividers>
-        <Gtextfield id="name" size="small" label="Name" value={data.name} onChange={null} />
+        <Gtextfield id="name" size="small" label="Name" value={altered.name} onChange={handleAlterations} />
         <Gdropdown
           name="sex"
           label="Sex"
-          value={data.sex}
-          onChange={null}
+          value={altered.sex}
+          onChange={handleAlterations}
           menuItems={[
             { _id: "Male", value: "Male" },
             { _id: "Female", value: "Female" },
@@ -63,11 +92,11 @@ export default function EditAppointsDialog({ handleClose, open, data }) {
         </Typography>
 
         {data.service_history.map((node, index) => (
-          <div key={index}>{<ServHisSet depts={depts} data={data} index={index} onChange={null} />}</div>
+          <div key={index}>{<ServHisSet depts={depts} data={altered} index={index} onChange={(e) => handleAlterations(e, index)} />}</div>
         ))}
       </DialogContent>
       <DialogActions>
-        <Button autoFocus onClick={handleClose} color="primary">
+        <Button autoFocus onClick={handleSubmit} color="primary">
           Save changes
         </Button>
       </DialogActions>

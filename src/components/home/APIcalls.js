@@ -92,4 +92,8 @@ function pushNewAppoint(id, data, callback) {
     });
 }
 
-export { initialize, getOffices, newPersonel, search, filter, addDept, deletePersonel, pushNewAppoint };
+function editExisting(id, data, callback) {
+  // log
+}
+
+export { initialize, getOffices, newPersonel, search, filter, addDept, deletePersonel, pushNewAppoint, editExisting };
