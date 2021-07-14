@@ -29,7 +29,7 @@ export default function HomeBody() {
 
   return (
     <div style={{ width: "100vw" }}>
-      <TopControls append={appendData} setData={setData} />
+      <TopControls append={appendData} setData={setData} data={data} />
 
       <Grid container spacing={1} style={{ margin: "0px", width: "100vw", backgroundColor: "#eeeeee" }}>
         {data.length !== 0 ? (

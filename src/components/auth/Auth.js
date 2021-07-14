@@ -20,7 +20,7 @@ function Desktop({ tabState, handleTabChange }) {
   return (
     <Grid container spacing={0}>
       {/* decoration: logo */}
-      <Grid item md={8} sm={1} style={{ height: "100vh", backgroundColor: "#004e80" }}>
+      <Grid item md={8} sm={12} style={{ height: "100vh", backgroundColor: "#004e80" }}>
         <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column" style={{ height: "100vh" }}>
           <img src={tkLogo} alt="Tagkawayan Logo" style={{ height: "250px" }} />
 
@@ -34,7 +34,7 @@ function Desktop({ tabState, handleTabChange }) {
       </Grid>
 
       {/* loging form */}
-      <Grid item md={4} sm={0} style={{ height: "100vh", backgroundColor: "#eeeeee" }}>
+      <Grid item md={4} sm={12} style={{ height: "100vh", backgroundColor: "#eeeeee" }}>
         <Box display="flex" justifyContent="center" alignItems="center" style={{ height: "100vh" }}>
           <Card elevation={2} style={{ width: "350px" }}>
             <CardContent>

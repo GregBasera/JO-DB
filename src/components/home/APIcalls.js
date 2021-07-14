@@ -84,7 +84,6 @@ function deletePersonel(id, callback) {
 function pushNewAppoint(id, data, callback) {
   Axios.put(`${JOs}/${id}`, data, headers())
     .then((res) => {
-      console.log(res.data);
       callback(id, data);
     })
     .catch((err) => {
@@ -93,7 +92,13 @@ function pushNewAppoint(id, data, callback) {
 }
 
 function editExisting(id, data, callback) {
-  // log
+  Axios.put(`${JOs}/${id}`, data, headers())
+    .then((res) => {
+      console.log(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 export { initialize, getOffices, newPersonel, search, filter, addDept, deletePersonel, pushNewAppoint, editExisting };

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Button, Dialog, DialogContent, Typography, DialogActions, IconButton, Grid, Paper } from "@material-ui/core";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
-import { getOffices } from "./APIcalls";
+import { getOffices, editExisting } from "./APIcalls";
 import { Gtextfield, Gdropdown } from "../shared/FormElements";
 import CloseIcon from "@material-ui/icons/Close";
 
@@ -65,7 +65,8 @@ export default function EditAppointsDialog({ handleClose, open, data }) {
   };
 
   const handleSubmit = () => {
-    // api call
+    editExisting(data._id, altered);
+    handleClose();
   };
 
   return (

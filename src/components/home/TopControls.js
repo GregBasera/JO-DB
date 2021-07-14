@@ -6,10 +6,12 @@ import AddDepartmentDialog from "./AddDepartmentDialog";
 import { getOffices, search, filter } from "./APIcalls";
 import AddIcon from "@material-ui/icons/Add";
 import PrintIcon from "@material-ui/icons/Print";
+import PrintReport from "./PrintReport";
 
-export default function TopControls({ append, setData }) {
+export default function TopControls({ append, setData, data }) {
   const [addPersonelDialog, setAddPersonelDialog] = useState(false);
   const [addDepartmentDialog, setAddDepartmentDialog] = useState(false);
+  const [print, setPrint] = useState(false);
   const [depts, setDepts] = useState([]);
   useEffect(() => {
     getOffices(setDepts);
@@ -43,7 +45,7 @@ export default function TopControls({ append, setData }) {
           <Box display="flex" flexDirection="row-reverse">
             <Gbutton icon={<AddIcon />} size="medium" text="Add Personel" color="secondary" onClick={() => setAddPersonelDialog(true)} />
             <Gbutton icon={<AddIcon />} size="medium" text="Add Office" onClick={() => setAddDepartmentDialog(true)} />
-            <IconButton>
+            <IconButton onClick={() => setPrint(true)}>
               <PrintIcon />
             </IconButton>
           </Box>
@@ -52,6 +54,7 @@ export default function TopControls({ append, setData }) {
 
       <AddPersonelDialog open={addPersonelDialog} handleClose={() => setAddPersonelDialog(false)} depts={depts} append={append} />
       <AddDepartmentDialog open={addDepartmentDialog} handleClose={() => setAddDepartmentDialog(false)} />
+      <PrintReport open={print} handleClose={() => setPrint(false)} data={data} />
     </React.Fragment>
   );
 }
