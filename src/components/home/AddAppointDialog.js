@@ -112,10 +112,8 @@ export default function AddAppointDialog({ handleClose, open, data, newHistory }
           </Grid>
         </Grid>
       </DialogContent>
-      <DialogActions>
-        <Button autoFocus onClick={onSubmit} color="primary">
-          Save Changes
-        </Button>
+      <DialogActions style={{ backgroundColor: "aquamarine" }}>
+        <Button onClick={onSubmit}>Save Changes</Button>
       </DialogActions>
     </Dialog>
   );

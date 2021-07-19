@@ -2,7 +2,7 @@ import React from "react";
 import { TextField, FormControl, Select, InputLabel, MenuItem, Button } from "@material-ui/core";
 
 function Gtextfield(props) {
-  const { type, label, id, value, onChange, onKeyDown, error, size, InputLabelProps, readOnly, helperText } = props;
+  const { type, label, id, value, defaultValue, onChange, onKeyDown, error, size, InputLabelProps, isReadOnly, helperText } = props;
 
   return (
     <TextField
@@ -10,6 +10,7 @@ function Gtextfield(props) {
       type={type}
       label={label}
       value={value}
+      defaultValue={defaultValue}
       onChange={onChange}
       helperText={helperText}
       onKeyDown={onKeyDown}
@@ -18,7 +19,7 @@ function Gtextfield(props) {
       variant="outlined"
       fullWidth
       style={{ marginTop: "8px" }}
-      InputLabelProps={{ ...InputLabelProps, readOnly: readOnly ? true : false }}
+      InputLabelProps={{ ...InputLabelProps, readOnly: isReadOnly ? true : false }}
     />
   );
 }

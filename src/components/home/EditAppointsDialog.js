@@ -96,10 +96,8 @@ export default function EditAppointsDialog({ handleClose, open, data }) {
           <div key={index}>{<ServHisSet depts={depts} data={altered} index={index} onChange={(e) => handleAlterations(e, index)} />}</div>
         ))}
       </DialogContent>
-      <DialogActions>
-        <Button autoFocus onClick={handleSubmit} color="primary">
-          Save changes
-        </Button>
+      <DialogActions style={{ backgroundColor: "#FBB917" }}>
+        <Button onClick={handleSubmit}>Save changes</Button>
       </DialogActions>
     </Dialog>
   );

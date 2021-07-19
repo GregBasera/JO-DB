@@ -56,10 +56,8 @@ export default function AddDepartmentDialog({ handleClose, open }) {
           helperText={<Typography variant="caption">Offices added here will become an option on "Office Assignment" fields</Typography>}
         />
       </DialogContent>
-      <DialogActions>
-        <Button autoFocus onClick={handleSubmit} color="primary">
-          Add Office
-        </Button>
+      <DialogActions style={{ backgroundColor: "#1589FF" }}>
+        <Button onClick={handleSubmit}>Add Office</Button>
       </DialogActions>
     </Dialog>
   );

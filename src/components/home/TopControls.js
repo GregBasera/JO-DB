@@ -43,8 +43,8 @@ export default function TopControls({ append, setData, data }) {
         </Grid>
         <Grid item xs={12} md={6}>
           <Box display="flex" flexDirection="row-reverse">
-            <Gbutton icon={<AddIcon />} size="medium" text="Add Personel" color="secondary" onClick={() => setAddPersonelDialog(true)} />
-            <Gbutton icon={<AddIcon />} size="medium" text="Add Office" onClick={() => setAddDepartmentDialog(true)} />
+            <Gbutton icon={<AddIcon />} size="medium" text="Personel" color="secondary" onClick={() => setAddPersonelDialog(true)} />
+            <Gbutton icon={<AddIcon />} size="medium" text="Office" onClick={() => setAddDepartmentDialog(true)} />
             <IconButton onClick={() => setPrint(true)}>
               <PrintIcon />
             </IconButton>

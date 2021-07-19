@@ -117,10 +117,8 @@ export default function AddPersonelDialog({ handleClose, open, depts, append }) 
           <RemoveIcon />
         </IconButton>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={handleSubmit} color="primary">
-          Save changes
-        </Button>
+      <DialogActions style={{ backgroundColor: "#1589FF" }}>
+        <Button onClick={handleSubmit}>Save changes</Button>
       </DialogActions>
     </Dialog>
   );

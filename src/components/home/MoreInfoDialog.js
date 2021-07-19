@@ -43,31 +43,26 @@ export default function MoreInfoDialog({ handleClose, open, data }) {
         <Gtextfield readOnly label="Sex" value={data.sex} />
 
         <Typography style={{ marginTop: "8px" }}>Service History</Typography>
-        <Typography variant="caption" color="textSecondary">
-          from lastest to oldest
-        </Typography>
         {data.service_history.map((elem, index) => (
           <ServHisSet key={index} data={elem} />
         ))}
       </DialogContent>
 
-      <DialogActions>
-        <Button onClick={handleClose} color="primary">
-          Close
-        </Button>
+      <DialogActions style={{ backgroundColor: "#5CB3FF" }}>
+        <Button onClick={handleClose}>Close</Button>
       </DialogActions>
     </Dialog>
   );
 }
 
-function ServHisSet(props) {
-  let { designation, rate_per_day, ep_start, ep_end, office_assignment, status } = props.data;
+function ServHisSet({ data }) {
+  let { designation, rate_per_day, ep_start, ep_end, office_assignment, status } = data;
 
   return (
     <Paper variant="outlined" style={{ padding: "8px", paddingLeft: "16px", marginBottom: "8px", borderColor: "black" }}>
       <Grid container spacing={1}>
         <Grid item xs={12} md={8}>
-          <Gtextfield readOnly label="Designation" id="designation" value={designation ?? ""} />
+          <Gtextfield isReadOnly label="Designation" id="designation" defaultValue={designation ?? ""} />
         </Grid>
         <Grid item xs={12} md={4}>
           <Gtextfield readOnly label="Rate per Day" id="rate_per_day" value={rate_per_day ?? ""} />

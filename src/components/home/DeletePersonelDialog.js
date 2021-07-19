@@ -48,10 +48,8 @@ export default function DeletePersonelDialog({ handleClose, open, data, deleteOn
           This can not be undone.
         </Typography>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={handleDelete} disableElevation variant="contained" color="secondary">
-          Delete Personnel
-        </Button>
+      <DialogActions style={{ backgroundColor: "#F75D59" }}>
+        <Button onClick={handleDelete}>Delete Personnel</Button>
       </DialogActions>
     </Dialog>
   );
