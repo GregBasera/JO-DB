@@ -4,6 +4,8 @@ import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import { Dialog, DialogContent, Typography, DialogActions, Button, IconButton, Paper, Grid } from "@material-ui/core";
 import { Gtextfield } from "../shared/FormElements";
 import CloseIcon from "@material-ui/icons/Close";
+import DescriptionIcon from "@material-ui/icons/Description";
+import PrintIcon from "@material-ui/icons/Print";
 import moment from "moment";
 
 const styles = (theme) => ({
@@ -33,6 +35,10 @@ const DialogTitle = withStyles(styles)((props) => {
 });
 
 export default function MoreInfoDialog({ handleClose, open, data }) {
+  const getCSV = () => {
+    console.log("click");
+  };
+
   return (
     <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
       <DialogTitle id="customized-dialog-title" onClose={handleClose}>
@@ -49,6 +55,12 @@ export default function MoreInfoDialog({ handleClose, open, data }) {
       </DialogContent>
 
       <DialogActions style={{ backgroundColor: "#5CB3FF" }}>
+        <IconButton href={`${document.location.origin}/employcert`} target="_blank">
+          <DescriptionIcon />
+        </IconButton>
+        <IconButton onClick={getCSV}>
+          <PrintIcon />
+        </IconButton>
         <Button onClick={handleClose}>Close</Button>
       </DialogActions>
     </Dialog>
