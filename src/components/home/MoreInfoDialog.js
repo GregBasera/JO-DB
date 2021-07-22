@@ -3,9 +3,8 @@ import { withStyles } from "@material-ui/core/styles";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import { Dialog, DialogContent, Typography, DialogActions, Button, IconButton, Paper, Grid } from "@material-ui/core";
 import { Gtextfield } from "../shared/FormElements";
+import qs from "qs";
 import CloseIcon from "@material-ui/icons/Close";
-import DescriptionIcon from "@material-ui/icons/Description";
-import PrintIcon from "@material-ui/icons/Print";
 import moment from "moment";
 
 const styles = (theme) => ({
@@ -35,10 +34,6 @@ const DialogTitle = withStyles(styles)((props) => {
 });
 
 export default function MoreInfoDialog({ handleClose, open, data }) {
-  const getCSV = () => {
-    console.log("click");
-  };
-
   return (
     <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
       <DialogTitle id="customized-dialog-title" onClose={handleClose}>
@@ -55,13 +50,31 @@ export default function MoreInfoDialog({ handleClose, open, data }) {
       </DialogContent>
 
       <DialogActions style={{ backgroundColor: "#5CB3FF" }}>
-        <IconButton href={`${document.location.origin}/employcert`} target="_blank">
-          <DescriptionIcon />
-        </IconButton>
-        <IconButton onClick={getCSV}>
-          <PrintIcon />
-        </IconButton>
-        <Button onClick={handleClose}>Close</Button>
+        <Button
+          variant="contained"
+          disableElevation
+          href={`${document.location.origin}/employcert?${qs.stringify({
+            name: data.name,
+            office_assignment: data.service_history[0].office_assignment,
+            designation: data.service_history[0].designation,
+            status: data.service_history[0].status,
+          })}`}
+          target="_blank">
+          get employment cert
+        </Button>
+        <Button
+          variant="contained"
+          disableElevation
+          href={`${document.location.origin}/servrecord?${qs.stringify({
+            name: data.name,
+            service_history: data.service_history,
+          })}`}
+          target="_blank">
+          get service record
+        </Button>
+        <Button variant="contained" disableElevation onClick={handleClose}>
+          Close
+        </Button>
       </DialogActions>
     </Dialog>
   );
