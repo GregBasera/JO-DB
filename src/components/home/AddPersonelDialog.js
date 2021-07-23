@@ -54,6 +54,10 @@ export default function AddPersonelDialog({ handleClose, open, depts, append }) 
     name: "",
     sex: "",
     service_history: [{}],
+    birthdate: "",
+    birthplace: "",
+    address: "",
+    appointment_status: "",
   });
   const handlePersonelDataChanges = (e, indx) => {
     let { name, id, value } = e.target;
@@ -61,6 +65,10 @@ export default function AddPersonelDialog({ handleClose, open, depts, append }) 
     switch (id ?? name) {
       case "name":
       case "sex":
+      case "birthdate":
+      case "birthplace":
+      case "address":
+      case "appointment_status":
         setNewPersonelData({ ...newPersonelData, [id ?? name]: value });
         break;
       case "designation":
@@ -69,6 +77,7 @@ export default function AddPersonelDialog({ handleClose, open, depts, append }) 
       case "ep_end":
       case "office_assignment":
       case "status":
+      case "general_function":
         // service_history contains deeply nested values. idk if this way is better
         let iDontLikeThisLongWay = newPersonelData.service_history;
         iDontLikeThisLongWay[indx] = { ...iDontLikeThisLongWay[indx], [id ?? name]: id === "rate_per_day" ? parseInt(value) : value };
@@ -98,6 +107,20 @@ export default function AddPersonelDialog({ handleClose, open, depts, append }) 
           menuItems={[
             { _id: "Male", value: "Male" },
             { _id: "Female", value: "Female" },
+          ]}
+        />
+        <Gtextfield id="birthdate" type="date" label="Birthdate" value={newPersonelData.birthdate} onChange={handlePersonelDataChanges} InputLabelProps={{ shrink: true }} />
+        <Gtextfield id="birthplace" label="Birthplace" value={newPersonelData.birthplace} onChange={handlePersonelDataChanges} />
+        <Gtextfield id="address" label="Address" value={newPersonelData.address} onChange={handlePersonelDataChanges} />
+        <Gdropdown
+          name="appointment_status"
+          label="Appointment Status"
+          value={newPersonelData.appointment_status}
+          onChange={handlePersonelDataChanges}
+          menuItems={[
+            { _id: "Job Order", value: "Job Order" },
+            { _id: "Contractual", value: "Contractual" },
+            { _id: "Locally Funded", value: "Locally Funded" },
           ]}
         />
 
@@ -166,7 +189,38 @@ function ServHisSet(props) {
           <Gdropdown label="Office Assignment" menuItems={depts} name="office_assignment" value={data.service_history[index].office_assignment ?? ""} onChange={onChange} />
         </Grid>
         <Grid item xs={12} md={12}>
-          <Gtextfield size="small" label="Status / Remarks" id="status" value={data.service_history[index].status ?? ""} onChange={onChange} />
+          <Gdropdown
+            label="Status / Remarks"
+            menuItems={[
+              { _id: "New", value: "New" },
+              { _id: "Re-Appointed", value: "Re-Appointed" },
+              { _id: "Resigned", value: "Resigned" },
+              { _id: "Terminated", value: "Terminated" },
+              { _id: "Promoted", value: "Promoted" },
+            ]}
+            name="status"
+            value={data.service_history[index].status ?? ""}
+            onChange={onChange}
+          />
+        </Grid>
+        <Grid item xs={12} md={12}>
+          <Gdropdown
+            label="General Function"
+            menuItems={[
+              { _id: "IT Service", value: "IT Service" },
+              { _id: "Teaching Service", value: "Teaching Service" },
+              { _id: "Health and Allied Service", value: "Health and Allied Service" },
+              { _id: "Technical Service", value: "Technical Service" },
+              { _id: "Clerical Service", value: "Clerical Service" },
+              { _id: "Janitorial Service", value: "Janitorial Service" },
+              { _id: "Security Service", value: "Security Service" },
+              { _id: "Trade and Crafts / Laborer", value: "Trade and Crafts / Laborer" },
+              { _id: "Others", value: "Others" },
+            ]}
+            name="general_function"
+            value={data.service_history[index].general_function ?? ""}
+            onChange={onChange}
+          />
         </Grid>
       </Grid>
     </Paper>

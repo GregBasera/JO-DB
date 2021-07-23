@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import { Grid, Typography, Dialog, DialogContent, DialogActions, Button } from "@material-ui/core";
@@ -10,15 +10,16 @@ import CloseIcon from "@material-ui/icons/Close";
 import { Gtextfield } from "../shared/FormElements";
 
 export default function EmploymentCert() {
+  useEffect(() => {
+    // Change the document.title for unique filename when downloaded
+    document.title = `EmploymentCert_${moment().format("YY-MM-DD-Hms")}`;
+  }, []);
   let { name, office_assignment, designation, status } = qs.parse(window.location.search.substring(1));
+
   const [open, setOpen] = useState(true);
   const [details, setDetails] = useState({
     requestee: "[requestee]",
     reason: "[reason]",
-    prep: "NIDA A. NABUHAY",
-    prep_position: "Administrative Aide II",
-    attest: "MA. SARINA G. ANONUEVO",
-    attest_position: "MGDH I (HRMO V)",
   });
   const handleDetailChange = (e) => {
     setDetails({ ...details, [e.target.id]: e.target.value });
@@ -30,23 +31,23 @@ export default function EmploymentCert() {
       <Grid container spacing={0} style={{ borderBottom: "solid 2px black" }}>
         <Grid item xs={10}>
           <Typography style={{ fontSize: "10pt" }}>Republic of the Philippines</Typography>
-          <Typography style={{ fontSize: "10pt" }}>Province of Quezon</Typography>
-          <Typography style={{ fontSize: "10pt" }}>
+          <Typography style={{ fontSize: "10pt", marginTop: "-5px" }}>Province of Quezon</Typography>
+          <Typography style={{ fontSize: "10pt", marginTop: "-5px" }}>
             <b>Municipality of Tagkawayan</b>
           </Typography>
 
-          <Typography variant="h6" style={{ color: "darkblue" }}>
+          <Typography variant="h6" style={{ color: "darkblue", marginTop: "-5px" }}>
             Human Resource Management & Development Office
           </Typography>
-          <Typography style={{ fontSize: "9pt" }}>
+          <Typography style={{ fontSize: "9pt", marginTop: "-5px" }}>
             <i>Contact Number: 0908-872-9964</i>
           </Typography>
-          <Typography style={{ fontSize: "9pt" }}>
+          <Typography style={{ fontSize: "9pt", marginTop: "-5px" }}>
             <i>Email Address: hrmo.lgutagkawayan@gmail.com</i>
           </Typography>
         </Grid>
         <Grid item xs={2}>
-          <img src={tkLogo} alt="Tagkawayan Logo" style={{ height: "120px" }} />
+          <img src={tkLogo} alt="Tagkawayan Logo" style={{ height: "100px" }} />
         </Grid>
       </Grid>
 
@@ -75,8 +76,8 @@ export default function EmploymentCert() {
             in{" "}
             <b>
               <u>{status.toUpperCase()}</u>
-            </b>
-            .
+            </b>{" "}
+            status.
           </Typography>
           <Typography align="justify" style={{ fontSize: "14pt", margin: "0px 0px 80px 0px", textIndent: "5em", fontFamily: "Times New Roman" }}>
             Issued this{" "}
@@ -103,19 +104,19 @@ export default function EmploymentCert() {
         <Grid item xs={6}>
           <Typography>Prepared by:</Typography>
           <Typography align="center" style={{ marginTop: "50px" }}>
-            <b>{details.prep}</b>
+            <b>NIDA A. NABUHAY</b>
           </Typography>
           <Typography align="center">
-            <i>{details.prep_position}</i>
+            <i>Administrative Aide II</i>
           </Typography>
         </Grid>
         <Grid item xs={6}>
           <Typography>Reviewed and Attested by:</Typography>
           <Typography align="center" style={{ marginTop: "50px" }}>
-            <b>{details.attest}</b>
+            <b>MA. SARINA G. ANONUEVO</b>
           </Typography>
           <Typography align="center">
-            <i>{details.attest_position}</i>
+            <i>MGDH I (HRMO V)</i>
           </Typography>
         </Grid>
         {/* spacer */}
@@ -162,7 +163,7 @@ const DialogTitle = withStyles(styles)((props) => {
 });
 
 function FinishingDetails({ open, handleClose, details, changes }) {
-  let { requestee, reason, prep, prep_position, attest, attest_position } = details;
+  let { requestee, reason } = details;
 
   return (
     <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
@@ -172,10 +173,6 @@ function FinishingDetails({ open, handleClose, details, changes }) {
       <DialogContent dividers>
         <Gtextfield id="requestee" label="Requestee" value={requestee} onChange={changes} />
         <Gtextfield id="reason" label="Reason" value={reason} onChange={changes} />
-        <Gtextfield id="prep" label="Prepared by" value={prep} onChange={changes} />
-        <Gtextfield id="prep_position" label="Position" value={prep_position} onChange={changes} />
-        <Gtextfield id="attest" label="Attested by" value={attest} onChange={changes} />
-        <Gtextfield id="attest_position" label="Position" value={attest_position} onChange={changes} />
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Save changes</Button>
