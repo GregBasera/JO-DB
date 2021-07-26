@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
-import { Grid, Typography, Dialog, DialogContent, DialogActions, Button } from "@material-ui/core";
+import { Grid, Typography, Dialog, DialogContent, DialogActions, Button, Checkbox, FormControlLabel } from "@material-ui/core";
 import moment from "moment";
 import qs from "qs";
 import tkLogo from "../../../src/logo lgu new 12x12 inches 300px.png";
@@ -20,14 +20,21 @@ export default function EmploymentCert() {
   const [details, setDetails] = useState({
     requestee: "[requestee]",
     reason: "[reason]",
+    prep: "NIDA A. NABUHAY",
+    prep_position: "Administrative Aide II",
   });
   const handleDetailChange = (e) => {
     setDetails({ ...details, [e.target.id]: e.target.value });
   };
+  const [isAbsent, setIsAbsent] = useState(false);
+  const checkChange = (e) => {
+    setIsAbsent(e.target.checked);
+    console.log(e.target.checked);
+  };
 
   return (
     <React.Fragment>
-      <FinishingDetails open={open} handleClose={() => setOpen(false)} details={details} changes={handleDetailChange} />
+      <FinishingDetails open={open} handleClose={() => setOpen(false)} details={details} changes={handleDetailChange} isAbsent={isAbsent} isAbsentChange={checkChange} />
       <Grid container spacing={0} style={{ borderBottom: "solid 2px black" }}>
         <Grid item xs={10}>
           <Typography style={{ fontSize: "10pt" }}>Republic of the Philippines</Typography>
@@ -60,7 +67,7 @@ export default function EmploymentCert() {
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography align="justify" style={{ fontSize: "14pt", margin: "30px 0px 30px 0px", textIndent: "5em", fontFamily: "Times New Roman" }}>
+          <Typography align="justify" style={{ fontSize: "14pt", margin: "30px 40px 30px 40px", textIndent: "5em", fontFamily: "Times New Roman" }}>
             This is to certify that Mr./Ms.{" "}
             <b>
               <u>{name.toUpperCase()}</u>
@@ -79,7 +86,7 @@ export default function EmploymentCert() {
             </b>{" "}
             status.
           </Typography>
-          <Typography align="justify" style={{ fontSize: "14pt", margin: "0px 0px 80px 0px", textIndent: "5em", fontFamily: "Times New Roman" }}>
+          <Typography align="justify" style={{ fontSize: "14pt", margin: "0px 40px 60px 40px", textIndent: "5em", fontFamily: "Times New Roman" }}>
             Issued this{" "}
             <b>
               <u>{moment().format("Do").toUpperCase()}</u>
@@ -103,16 +110,27 @@ export default function EmploymentCert() {
         <Grid item xs={6}></Grid>
         <Grid item xs={6}>
           <Typography>Prepared by:</Typography>
-          <Typography align="center" style={{ marginTop: "50px" }}>
-            <b>NIDA A. NABUHAY</b>
+          <Typography align="center" style={{ marginTop: "30px" }}>
+            <b>{details.prep}</b>
           </Typography>
           <Typography align="center">
-            <i>Administrative Aide II</i>
+            <i>{details.prep_position}</i>
           </Typography>
         </Grid>
         <Grid item xs={6}>
           <Typography>Reviewed and Attested by:</Typography>
-          <Typography align="center" style={{ marginTop: "50px" }}>
+          <Typography align="center" style={{ marginTop: "30px" }}>
+            <b>MA. SARINA G. ANONUEVO</b>
+          </Typography>
+          <Typography align="center">
+            <i>MGDH I (HRMO V)</i>
+          </Typography>
+        </Grid>
+        {/* spacer */}
+        <Grid item xs={6}></Grid>
+        <Grid item xs={6} style={isAbsent ? { display: "block" } : { display: "none" }}>
+          <Typography>Reviewed and Attested by:</Typography>
+          <Typography align="center" style={{ marginTop: "30px" }}>
             <b>MA. SARINA G. ANONUEVO</b>
           </Typography>
           <Typography align="center">
@@ -162,8 +180,8 @@ const DialogTitle = withStyles(styles)((props) => {
   );
 });
 
-function FinishingDetails({ open, handleClose, details, changes }) {
-  let { requestee, reason } = details;
+function FinishingDetails({ open, handleClose, details, changes, isAbsent, isAbsentChange }) {
+  let { requestee, reason, prep, prep_position } = details;
 
   return (
     <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
@@ -173,6 +191,9 @@ function FinishingDetails({ open, handleClose, details, changes }) {
       <DialogContent dividers>
         <Gtextfield id="requestee" label="Requestee" value={requestee} onChange={changes} />
         <Gtextfield id="reason" label="Reason" value={reason} onChange={changes} />
+        <Gtextfield id="prep" label="Prepared by" value={prep} onChange={changes} />
+        <Gtextfield id="prep_position" label="Position" value={prep_position} onChange={changes} />
+        <FormControlLabel control={<Checkbox checked={isAbsent} onChange={isAbsentChange} />} label="Attester is absent" />
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Save changes</Button>
