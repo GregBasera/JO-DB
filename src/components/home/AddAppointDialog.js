@@ -72,6 +72,19 @@ export default function AddAppointDialog({ handleClose, open, data, newHistory }
           <Grid item xs={12} md={4}>
             <Gtextfield type="number" size="small" label="Rate per Day" id="rate_per_day" value={newAppoint.service_history[0].rate_per_day ?? ""} onChange={handleChanges} />
           </Grid>
+          <Grid item xs={12} md={12}>
+            <Gdropdown
+              name="appointment_status"
+              label="Appointment Status"
+              value={newAppoint.service_history[0].appointment_status ?? ""}
+              onChange={handleChanges}
+              menuItems={[
+                { _id: "Job Order", value: "Job Order" },
+                { _id: "Contractual", value: "Contractual" },
+                { _id: "Locally Funded", value: "Locally Funded" },
+              ]}
+            />
+          </Grid>
           <Grid item xs={12} md={6}>
             <Gtextfield
               type="date"
@@ -108,7 +121,38 @@ export default function AddAppointDialog({ handleClose, open, data, newHistory }
             />
           </Grid>
           <Grid item xs={12} md={12}>
-            <Gtextfield size="small" label="Status / Remarks" id="status" value={newAppoint.service_history[0].status ?? ""} onChange={handleChanges} />
+            <Gdropdown
+              label="General Function"
+              menuItems={[
+                { _id: "IT Service", value: "IT Service" },
+                { _id: "Teaching Service", value: "Teaching Service" },
+                { _id: "Health and Allied Service", value: "Health and Allied Service" },
+                { _id: "Technical Service", value: "Technical Service" },
+                { _id: "Clerical Service", value: "Clerical Service" },
+                { _id: "Janitorial Service", value: "Janitorial Service" },
+                { _id: "Security Service", value: "Security Service" },
+                { _id: "Trade and Crafts / Laborer", value: "Trade and Crafts / Laborer" },
+                { _id: "Others", value: "Others" },
+              ]}
+              name="general_function"
+              value={newAppoint.service_history[0].general_function ?? ""}
+              onChange={handleChanges}
+            />
+          </Grid>
+          <Grid item xs={12} md={12}>
+            <Gdropdown
+              label="Status / Remarks"
+              menuItems={[
+                { _id: "New", value: "New" },
+                { _id: "Re-Appointed", value: "Re-Appointed" },
+                { _id: "Resigned", value: "Resigned" },
+                { _id: "Terminated", value: "Terminated" },
+                { _id: "Promoted", value: "Promoted" },
+              ]}
+              name="status"
+              value={newAppoint.service_history[0].status ?? ""}
+              onChange={handleChanges}
+            />
           </Grid>
         </Grid>
       </DialogContent>

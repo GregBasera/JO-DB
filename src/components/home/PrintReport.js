@@ -32,13 +32,25 @@ const DialogTitle = withStyles(styles)((props) => {
 });
 
 export default function PrintReport({ open, handleClose, data }) {
+  const removeInvalidDate = () => {
+    data.forEach((personnel) => {
+      console.log(
+        personnel.service_history.filter((sh) => {
+          return sh.ep_start >= "2021-04-01" && sh.ep_end <= "2021-06-31";
+        })
+      );
+      // personnel.service_history.forEach((sh) => {
+      //   console.log(sh);
+      // });
+    });
+  };
+
   return (
     <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
       <DialogTitle id="customized-dialog-title" onClose={handleClose}>
         Print Report
       </DialogTitle>
       <DialogContent dividers>
-        {/* <Alert severity="warning">This is an error alert — check it out!</Alert> */}
         <Grid container spacing={1}>
           <Grid item xs={12}>
             <Gdropdown name="office_assignment" label="Office Assignment" menuItems={[]} />
@@ -66,7 +78,7 @@ export default function PrintReport({ open, handleClose, data }) {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Save changes</Button>
+        <Button onClick={removeInvalidDate}>Save changes</Button>
       </DialogActions>
     </Dialog>
   );

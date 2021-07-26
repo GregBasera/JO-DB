@@ -68,7 +68,6 @@ export default function AddPersonelDialog({ handleClose, open, depts, append }) 
       case "birthdate":
       case "birthplace":
       case "address":
-      case "appointment_status":
         setNewPersonelData({ ...newPersonelData, [id ?? name]: value });
         break;
       case "designation":
@@ -78,6 +77,7 @@ export default function AddPersonelDialog({ handleClose, open, depts, append }) 
       case "office_assignment":
       case "status":
       case "general_function":
+      case "appointment_status":
         // service_history contains deeply nested values. idk if this way is better
         let iDontLikeThisLongWay = newPersonelData.service_history;
         iDontLikeThisLongWay[indx] = { ...iDontLikeThisLongWay[indx], [id ?? name]: id === "rate_per_day" ? parseInt(value) : value };
@@ -112,17 +112,6 @@ export default function AddPersonelDialog({ handleClose, open, depts, append }) 
         <Gtextfield id="birthdate" type="date" label="Birthdate" value={newPersonelData.birthdate} onChange={handlePersonelDataChanges} InputLabelProps={{ shrink: true }} />
         <Gtextfield id="birthplace" label="Birthplace" value={newPersonelData.birthplace} onChange={handlePersonelDataChanges} />
         <Gtextfield id="address" label="Address" value={newPersonelData.address} onChange={handlePersonelDataChanges} />
-        <Gdropdown
-          name="appointment_status"
-          label="Appointment Status"
-          value={newPersonelData.appointment_status}
-          onChange={handlePersonelDataChanges}
-          menuItems={[
-            { _id: "Job Order", value: "Job Order" },
-            { _id: "Contractual", value: "Contractual" },
-            { _id: "Locally Funded", value: "Locally Funded" },
-          ]}
-        />
 
         <Typography style={{ marginTop: "8px" }}>Service History</Typography>
         <Typography variant="caption" color="textSecondary">
@@ -159,6 +148,19 @@ function ServHisSet(props) {
         <Grid item xs={12} md={4}>
           <Gtextfield type="number" size="small" label="Rate per Day" id="rate_per_day" value={data.service_history[index].rate_per_day ?? ""} onChange={onChange} />
         </Grid>
+        <Grid item xs={12} md={12}>
+          <Gdropdown
+            name="appointment_status"
+            label="Appointment Status"
+            value={data.service_history[index].appointment_status ?? ""}
+            onChange={onChange}
+            menuItems={[
+              { _id: "Job Order", value: "Job Order" },
+              { _id: "Contractual", value: "Contractual" },
+              { _id: "Locally Funded", value: "Locally Funded" },
+            ]}
+          />
+        </Grid>
         <Grid item xs={12} md={6}>
           <Gtextfield
             type="date"
@@ -190,21 +192,6 @@ function ServHisSet(props) {
         </Grid>
         <Grid item xs={12} md={12}>
           <Gdropdown
-            label="Status / Remarks"
-            menuItems={[
-              { _id: "New", value: "New" },
-              { _id: "Re-Appointed", value: "Re-Appointed" },
-              { _id: "Resigned", value: "Resigned" },
-              { _id: "Terminated", value: "Terminated" },
-              { _id: "Promoted", value: "Promoted" },
-            ]}
-            name="status"
-            value={data.service_history[index].status ?? ""}
-            onChange={onChange}
-          />
-        </Grid>
-        <Grid item xs={12} md={12}>
-          <Gdropdown
             label="General Function"
             menuItems={[
               { _id: "IT Service", value: "IT Service" },
@@ -219,6 +206,21 @@ function ServHisSet(props) {
             ]}
             name="general_function"
             value={data.service_history[index].general_function ?? ""}
+            onChange={onChange}
+          />
+        </Grid>
+        <Grid item xs={12} md={12}>
+          <Gdropdown
+            label="Status / Remarks"
+            menuItems={[
+              { _id: "New", value: "New" },
+              { _id: "Re-Appointed", value: "Re-Appointed" },
+              { _id: "Resigned", value: "Resigned" },
+              { _id: "Terminated", value: "Terminated" },
+              { _id: "Promoted", value: "Promoted" },
+            ]}
+            name="status"
+            value={data.service_history[index].status ?? ""}
             onChange={onChange}
           />
         </Grid>

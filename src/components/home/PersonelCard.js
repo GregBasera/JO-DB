@@ -13,7 +13,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 function statusNode(value) {
   // separated this for cleaner render function
   switch (value.toLowerCase()) {
-    case "active":
+    case "new":
+    case "re-appointed":
       return (
         <b title="Status" style={{ color: "green" }}>
           {value}
@@ -23,6 +24,12 @@ function statusNode(value) {
     case "terminated":
       return (
         <b title="Status" style={{ color: "red" }}>
+          {value}
+        </b>
+      );
+    case "promoted":
+      return (
+        <b title="Status" style={{ color: "orange" }}>
           {value}
         </b>
       );
@@ -51,10 +58,6 @@ export default function PersonelCard({ data, deleteOne, newHistory }) {
                 </Typography>
               }
             />
-          </ListItem>
-          <Divider component="li" />
-          <ListItem key={data._id + "sex"} alignItems="flex-start" disableGutters>
-            <ListItemText primary={<Typography title="Sex">{data.sex}</Typography>} />
           </ListItem>
           <Divider component="li" />
           <ListItem key={data._id + "designation"} alignItems="flex-start" disableGutters>

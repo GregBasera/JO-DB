@@ -39,13 +39,23 @@ export default function EditAppointsDialog({ handleClose, open, data }) {
     return () => {};
   }, []);
 
-  const [altered, setAltered] = useState({ name: data.name, sex: data.sex, service_history: data.service_history });
+  const [altered, setAltered] = useState({
+    name: data.name,
+    sex: data.sex,
+    birthdate: data.birthdate,
+    birthplace: data.birthplace,
+    address: data.address,
+    service_history: data.service_history,
+  });
   const handleAlterations = (e, indx) => {
     let { name, id, value } = e.target;
 
     switch (id ?? name) {
       case "name":
       case "sex":
+      case "birthdate":
+      case "birthplace":
+      case "address":
         setAltered({ ...altered, [id ?? name]: value });
         break;
       case "designation":
@@ -54,6 +64,8 @@ export default function EditAppointsDialog({ handleClose, open, data }) {
       case "ep_end":
       case "office_assignment":
       case "status":
+      case "general_function":
+      case "appointment_status":
         // service_history contains deeply nested values. idk if this way is better
         let iDontLikeThisLongWay = altered.service_history;
         iDontLikeThisLongWay[indx] = { ...iDontLikeThisLongWay[indx], [id ?? name]: id === "rate_per_day" ? parseInt(value) : value };
@@ -86,6 +98,9 @@ export default function EditAppointsDialog({ handleClose, open, data }) {
             { _id: "Female", value: "Female" },
           ]}
         />
+        <Gtextfield id="birthdate" type="date" label="Birthdate" value={altered.birthdate} onChange={handleAlterations} InputLabelProps={{ shrink: true }} />
+        <Gtextfield id="birthplace" label="Birthplace" value={altered.birthplace} onChange={handleAlterations} />
+        <Gtextfield id="address" label="Address" value={altered.address} onChange={handleAlterations} />
 
         <Typography style={{ marginTop: "8px" }}>Service History</Typography>
         <Typography variant="caption" color="textSecondary">
@@ -114,6 +129,19 @@ function ServHisSet(props) {
         </Grid>
         <Grid item xs={12} md={4}>
           <Gtextfield type="number" size="small" label="Rate per Day" id="rate_per_day" value={data.service_history[index].rate_per_day ?? ""} onChange={onChange} />
+        </Grid>
+        <Grid item xs={12} md={12}>
+          <Gdropdown
+            name="appointment_status"
+            label="Appointment Status"
+            value={data.service_history[index].appointment_status ?? ""}
+            onChange={onChange}
+            menuItems={[
+              { _id: "Job Order", value: "Job Order" },
+              { _id: "Contractual", value: "Contractual" },
+              { _id: "Locally Funded", value: "Locally Funded" },
+            ]}
+          />
         </Grid>
         <Grid item xs={12} md={6}>
           <Gtextfield
@@ -145,7 +173,38 @@ function ServHisSet(props) {
           <Gdropdown label="Office Assignment" menuItems={depts} name="office_assignment" value={data.service_history[index].office_assignment ?? ""} onChange={onChange} />
         </Grid>
         <Grid item xs={12} md={12}>
-          <Gtextfield size="small" label="Status / Remarks" id="status" value={data.service_history[index].status ?? ""} onChange={onChange} />
+          <Gdropdown
+            label="General Function"
+            menuItems={[
+              { _id: "IT Service", value: "IT Service" },
+              { _id: "Teaching Service", value: "Teaching Service" },
+              { _id: "Health and Allied Service", value: "Health and Allied Service" },
+              { _id: "Technical Service", value: "Technical Service" },
+              { _id: "Clerical Service", value: "Clerical Service" },
+              { _id: "Janitorial Service", value: "Janitorial Service" },
+              { _id: "Security Service", value: "Security Service" },
+              { _id: "Trade and Crafts / Laborer", value: "Trade and Crafts / Laborer" },
+              { _id: "Others", value: "Others" },
+            ]}
+            name="general_function"
+            value={data.service_history[index].general_function ?? ""}
+            onChange={onChange}
+          />
+        </Grid>
+        <Grid item xs={12} md={12}>
+          <Gdropdown
+            label="Status / Remarks"
+            menuItems={[
+              { _id: "New", value: "New" },
+              { _id: "Re-Appointed", value: "Re-Appointed" },
+              { _id: "Resigned", value: "Resigned" },
+              { _id: "Terminated", value: "Terminated" },
+              { _id: "Promoted", value: "Promoted" },
+            ]}
+            name="status"
+            value={data.service_history[index].status ?? ""}
+            onChange={onChange}
+          />
         </Grid>
       </Grid>
     </Paper>

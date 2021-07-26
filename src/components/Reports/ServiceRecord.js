@@ -89,62 +89,62 @@ export default function ServiceRecord() {
         </Grid>
 
         <Grid item xs={12}>
-          <TableContainer component={Paper} elevation={0}>
-            <Table size="small">
-              <TableHead>
-                <TableRow>
-                  <TableCell align="center" style={{ color: "firebrick" }} colSpan={2}>
-                    SERVICE
-                  </TableCell>
-                  <TableCell align="center" style={{ color: "firebrick" }} colSpan={3}>
-                    RECORD OF APPOINTMENT
-                  </TableCell>
-                  <TableCell align="center" style={{ color: "firebrick" }} colSpan={1}>
-                    OFFICE
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="center" style={{ color: "firebrick" }}>
-                    From
-                  </TableCell>
-                  <TableCell align="center" style={{ color: "firebrick" }}>
-                    To
-                  </TableCell>
-                  <TableCell align="center" style={{ color: "firebrick" }}>
-                    Designation
-                  </TableCell>
-                  <TableCell align="center" style={{ color: "firebrick" }}>
-                    Status
-                  </TableCell>
-                  <TableCell align="center" style={{ color: "firebrick" }}>
-                    Salary
-                  </TableCell>
-                  <TableCell align="center" style={{ color: "firebrick" }}>
-                    Station of Assignment
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {service_history.map((q, index) => {
-                  return (
-                    <TableRow key={index}>
-                      <TableCell align="center">{moment(q.ep_start).format("DD-MMM-YYYY")}</TableCell>
-                      <TableCell align="center">{moment(q.ep_end).format("DD-MMM-YYYY")}</TableCell>
-                      <TableCell align="center">{q.designation}</TableCell>
-                      <TableCell align="center">{status}</TableCell>
-                      <TableCell align="center">{`${q.rate_per_day}.00/day`}</TableCell>
-                      <TableCell align="center" style={{ maxWidth: "20vw" }}>
-                        {q.office_assignment}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
+          {/* <TableContainer component={Paper} elevation={0}> */}
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell align="center" style={{ color: "firebrick" }} colSpan={2}>
+                  SERVICE
+                </TableCell>
+                <TableCell align="center" style={{ color: "firebrick" }} colSpan={3}>
+                  RECORD OF APPOINTMENT
+                </TableCell>
+                <TableCell align="center" style={{ color: "firebrick" }} colSpan={1}>
+                  OFFICE
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="center" style={{ color: "firebrick" }}>
+                  From
+                </TableCell>
+                <TableCell align="center" style={{ color: "firebrick" }}>
+                  To
+                </TableCell>
+                <TableCell align="center" style={{ color: "firebrick" }}>
+                  Designation
+                </TableCell>
+                <TableCell align="center" style={{ color: "firebrick" }}>
+                  Status
+                </TableCell>
+                <TableCell align="center" style={{ color: "firebrick" }}>
+                  Salary
+                </TableCell>
+                <TableCell align="center" style={{ color: "firebrick" }}>
+                  Station of Assignment
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {service_history.map((q, index) => {
+                return (
+                  <TableRow key={index}>
+                    <TableCell align="center">{moment(q.ep_start).format("DD-MMM-YYYY")}</TableCell>
+                    <TableCell align="center">{moment(q.ep_end).format("DD-MMM-YYYY")}</TableCell>
+                    <TableCell align="center">{q.designation}</TableCell>
+                    <TableCell align="center">{status}</TableCell>
+                    <TableCell align="center">{`${q.rate_per_day}.00/day`}</TableCell>
+                    <TableCell align="center" style={{ maxWidth: "20vw" }}>
+                      {q.office_assignment}
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+          {/* </TableContainer> */}
         </Grid>
 
-        <Grid item xs={6} style={{ marginTop: "30px" }}>
+        <Grid item xs={6} style={{ marginTop: "10vh" }}>
           <Typography>Prepared by:</Typography>
           <Typography align="center" style={{ marginTop: "50px" }}>
             <b>NIDA A. NABUHAY</b>
@@ -153,7 +153,7 @@ export default function ServiceRecord() {
             <i>Administrative Aide II</i>
           </Typography>
         </Grid>
-        <Grid item xs={6} style={{ marginTop: "30px" }}>
+        <Grid item xs={6} style={{ marginTop: "10vh" }}>
           <Typography>Reviewed and Attested by:</Typography>
           <Typography align="center" style={{ marginTop: "50px" }}>
             <b>MA. SARINA G. ANONUEVO</b>

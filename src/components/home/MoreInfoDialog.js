@@ -45,7 +45,6 @@ export default function MoreInfoDialog({ handleClose, open, data }) {
         <Gtextfield readOnly label="Birthdate" value={data.birthdate} />
         <Gtextfield readOnly label="Birthplace" value={data.birthplace} />
         <Gtextfield readOnly label="Address" value={data.address} />
-        <Gtextfield readOnly label="Appointment Status" value={data.appointment_status} />
 
         <Typography style={{ marginTop: "8px" }}>Service History</Typography>
         {data.service_history.map((elem, index) => (
@@ -61,10 +60,10 @@ export default function MoreInfoDialog({ handleClose, open, data }) {
             name: data.name,
             office_assignment: data.service_history[0].office_assignment,
             designation: data.service_history[0].designation,
-            status: data.appointment_status,
+            status: data.service_history[0].appointment_status,
           })}`}
           target="_blank">
-          get employment cert
+          EMPLOYMENT CERT
         </Button>
         <Button
           variant="contained"
@@ -74,11 +73,11 @@ export default function MoreInfoDialog({ handleClose, open, data }) {
             birthdate: data.birthdate,
             birthplace: data.birthplace,
             address: data.address,
-            status: data.appointment_status,
+            status: data.service_history[0].appointment_status,
             service_history: data.service_history,
           })}`}
           target="_blank">
-          get service record
+          SERVICE RECORD
         </Button>
         <Button variant="contained" disableElevation onClick={handleClose}>
           Close
@@ -89,7 +88,7 @@ export default function MoreInfoDialog({ handleClose, open, data }) {
 }
 
 function ServHisSet({ data }) {
-  let { designation, rate_per_day, ep_start, ep_end, office_assignment, status, general_function } = data;
+  let { designation, rate_per_day, ep_start, ep_end, office_assignment, status, general_function, appointment_status } = data;
 
   return (
     <Paper variant="outlined" style={{ padding: "8px", paddingLeft: "16px", marginBottom: "8px", borderColor: "black" }}>
@@ -99,6 +98,9 @@ function ServHisSet({ data }) {
         </Grid>
         <Grid item xs={12} md={4}>
           <Gtextfield readOnly label="Rate per Day" id="rate_per_day" value={rate_per_day ?? ""} />
+        </Grid>
+        <Grid item xs={12} md={12}>
+          <Gtextfield readOnly label="Appointment Status" value={appointment_status} />
         </Grid>
         <Grid item xs={12} md={6}>
           <Gtextfield readOnly label="Employment Period: Start" id="ep_start" value={moment(ep_start).format("MMM DD, YYYY") ?? ""} />
@@ -110,10 +112,10 @@ function ServHisSet({ data }) {
           <Gtextfield readOnly label="Office Assignment" id="office_assignment" value={office_assignment ?? ""} />
         </Grid>
         <Grid item xs={12} md={12}>
-          <Gtextfield readOnly label="Status / Remarks" id="status" value={status ?? ""} />
+          <Gtextfield readOnly label="General Function" id="general_function" value={general_function ?? ""} />
         </Grid>
         <Grid item xs={12} md={12}>
-          <Gtextfield readOnly label="General Function" id="general_function" value={general_function ?? ""} />
+          <Gtextfield readOnly label="Status / Remarks" id="status" value={status ?? ""} />
         </Grid>
       </Grid>
     </Paper>
