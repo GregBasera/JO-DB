@@ -11,7 +11,7 @@ import PrintReport from "./PrintReport";
 export default function TopControls({ append, setData, data }) {
   const [addPersonelDialog, setAddPersonelDialog] = useState(false);
   const [addDepartmentDialog, setAddDepartmentDialog] = useState(false);
-  const [print, setPrint] = useState(false);
+  // const [print, setPrint] = useState(false);
   const [depts, setDepts] = useState([]);
   useEffect(() => {
     getOffices(setDepts);
@@ -32,6 +32,10 @@ export default function TopControls({ append, setData, data }) {
     setSearchTerm(e.target.value);
   };
 
+  const printAppReport = () => {
+    localStorage.setItem("forPrinting", JSON.stringify(data));
+  };
+
   return (
     <React.Fragment>
       <Grid container spacing={1} style={{ margin: "0px", width: "100vw" }}>
@@ -45,7 +49,7 @@ export default function TopControls({ append, setData, data }) {
           <Box display="flex" flexDirection="row-reverse">
             <Gbutton icon={<AddIcon />} size="medium" text="Personel" color="secondary" onClick={() => setAddPersonelDialog(true)} />
             <Gbutton icon={<AddIcon />} size="medium" text="Office" onClick={() => setAddDepartmentDialog(true)} />
-            <IconButton onClick={() => setPrint(true)}>
+            <IconButton href={`${document.location.origin}/JOappreport`} target="_blank" onClick={printAppReport}>
               <PrintIcon />
             </IconButton>
           </Box>
@@ -54,7 +58,7 @@ export default function TopControls({ append, setData, data }) {
 
       <AddPersonelDialog open={addPersonelDialog} handleClose={() => setAddPersonelDialog(false)} depts={depts} append={append} />
       <AddDepartmentDialog open={addDepartmentDialog} handleClose={() => setAddDepartmentDialog(false)} />
-      <PrintReport open={print} handleClose={() => setPrint(false)} data={data} />
+      {/* <PrintReport open={print} handleClose={() => setPrint(false)} data={data} /> */}
     </React.Fragment>
   );
 }

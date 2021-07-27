@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { Grid, Typography, Table, TableHead, TableRow, TableBody } from "@material-ui/core";
+import { Grid, Typography, Table, TableHead, TableRow, TableBody, TableContainer, Paper } from "@material-ui/core";
 import MuiTableCell from "@material-ui/core/TableCell";
 import qs from "qs";
 import moment from "moment";
@@ -88,7 +88,7 @@ export default function ServiceRecord() {
           </Typography>
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={12} style={{ padding: "0px 10px 0px 10px" }}>
           {/* <TableContainer component={Paper} elevation={0}> */}
           <Table size="small">
             <TableHead>
@@ -146,7 +146,7 @@ export default function ServiceRecord() {
 
         <Grid item xs={6} style={{ marginTop: "10vh" }}>
           <Typography>Prepared by:</Typography>
-          <Typography align="center" style={{ marginTop: "50px" }}>
+          <Typography align="center" style={{ marginTop: "30px" }}>
             <b>NIDA A. NABUHAY</b>
           </Typography>
           <Typography align="center">
@@ -155,11 +155,23 @@ export default function ServiceRecord() {
         </Grid>
         <Grid item xs={6} style={{ marginTop: "10vh" }}>
           <Typography>Reviewed and Attested by:</Typography>
-          <Typography align="center" style={{ marginTop: "50px" }}>
+          <Typography align="center" style={{ marginTop: "30px" }}>
             <b>MA. SARINA G. ANONUEVO</b>
           </Typography>
           <Typography align="center">
             <i>MGDH I (HRMO V)</i>
+          </Typography>
+        </Grid>
+        <Grid item xs={6}>
+          {/* spacer */}
+        </Grid>
+        <Grid item xs={6}>
+          <Typography>for and In the Absence of:</Typography>
+          <Typography align="center" style={{ marginTop: "30px" }}>
+            <b>ANNA LOUELLA U. VILLANUEVA</b>
+          </Typography>
+          <Typography align="center">
+            <i>Administrative Officer V (HRMO III)</i>
           </Typography>
         </Grid>
       </Grid>

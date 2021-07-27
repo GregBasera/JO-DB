@@ -106,8 +106,9 @@ export default function EmploymentCert() {
             purposes.
           </Typography>
         </Grid>
-        {/* spacer */}
-        <Grid item xs={6}></Grid>
+        <Grid item xs={6}>
+          {/* spacer */}
+        </Grid>
         <Grid item xs={6}>
           <Typography>Prepared by:</Typography>
           <Typography align="center" style={{ marginTop: "30px" }}>
@@ -126,19 +127,21 @@ export default function EmploymentCert() {
             <i>MGDH I (HRMO V)</i>
           </Typography>
         </Grid>
-        {/* spacer */}
-        <Grid item xs={6}></Grid>
+        <Grid item xs={6}>
+          {/* spacer */}
+        </Grid>
         <Grid item xs={6} style={isAbsent ? { display: "block" } : { display: "none" }}>
-          <Typography>Reviewed and Attested by:</Typography>
+          <Typography>for and In the Absence of:</Typography>
           <Typography align="center" style={{ marginTop: "30px" }}>
-            <b>MA. SARINA G. ANONUEVO</b>
+            <b>ANNA LOUELLA U. VILLANUEVA</b>
           </Typography>
           <Typography align="center">
-            <i>MGDH I (HRMO V)</i>
+            <i>Administrative Officer V (HRMO III)</i>
           </Typography>
         </Grid>
-        {/* spacer */}
-        <Grid item xs={6}></Grid>
+        <Grid item xs={6}>
+          {/* spacer */}
+        </Grid>
 
         <Grid item xs={12} style={{ marginTop: "70px" }}>
           <Typography align="right" color="textSecondary" style={{ fontSize: "11pt" }}>

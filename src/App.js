@@ -5,6 +5,7 @@ import Home from "./components/home/Home";
 import Auth from "./components/auth/Auth";
 import EmploymentCert from "./components/Reports/EmploymentCert";
 import ServiceRecord from "./components/Reports/ServiceRecord";
+import JOappreport from "./components/Reports/JOappreport";
 import NotFound from "./components/shared/NotFound";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path="/home" exact component={Home} />
         <Route path="/employcert" exact component={EmploymentCert} />
         <Route path="/servrecord" exact component={ServiceRecord} />
+        <Route path="/joappreport" exact component={JOappreport} />
         {/* <Route path="/admin" exact component={Admin} /> */}
         <Route component={NotFound} /> {/* 404 */}
       </Switch>

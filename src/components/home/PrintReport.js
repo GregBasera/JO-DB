@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Dialog, DialogContent, Typography, DialogActions, Button, IconButton, Grid } from "@material-ui/core";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
@@ -32,17 +32,20 @@ const DialogTitle = withStyles(styles)((props) => {
 });
 
 export default function PrintReport({ open, handleClose, data }) {
+  // const [cleanData, setCleanData] = useState();
   const removeInvalidDate = () => {
-    data.forEach((personnel) => {
-      console.log(
-        personnel.service_history.filter((sh) => {
-          return sh.ep_start >= "2021-04-01" && sh.ep_end <= "2021-06-31";
-        })
-      );
-      // personnel.service_history.forEach((sh) => {
-      //   console.log(sh);
-      // });
+    let cleaning = data;
+    cleaning.forEach((personnel, index) => {
+      cleaning[index].service_history = personnel.service_history.filter((sh) => {
+        return sh.ep_start >= "2021-07-01" && sh.ep_end <= "2021-09-31";
+      });
     });
+    // console.log(
+    cleaning = cleaning.filter((p) => {
+      return p.service_history.length !== 0;
+    });
+    // );
+    console.log(cleaning);
   };
 
   return (
