@@ -6,7 +6,6 @@ import AddDepartmentDialog from "./AddDepartmentDialog";
 import { getOffices, search, filter } from "./APIcalls";
 import AddIcon from "@material-ui/icons/Add";
 import PrintIcon from "@material-ui/icons/Print";
-import PrintReport from "./PrintReport";
 
 export default function TopControls({ append, setData, data }) {
   const [addPersonelDialog, setAddPersonelDialog] = useState(false);

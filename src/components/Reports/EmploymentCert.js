@@ -130,7 +130,7 @@ export default function EmploymentCert() {
         <Grid item xs={6}>
           {/* spacer */}
         </Grid>
-        <Grid item xs={6} style={isAbsent ? { display: "block" } : { display: "none" }}>
+        <Grid item xs={6} style={isAbsent ? { display: "block", marginTop: "20px" } : { display: "none" }}>
           <Typography>for and In the Absence of:</Typography>
           <Typography align="center" style={{ marginTop: "30px" }}>
             <b>ANNA LOUELLA U. VILLANUEVA</b>

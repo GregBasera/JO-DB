@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { Grid, Typography, Table, TableHead, TableRow, TableBody, TableContainer, Paper } from "@material-ui/core";
+import { Grid, Typography, Table, TableHead, TableRow, TableBody } from "@material-ui/core";
 import MuiTableCell from "@material-ui/core/TableCell";
 import qs from "qs";
 import moment from "moment";
@@ -165,8 +165,8 @@ export default function ServiceRecord() {
         <Grid item xs={6}>
           {/* spacer */}
         </Grid>
-        <Grid item xs={6}>
-          <Typography>for and In the Absence of:</Typography>
+        <Grid item xs={6} style={{ marginTop: "10vh" }}>
+          <Typography>For and In the Absence of:</Typography>
           <Typography align="center" style={{ marginTop: "30px" }}>
             <b>ANNA LOUELLA U. VILLANUEVA</b>
           </Typography>
