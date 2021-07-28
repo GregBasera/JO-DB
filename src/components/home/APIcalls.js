@@ -1,6 +1,6 @@
 import Axios from "axios";
 import qs from "qs";
-import { JOs, Departments } from "../shared/endpoints";
+import { JOs, Departments, FundSources } from "../shared/endpoints";
 import headers from "../shared/headers";
 
 function initialize(callback) {
@@ -14,9 +14,21 @@ function initialize(callback) {
 }
 
 function getOffices(callback) {
-  Axios.get(Departments, headers())
+  Axios.get(`${Departments}/count`, headers())
     .then((res) => {
-      callback(res.data);
+      // callback(res.data);
+      if (localStorage.getItem("offices") && JSON.parse(localStorage.getItem("offices")).length === res.data) {
+        callback(JSON.parse(localStorage.getItem("offices")));
+      } else {
+        Axios.get(Departments, headers())
+          .then((res) => {
+            localStorage.setItem("offices", JSON.stringify(res.data));
+            callback(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     })
     .catch((err) => {
       console.log(err);
@@ -101,4 +113,14 @@ function editExisting(id, data, callback) {
     });
 }
 
-export { initialize, getOffices, newPersonel, search, filter, addDept, deletePersonel, pushNewAppoint, editExisting };
+function getFundSources(callback) {
+  Axios.get(FundSources, headers())
+    .then((res) => {
+      callback(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+export { initialize, getOffices, newPersonel, search, filter, addDept, deletePersonel, pushNewAppoint, editExisting, getFundSources };

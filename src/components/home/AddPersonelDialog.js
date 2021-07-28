@@ -35,7 +35,7 @@ const DialogTitle = withStyles(styles)((props) => {
   );
 });
 
-export default function AddPersonelDialog({ handleClose, open, depts, append }) {
+export default function AddPersonelDialog({ handleClose, open, depts, fundSources, append }) {
   const [servHisArray, setServHisArray] = useState(["set"]); // this state is only used as a reference to render elements
   const addNewSet = () => {
     setNewPersonelData({ ...newPersonelData, service_history: [...newPersonelData.service_history, []] });
@@ -119,7 +119,7 @@ export default function AddPersonelDialog({ handleClose, open, depts, append }) 
         </Typography>
 
         {servHisArray.map((node, index) => (
-          <div key={index}>{<ServHisSet depts={depts} data={newPersonelData} index={index} onChange={(e) => handlePersonelDataChanges(e, index)} />}</div>
+          <div key={index}>{<ServHisSet depts={depts} fundSources={fundSources} data={newPersonelData} index={index} onChange={(e) => handlePersonelDataChanges(e, index)} />}</div>
         ))}
 
         <IconButton size="small" onClick={addNewSet}>
@@ -137,7 +137,7 @@ export default function AddPersonelDialog({ handleClose, open, depts, append }) 
 }
 
 function ServHisSet(props) {
-  let { depts, data, index, onChange } = props;
+  let { depts, fundSources, data, index, onChange } = props;
 
   return (
     <Paper variant="outlined" style={{ padding: "8px", paddingLeft: "16px", marginBottom: "8px", borderColor: "black" }}>
@@ -201,7 +201,9 @@ function ServHisSet(props) {
               { _id: "Clerical Service", value: "Clerical Service" },
               { _id: "Janitorial Service", value: "Janitorial Service" },
               { _id: "Security Service", value: "Security Service" },
-              { _id: "Trade and Crafts / Laborer", value: "Trade and Crafts / Laborer" },
+              { _id: "Trade and Crafts/Laborer", value: "Trade and Crafts/Laborer" },
+              { _id: "Driving/Support Service", value: "Driving/Support Service" },
+              { _id: "Janitorial/Messengerial", value: "Janitorial/Messengerial" },
               { _id: "Others", value: "Others" },
             ]}
             name="general_function"
@@ -223,6 +225,9 @@ function ServHisSet(props) {
             value={data.service_history[index].status ?? ""}
             onChange={onChange}
           />
+        </Grid>
+        <Grid item xs={12} md={12}>
+          <Gdropdown label="Funding Source" menuItems={fundSources} name="funding_source" value={""} onChange={null} />
         </Grid>
       </Grid>
     </Paper>

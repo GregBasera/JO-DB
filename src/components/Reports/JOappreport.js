@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { Grid, Typography, Table, TableHead, TableRow, TableBody } from "@material-ui/core";
+import { Grid, Typography, Table, TableHead, TableRow, TableBody, Dialog, DialogContent, DialogActions, Button } from "@material-ui/core";
+import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import tkLogo from "../../logo lgu new 12x12 inches 300px.png";
 import MuiTableCell from "@material-ui/core/TableCell";
+import moment from "moment";
+import { Gtextfield } from "../shared/FormElements";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
 
 const TableCell = withStyles({
   root: {
@@ -16,10 +21,50 @@ const TableCell = withStyles({
 })(MuiTableCell);
 
 export default function JOappreport() {
+  const [open, setOpen] = useState(true);
+  const [dateRange, setDateRange] = useState({
+    from: "",
+    to: "",
+  });
+  const dateRangeChanges = (e) => {
+    setDateRange({ ...dateRange, [e.target.id]: e.target.value });
+  };
+  const [data, setData] = useState(null);
+  useEffect(() => {
+    let temp = JSON.parse(localStorage.getItem("forPrinting"));
+    temp.forEach((personnel, index) => {
+      temp[index].service_history = personnel.service_history.filter((sh) => {
+        // return sh.ep_start >= "2021-07-01" && sh.ep_end <= "2021-09-31";
+        return sh.ep_start >= dateRange.from && sh.ep_end <= dateRange.to;
+      });
+    });
+    temp = temp.filter((p) => {
+      return p.service_history.length !== 0;
+    });
+    // console.log(temp);
+    setData(temp);
+  }, [dateRange]);
+
+  const quarterMaker = (num) => {
+    switch (num) {
+      case 1:
+        return "FIRST";
+      case 2:
+        return "SECOND";
+      case 3:
+        return "THIRD";
+      case 4:
+        return "FOURTH";
+      default:
+        return "ERROR";
+    }
+  };
+
   return (
     <React.Fragment>
+      <FinishingDetails open={open} handleClose={() => setOpen(false)} dateRange={dateRange} changes={dateRangeChanges} />
       <Grid container spacing={0} style={{ borderBottom: "solid 2px black" }}>
-        <Grid item xs={10}>
+        <Grid item xs={11}>
           <Typography style={{ fontSize: "10pt" }}>Republic of the Philippines</Typography>
           <Typography style={{ fontSize: "10pt", marginTop: "-5px" }}>Province of Quezon</Typography>
           <Typography style={{ fontSize: "10pt", marginTop: "-5px" }}>
@@ -36,7 +81,7 @@ export default function JOappreport() {
             <i>Email Address: hrmo.lgutagkawayan@gmail.com</i>
           </Typography>
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={1}>
           <img src={tkLogo} alt="Tagkawayan Logo" style={{ height: "100px" }} />
         </Grid>
       </Grid>
@@ -44,10 +89,10 @@ export default function JOappreport() {
       <Grid container spacing={0}>
         <Grid item xs={12}>
           <Typography align="center" variant="h6" style={{ margin: "20px 0px 0px 0px" }}>
-            <b>{"JOB ORDER APPOINTMENT [year]"}</b>
+            <b>{`JOB ORDER APPOINTMENT ${moment(dateRange.to).format("YYYY")}`}</b>
           </Typography>
           <Typography align="center" style={{ fontSize: "13pt", color: "red", margin: "0px 0px 20px 0px" }}>
-            <b>{"[???] QUARTER (month - month)"}</b>
+            <b>{`${quarterMaker(moment(dateRange.from).quarter())} QUARTER (${moment(dateRange.from).format("MMMM")} - ${moment(dateRange.to).format("MMMM")})`}</b>
           </Typography>
         </Grid>
       </Grid>
@@ -94,23 +139,72 @@ export default function JOappreport() {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow>
-              <TableCell align="center">1</TableCell>
-              <TableCell align="center">???</TableCell>
-              <TableCell align="center">???</TableCell>
-              <TableCell align="center">???</TableCell>
-              <TableCell align="center">???</TableCell>
-              <TableCell align="center">???</TableCell>
-              <TableCell align="center">???</TableCell>
-              <TableCell align="center">Gen. Fund</TableCell>
-              <TableCell align="center">???</TableCell>
-              <TableCell align="center">???</TableCell>
-              <TableCell align="center">???</TableCell>
-            </TableRow>
+            {(data ?? []).map((q, index) => {
+              return (
+                <TableRow key={q._id}>
+                  <TableCell align="center">{index + 1}</TableCell>
+                  <TableCell align="left">{q.name}</TableCell>
+                  <TableCell align="center">{q.service_history[0].designation}</TableCell>
+                  <TableCell align="center">{q.sex.substring(0, 1)}</TableCell>
+                  <TableCell align="center">{`${q.service_history[0].rate_per_day}.00`}</TableCell>
+                  <TableCell align="center">{moment(q.service_history[0].ep_start).format("D-MMM-YYYY")}</TableCell>
+                  <TableCell align="center">{moment(q.service_history[0].ep_end).format("D-MMM-YYYY")}</TableCell>
+                  <TableCell align="center">Gen. Fund</TableCell>
+                  <TableCell align="center">{q.service_history[0].office_assignment}</TableCell>
+                  <TableCell align="center">{q.service_history[0].status}</TableCell>
+                  <TableCell align="center">{q.service_history[0].general_function}</TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
         {/* </TableContainer> */}
       </Grid>
     </React.Fragment>
+  );
+}
+
+const styles = (theme) => ({
+  root: {
+    margin: 0,
+    padding: theme.spacing(2),
+  },
+  closeButton: {
+    position: "absolute",
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.grey[500],
+  },
+});
+const DialogTitle = withStyles(styles)((props) => {
+  const { children, classes, onClose, ...other } = props;
+  return (
+    <MuiDialogTitle disableTypography className={classes.root} {...other}>
+      <Typography variant="h6">{children}</Typography>
+      {onClose ? (
+        <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </MuiDialogTitle>
+  );
+});
+
+function FinishingDetails({ open, handleClose, dateRange, changes }) {
+  let { from, to } = dateRange;
+
+  return (
+    <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+      <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+        Set Date Ranges
+      </DialogTitle>
+      <DialogContent dividers>
+        <Gtextfield type="date" id="from" label="From" value={from} onChange={changes} InputLabelProps={{ shrink: true }} />
+        <Gtextfield type="date" id="to" label="To" value={to} onChange={changes} InputLabelProps={{ shrink: true }} />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Save changes</Button>
+      </DialogActions>
+    </Dialog>
   );
 }

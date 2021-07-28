@@ -3,7 +3,7 @@ import { Grid, Box, IconButton } from "@material-ui/core";
 import { Gtextfield, Gdropdown, Gbutton } from "../shared/FormElements";
 import AddPersonelDialog from "./AddPersonelDialog";
 import AddDepartmentDialog from "./AddDepartmentDialog";
-import { getOffices, search, filter } from "./APIcalls";
+import { getOffices, getFundSources, search, filter } from "./APIcalls";
 import AddIcon from "@material-ui/icons/Add";
 import PrintIcon from "@material-ui/icons/Print";
 
@@ -12,8 +12,10 @@ export default function TopControls({ append, setData, data }) {
   const [addDepartmentDialog, setAddDepartmentDialog] = useState(false);
   // const [print, setPrint] = useState(false);
   const [depts, setDepts] = useState([]);
+  const [fundSources, setFundSources] = useState([]);
   useEffect(() => {
     getOffices(setDepts);
+    getFundSources(setFundSources);
     return () => {};
   }, []);
 
@@ -55,7 +57,7 @@ export default function TopControls({ append, setData, data }) {
         </Grid>
       </Grid>
 
-      <AddPersonelDialog open={addPersonelDialog} handleClose={() => setAddPersonelDialog(false)} depts={depts} append={append} />
+      <AddPersonelDialog open={addPersonelDialog} handleClose={() => setAddPersonelDialog(false)} depts={depts} fundSources={fundSources} append={append} />
       <AddDepartmentDialog open={addDepartmentDialog} handleClose={() => setAddDepartmentDialog(false)} />
       {/* <PrintReport open={print} handleClose={() => setPrint(false)} data={data} /> */}
     </React.Fragment>
