@@ -114,9 +114,21 @@ function editExisting(id, data, callback) {
 }
 
 function getFundSources(callback) {
-  Axios.get(FundSources, headers())
+  Axios.get(`${FundSources}/count`, headers())
     .then((res) => {
-      callback(res.data);
+      // callback(res.data);
+      if (localStorage.getItem("funding") && JSON.parse(localStorage.getItem("funding")).length === res.data) {
+        callback(JSON.parse(localStorage.getItem("funding")));
+      } else {
+        Axios.get(FundSources, headers())
+          .then((res) => {
+            localStorage.setItem("funding", JSON.stringify(res.data));
+            callback(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     })
     .catch((err) => {
       console.log(err);

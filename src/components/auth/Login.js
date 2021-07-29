@@ -25,7 +25,7 @@ export default function Login() {
       <Gtextfield id="identifier" type="text" label="Username or E-mail" value={loginData.identifier} onChange={handleChange} />
       <Gtextfield id="password" type="password" label="Password" value={loginData.password} onChange={handleChange} />
 
-      <Button onClick={() => LoginLogic(loginData, history, onSubmit)} variant="contained" fullWidth color="primary" style={{ marginTop: "16px" }}>
+      <Button disableFocusRipple onClick={() => LoginLogic(loginData, history, onSubmit)} variant="contained" fullWidth color="primary" style={{ marginTop: "16px" }}>
         log-in
       </Button>
 

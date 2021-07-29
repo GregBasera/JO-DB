@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Button, Dialog, DialogContent, Typography, DialogActions, IconButton, Grid } from "@material-ui/core";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
-import { getOffices, pushNewAppoint } from "./APIcalls";
+import { getOffices, getFundSources, pushNewAppoint } from "./APIcalls";
 import { Gtextfield, Gdropdown } from "../shared/FormElements";
 import CloseIcon from "@material-ui/icons/Close";
 
@@ -34,8 +34,10 @@ const DialogTitle = withStyles(styles)((props) => {
 
 export default function AddAppointDialog({ handleClose, open, data, newHistory }) {
   const [offices, setOffices] = useState(null);
+  const [funding, setFunding] = useState(null);
   useEffect(() => {
     getOffices(setOffices);
+    getFundSources(setFunding);
     return () => {};
   }, []);
 
@@ -153,6 +155,9 @@ export default function AddAppointDialog({ handleClose, open, data, newHistory }
               value={newAppoint.service_history[0].status ?? ""}
               onChange={handleChanges}
             />
+          </Grid>
+          <Grid item xs={12} md={12}>
+            <Gdropdown label="Funding Source" menuItems={funding} name="funding_source" value={newAppoint.service_history[0].funding_source ?? ""} onChange={handleChanges} />
           </Grid>
         </Grid>
       </DialogContent>

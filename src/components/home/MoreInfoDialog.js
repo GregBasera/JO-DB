@@ -88,7 +88,7 @@ export default function MoreInfoDialog({ handleClose, open, data }) {
 }
 
 function ServHisSet({ data }) {
-  let { designation, rate_per_day, ep_start, ep_end, office_assignment, status, general_function, appointment_status } = data;
+  let { designation, rate_per_day, ep_start, ep_end, office_assignment, status, general_function, appointment_status, funding_source } = data;
 
   return (
     <Paper variant="outlined" style={{ padding: "8px", paddingLeft: "16px", marginBottom: "8px", borderColor: "black" }}>
@@ -116,6 +116,9 @@ function ServHisSet({ data }) {
         </Grid>
         <Grid item xs={12} md={12}>
           <Gtextfield readOnly label="Status / Remarks" id="status" value={status ?? ""} />
+        </Grid>
+        <Grid item xs={12} md={12}>
+          <Gtextfield readOnly label="Funding Source" id="funding_source" value={funding_source ?? ""} />
         </Grid>
       </Grid>
     </Paper>

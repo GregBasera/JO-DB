@@ -30,7 +30,7 @@ export default function Signup() {
       <Gtextfield id="password" type="password" label="Password" value={signupData.password} onChange={handleChange} />
       <Gtextfield error={confirmation} type="password" label="Confirm Password" onChange={handleChange} />
 
-      <Button onClick={() => SignupLogic(signupData, history, onSubmit)} variant="contained" fullWidth color="primary" style={{ marginTop: "16px" }}>
+      <Button disableFocusRipple onClick={() => SignupLogic(signupData, history, onSubmit)} variant="contained" fullWidth color="primary" style={{ marginTop: "16px" }}>
         sign-in
       </Button>
 

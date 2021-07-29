@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Button, Dialog, DialogContent, Typography, DialogActions, IconButton, Grid, Paper } from "@material-ui/core";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
-import { getOffices, editExisting } from "./APIcalls";
+import { getOffices, getFundSources, editExisting } from "./APIcalls";
 import { Gtextfield, Gdropdown } from "../shared/FormElements";
 import CloseIcon from "@material-ui/icons/Close";
 
@@ -34,8 +34,10 @@ const DialogTitle = withStyles(styles)((props) => {
 
 export default function EditAppointsDialog({ handleClose, open, data }) {
   const [depts, setDepts] = useState([]);
+  const [funding, setFunding] = useState([]);
   useEffect(() => {
     getOffices(setDepts);
+    getFundSources(setFunding);
     return () => {};
   }, []);
 
@@ -108,7 +110,7 @@ export default function EditAppointsDialog({ handleClose, open, data }) {
         </Typography>
 
         {data.service_history.map((node, index) => (
-          <div key={index}>{<ServHisSet depts={depts} data={altered} index={index} onChange={(e) => handleAlterations(e, index)} />}</div>
+          <div key={index}>{<ServHisSet depts={depts} funding={funding} data={altered} index={index} onChange={(e) => handleAlterations(e, index)} />}</div>
         ))}
       </DialogContent>
       <DialogActions style={{ backgroundColor: "#FBB917" }}>
@@ -119,7 +121,7 @@ export default function EditAppointsDialog({ handleClose, open, data }) {
 }
 
 function ServHisSet(props) {
-  let { depts, data, index, onChange } = props;
+  let { depts, funding, data, index, onChange } = props;
 
   return (
     <Paper variant="outlined" style={{ padding: "8px", paddingLeft: "16px", marginBottom: "8px", borderColor: "black" }}>
@@ -205,6 +207,9 @@ function ServHisSet(props) {
             value={data.service_history[index].status ?? ""}
             onChange={onChange}
           />
+        </Grid>
+        <Grid item xs={12} md={12}>
+          <Gdropdown label="Funding Source" menuItems={funding} name="funding_source" value={data.service_history[index].funding_source ?? ""} onChange={onChange} />
         </Grid>
       </Grid>
     </Paper>

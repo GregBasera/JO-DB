@@ -78,6 +78,7 @@ export default function AddPersonelDialog({ handleClose, open, depts, fundSource
       case "status":
       case "general_function":
       case "appointment_status":
+      case "funding_source":
         // service_history contains deeply nested values. idk if this way is better
         let iDontLikeThisLongWay = newPersonelData.service_history;
         iDontLikeThisLongWay[indx] = { ...iDontLikeThisLongWay[indx], [id ?? name]: id === "rate_per_day" ? parseInt(value) : value };
