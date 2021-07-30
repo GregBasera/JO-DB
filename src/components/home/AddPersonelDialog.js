@@ -228,7 +228,7 @@ function ServHisSet(props) {
           />
         </Grid>
         <Grid item xs={12} md={12}>
-          <Gdropdown label="Funding Source" menuItems={fundSources} name="funding_source" value={""} onChange={null} />
+          <Gdropdown label="Funding Source" menuItems={fundSources} name="funding_source" value={data.service_history[index].funding_source ?? ""} onChange={onChange} />
         </Grid>
       </Grid>
     </Paper>

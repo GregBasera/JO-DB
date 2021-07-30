@@ -4,7 +4,7 @@ import { Button, Dialog, DialogContent, Typography, DialogActions, IconButton } 
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import CloseIcon from "@material-ui/icons/Close";
 import { Gtextfield } from "../shared/FormElements";
-import { addDept } from "./APIcalls";
+import { addDept, addFund } from "./APIcalls";
 
 const styles = (theme) => ({
   root: {
@@ -32,32 +32,37 @@ const DialogTitle = withStyles(styles)((props) => {
   );
 });
 
-export default function AddDepartmentDialog({ handleClose, open }) {
+export default function AddDepartmentDialog({ handleClose, open, mode }) {
   const [name, setName] = useState(null);
   const handleChange = (e) => {
     setName(e.target.value);
   };
 
   const handleSubmit = () => {
-    addDept({ name: name }, null);
+    if (mode === "offices") addDept({ name: name }, null);
+    else addFund({ name: name }, null);
     handleClose();
   };
 
   return (
     <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open} fullWidth>
       <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-        Add an Office
+        {mode === "offices" ? "Add an Office" : "Add a Funding Source"}
       </DialogTitle>
       <DialogContent dividers>
         <Gtextfield
           value={name}
           onChange={handleChange}
-          label="Office name"
-          helperText={<Typography variant="caption">Offices added here will become an option on "Office Assignment" fields</Typography>}
+          label={mode === "offices" ? "Office name" : "Fund Source name"}
+          helperText={
+            <Typography variant="caption">{`${mode === "offices" ? "Offices" : "Funding Sources"} added here will become an option on ${
+              mode === "offices" ? "Office Assignment" : "Funding Sources"
+            } fields`}</Typography>
+          }
         />
       </DialogContent>
       <DialogActions style={{ backgroundColor: "#1589FF" }}>
-        <Button onClick={handleSubmit}>Add Office</Button>
+        <Button onClick={handleSubmit}>Add</Button>
       </DialogActions>
     </Dialog>
   );

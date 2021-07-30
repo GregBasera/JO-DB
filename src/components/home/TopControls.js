@@ -10,6 +10,7 @@ import PrintIcon from "@material-ui/icons/Print";
 export default function TopControls({ append, setData, data }) {
   const [addPersonelDialog, setAddPersonelDialog] = useState(false);
   const [addDepartmentDialog, setAddDepartmentDialog] = useState(false);
+  const [addFundingDialog, setFundingDialog] = useState(false);
   // const [print, setPrint] = useState(false);
   const [depts, setDepts] = useState([]);
   const [fundSources, setFundSources] = useState([]);
@@ -50,6 +51,7 @@ export default function TopControls({ append, setData, data }) {
           <Box display="flex" flexDirection="row-reverse">
             <Gbutton icon={<AddIcon />} size="medium" text="Personel" color="secondary" onClick={() => setAddPersonelDialog(true)} />
             <Gbutton icon={<AddIcon />} size="medium" text="Office" onClick={() => setAddDepartmentDialog(true)} />
+            <Gbutton icon={<AddIcon />} size="medium" text="Funding" onClick={() => setFundingDialog(true)} />
             <IconButton href={`${document.location.origin}/JOappreport`} target="_blank" onClick={printAppReport}>
               <PrintIcon />
             </IconButton>
@@ -58,7 +60,8 @@ export default function TopControls({ append, setData, data }) {
       </Grid>
 
       <AddPersonelDialog open={addPersonelDialog} handleClose={() => setAddPersonelDialog(false)} depts={depts} fundSources={fundSources} append={append} />
-      <AddDepartmentDialog open={addDepartmentDialog} handleClose={() => setAddDepartmentDialog(false)} />
+      <AddDepartmentDialog open={addDepartmentDialog} handleClose={() => setAddDepartmentDialog(false)} mode="offices" />
+      <AddDepartmentDialog open={addFundingDialog} handleClose={() => setFundingDialog(false)} mode="funding" />
       {/* <PrintReport open={print} handleClose={() => setPrint(false)} data={data} /> */}
     </React.Fragment>
   );

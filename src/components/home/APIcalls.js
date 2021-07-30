@@ -83,6 +83,16 @@ function addDept(data, callback) {
     });
 }
 
+function addFund(data, callback) {
+  Axios.post(FundSources, data, headers())
+    .then((res) => {
+      console.log(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
 function deletePersonel(id, callback) {
   Axios.delete(`${JOs}/${id}`, headers())
     .then((res) => {
@@ -135,4 +145,4 @@ function getFundSources(callback) {
     });
 }
 
-export { initialize, getOffices, newPersonel, search, filter, addDept, deletePersonel, pushNewAppoint, editExisting, getFundSources };
+export { initialize, getOffices, newPersonel, search, filter, addDept, addFund, deletePersonel, pushNewAppoint, editExisting, getFundSources };

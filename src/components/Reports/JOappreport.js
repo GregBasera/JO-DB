@@ -38,9 +38,17 @@ export default function JOappreport() {
         return sh.ep_start >= dateRange.from && sh.ep_end <= dateRange.to;
       });
     });
-    temp = temp.filter((p) => {
-      return p.service_history.length !== 0;
-    });
+    temp = temp
+      .filter((p) => {
+        return p.service_history.length !== 0;
+      })
+      .sort((a, b) => {
+        if (a.service_history[0].funding_source < b.service_history[0].funding_source) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
     // console.log(temp);
     setData(temp);
   }, [dateRange]);
@@ -97,68 +105,116 @@ export default function JOappreport() {
         </Grid>
       </Grid>
 
-      <Grid item xs={12} style={{ padding: "0px 10px 0px 10px" }}>
-        {/* <TableContainer component={Paper} elevation={0}> */}
-        <Table size="small">
-          <TableHead>
-            <TableRow>
-              <TableCell align="center" rowSpan={2}>
-                No.
-              </TableCell>
-              <TableCell align="center" rowSpan={2}>
-                Name of Job Order Personnel
-              </TableCell>
-              <TableCell align="center" rowSpan={2}>
-                Designation
-              </TableCell>
-              <TableCell align="center" rowSpan={2}>
-                Sex
-              </TableCell>
-              <TableCell align="center" rowSpan={2}>
-                Rate per Day
-              </TableCell>
-              <TableCell align="center" colSpan={2} rowSpan={1}>
-                Period of Employment
-              </TableCell>
-              <TableCell align="center" rowSpan={2}>
-                Funding Source
-              </TableCell>
-              <TableCell align="center" rowSpan={2}>
-                Office Assignment
-              </TableCell>
-              <TableCell align="center" rowSpan={2}>
-                Status
-              </TableCell>
-              <TableCell align="center" rowSpan={2}>
-                General Function
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell align="center">From</TableCell>
-              <TableCell align="center">To</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {(data ?? []).map((q, index) => {
-              return (
-                <TableRow key={q._id}>
-                  <TableCell align="center">{index + 1}</TableCell>
-                  <TableCell align="left">{q.name}</TableCell>
-                  <TableCell align="center">{q.service_history[0].designation}</TableCell>
-                  <TableCell align="center">{q.sex.substring(0, 1)}</TableCell>
-                  <TableCell align="center">{`${q.service_history[0].rate_per_day}.00`}</TableCell>
-                  <TableCell align="center">{moment(q.service_history[0].ep_start).format("D-MMM-YYYY")}</TableCell>
-                  <TableCell align="center">{moment(q.service_history[0].ep_end).format("D-MMM-YYYY")}</TableCell>
-                  <TableCell align="center">Gen. Fund</TableCell>
-                  <TableCell align="center">{q.service_history[0].office_assignment}</TableCell>
-                  <TableCell align="center">{q.service_history[0].status}</TableCell>
-                  <TableCell align="center">{q.service_history[0].general_function}</TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-        {/* </TableContainer> */}
+      <Grid container spacing={0}>
+        <Grid item xs={12} style={{ padding: "0px 10px 0px 10px" }}>
+          {/* <TableContainer component={Paper} elevation={0}> */}
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell align="center" rowSpan={2}>
+                  No.
+                </TableCell>
+                <TableCell align="center" rowSpan={2}>
+                  Name of Job Order Personnel
+                </TableCell>
+                <TableCell align="center" rowSpan={2}>
+                  Designation
+                </TableCell>
+                <TableCell align="center" rowSpan={2}>
+                  Sex
+                </TableCell>
+                <TableCell align="center" rowSpan={2}>
+                  Rate per Day
+                </TableCell>
+                <TableCell align="center" colSpan={2} rowSpan={1}>
+                  Period of Employment
+                </TableCell>
+                <TableCell align="center" rowSpan={2}>
+                  Funding Source
+                </TableCell>
+                <TableCell align="center" rowSpan={2}>
+                  Office Assignment
+                </TableCell>
+                <TableCell align="center" rowSpan={2}>
+                  Status
+                </TableCell>
+                <TableCell align="center" rowSpan={2}>
+                  General Function
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="center">From</TableCell>
+                <TableCell align="center">To</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {(data ?? []).map((q, index) => {
+                return (
+                  <TableRow key={q._id}>
+                    <TableCell align="center">{index + 1}</TableCell>
+                    <TableCell align="left">{q.name}</TableCell>
+                    <TableCell align="center">{q.service_history[0].designation}</TableCell>
+                    <TableCell align="center">{q.sex.substring(0, 1)}</TableCell>
+                    <TableCell align="center">{`${q.service_history[0].rate_per_day}.00`}</TableCell>
+                    <TableCell align="center">{moment(q.service_history[0].ep_start).format("D-MMM-YYYY")}</TableCell>
+                    <TableCell align="center">{moment(q.service_history[0].ep_end).format("D-MMM-YYYY")}</TableCell>
+                    <TableCell align="center">{q.service_history[0].funding_source}</TableCell>
+                    <TableCell align="center">{q.service_history[0].office_assignment}</TableCell>
+                    <TableCell align="center">{q.service_history[0].status}</TableCell>
+                    <TableCell align="center">{q.service_history[0].general_function}</TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+          {/* </TableContainer> */}
+        </Grid>
+
+        <Grid item xs={12} style={{ padding: "0px 10px 0px 10px" }}>
+          <Typography align="justify" style={{ textIndent: "5em", margin: "20px 0px 20px 0px", fontSize: "10pt" }}>
+            The said job orders shall automatically cease upon the expiration as stipulated above, unless renewed. However, services of any or above-named can be terminated prior
+            to the expiration of this job order for lack of funds or when the/their services is/are no longer needed. The above-named hereby attest that (1) s/he is not related
+            with the fourth degree of consanguinity or affinity to the hiring authority and/or representative of the hiring agency; (2) s/he has not been previously dismissed from
+            government service by reason of an administrative offense; (3) s/he has not already reached the agency retirement age of sixty-five (65).
+          </Typography>
+        </Grid>
+
+        <Grid item xs={6} style={{ marginTop: "20px" }}>
+          <Typography>Prepared by:</Typography>
+          <Typography align="center" style={{ marginTop: "20px" }}>
+            <b>MA. SARINA G AÑONUEVO</b>
+          </Typography>
+          <Typography align="center">
+            <i>MGDH I (HRMO V)</i>
+          </Typography>
+        </Grid>
+        <Grid item xs={5}>
+          {/* SPACER */}
+        </Grid>
+        <Grid item xs={6}>
+          {/* SPACER */}
+        </Grid>
+        <Grid item xs={6}>
+          <Typography>Approved by:</Typography>
+          <Typography align="center" style={{ marginTop: "20px" }}>
+            <b>LUIS OSCAR T. ELEAZAR</b>
+          </Typography>
+          <Typography align="center">
+            <i>Municipal Mayor</i>
+          </Typography>
+          <Typography align="center">
+            <i>Date: {moment().format("D MMM YYYY")}</i>
+          </Typography>
+        </Grid>
+        <Grid item xs={6} style={{ padding: "0px 10px 0px 10px" }}>
+          <Typography style={{ fontSize: "10pt" }}>Copy Furnished:</Typography>
+          <Typography style={{ fontSize: "10pt" }}>
+            <i>Department Heads Concern</i>
+          </Typography>
+          <Typography style={{ fontSize: "10pt" }}>
+            <i>File</i>
+          </Typography>
+        </Grid>
       </Grid>
     </React.Fragment>
   );

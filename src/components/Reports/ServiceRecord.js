@@ -156,7 +156,7 @@ export default function ServiceRecord() {
         <Grid item xs={6} style={{ marginTop: "10vh" }}>
           <Typography>Reviewed and Attested by:</Typography>
           <Typography align="center" style={{ marginTop: "30px" }}>
-            <b>MA. SARINA G. ANONUEVO</b>
+            <b>MA. SARINA G. AÑONUEVO</b>
           </Typography>
           <Typography align="center">
             <i>MGDH I (HRMO V)</i>
