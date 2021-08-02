@@ -1,10 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { Grid, Typography, Table, TableHead, TableRow, TableBody } from "@material-ui/core";
+import MuiDialogTitle from "@material-ui/core/DialogTitle";
+import { Grid, Typography, Table, TableHead, TableRow, TableBody, Box, Dialog, DialogContent, DialogActions, Button, FormControlLabel, Checkbox } from "@material-ui/core";
 import MuiTableCell from "@material-ui/core/TableCell";
 import qs from "qs";
 import moment from "moment";
 import tkLogo from "../../../src/logo lgu new 12x12 inches 300px.png";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+import { Alert } from "@material-ui/lab";
 
 const TableCell = withStyles({
   root: {
@@ -24,8 +28,15 @@ export default function ServiceRecord() {
   }, []);
   let { name, service_history, birthdate, birthplace, address, status } = qs.parse(window.location.search.substring(1));
 
+  const [open, setOpen] = useState(true);
+  const [isAbsent, setIsAbsent] = useState(false);
+  const checkChange = (e) => {
+    setIsAbsent(e.target.checked);
+  };
+
   return (
     <React.Fragment>
+      <FinishingDetails open={open} handleClose={() => setOpen(false)} isAbsent={isAbsent} isAbsentChange={checkChange} />
       <Grid container spacing={0} style={{ borderBottom: "solid 2px black" }}>
         <Grid item xs={10}>
           <Typography style={{ fontSize: "10pt" }}>Republic of the Philippines</Typography>
@@ -60,25 +71,33 @@ export default function ServiceRecord() {
           <Typography style={{ fontSize: "10pt" }}>Name:</Typography>
         </Grid>
         <Grid item xs={4}>
-          <Typography style={{ fontSize: "10pt" }}>{name.toUpperCase()}</Typography>
+          <Typography style={{ fontSize: "10pt" }}>
+            <b>{name.toUpperCase()}</b>
+          </Typography>
         </Grid>
         <Grid item xs={2}>
           <Typography style={{ fontSize: "10pt" }}>Address:</Typography>
         </Grid>
         <Grid item xs={4}>
-          <Typography style={{ fontSize: "10pt" }}>{address.toUpperCase()}</Typography>
+          <Typography style={{ fontSize: "10pt" }}>
+            <b>{address.toUpperCase()}</b>
+          </Typography>
         </Grid>
         <Grid item xs={2}>
           <Typography style={{ fontSize: "10pt" }}>Birthday:</Typography>
         </Grid>
         <Grid item xs={4}>
-          <Typography style={{ fontSize: "10pt" }}>{moment(birthdate).format("MMMM DD, YYYY")}</Typography>
+          <Typography style={{ fontSize: "10pt" }}>
+            <b>{moment(birthdate).format("MMMM DD, YYYY")}</b>
+          </Typography>
         </Grid>
         <Grid item xs={2}>
           <Typography style={{ fontSize: "10pt" }}>Birthplace:</Typography>
         </Grid>
         <Grid item xs={4}>
-          <Typography style={{ fontSize: "10pt" }}>{birthplace.toUpperCase()}</Typography>
+          <Typography style={{ fontSize: "10pt" }}>
+            <b>{birthplace.toUpperCase()}</b>
+          </Typography>
         </Grid>
 
         <Grid item xs={12}>
@@ -165,7 +184,7 @@ export default function ServiceRecord() {
         <Grid item xs={6}>
           {/* spacer */}
         </Grid>
-        <Grid item xs={6} style={{ marginTop: "10vh" }}>
+        <Grid item xs={6} style={isAbsent ? { display: "block", marginTop: "20px" } : { display: "none" }}>
           <Typography>For and In the Absence of:</Typography>
           <Typography align="center" style={{ marginTop: "30px" }}>
             <b>ANNA LOUELLA U. VILLANUEVA</b>
@@ -176,5 +195,49 @@ export default function ServiceRecord() {
         </Grid>
       </Grid>
     </React.Fragment>
+  );
+}
+
+const styles = (theme) => ({
+  root: {
+    margin: 0,
+    padding: theme.spacing(2),
+  },
+  closeButton: {
+    position: "absolute",
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.grey[500],
+  },
+});
+
+const DialogTitle = withStyles(styles)((props) => {
+  const { children, classes, onClose, ...other } = props;
+  return (
+    <MuiDialogTitle disableTypography className={classes.root} {...other}>
+      <Typography variant="h6">{children}</Typography>
+      {onClose ? (
+        <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </MuiDialogTitle>
+  );
+});
+
+function FinishingDetails({ open, handleClose, isAbsent, isAbsentChange }) {
+  return (
+    <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+      <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+        Finish Employment Certificate
+      </DialogTitle>
+      <DialogContent dividers>
+        <Alert severity="warning">This page is better printed on Mozilla Firefox</Alert>
+        <FormControlLabel control={<Checkbox checked={isAbsent} onChange={isAbsentChange} />} label="Attester is absent" />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Save changes</Button>
+      </DialogActions>
+    </Dialog>
   );
 }

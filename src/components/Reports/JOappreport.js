@@ -8,6 +8,7 @@ import moment from "moment";
 import { Gtextfield } from "../shared/FormElements";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
+import { Alert } from "@material-ui/lab";
 
 const TableCell = withStyles({
   root: {
@@ -43,11 +44,11 @@ export default function JOappreport() {
         return p.service_history.length !== 0;
       })
       .sort((a, b) => {
-        if (a.service_history[0].funding_source < b.service_history[0].funding_source) {
-          return 1;
-        } else {
-          return 0;
-        }
+        if (a.service_history[0].funding_source !== b.service_history[0].funding_source)
+          return a.service_history[0].funding_source.localeCompare(b.service_history[0].funding_source);
+        else if (a.service_history[0].office_assignment !== b.service_history[0].office_assignment)
+          return a.service_history[0].office_assignment.localeCompare(b.service_history[0].office_assignment);
+        return a.name.localeCompare(b.name);
       });
     // console.log(temp);
     setData(temp);
@@ -255,6 +256,7 @@ function FinishingDetails({ open, handleClose, dateRange, changes }) {
         Set Date Ranges
       </DialogTitle>
       <DialogContent dividers>
+        <Alert severity="warning">This page is better printed on Mozilla Firefox</Alert>
         <Gtextfield type="date" id="from" label="From" value={from} onChange={changes} InputLabelProps={{ shrink: true }} />
         <Gtextfield type="date" id="to" label="To" value={to} onChange={changes} InputLabelProps={{ shrink: true }} />
       </DialogContent>

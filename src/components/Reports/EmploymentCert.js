@@ -18,7 +18,7 @@ export default function EmploymentCert() {
 
   const [open, setOpen] = useState(true);
   const [details, setDetails] = useState({
-    requestee: "[requestee]",
+    requestee: "[requester]",
     reason: "[reason]",
     prep: "NIDA A. NABUHAY",
     prep_position: "Administrative Aide II",
@@ -29,7 +29,6 @@ export default function EmploymentCert() {
   const [isAbsent, setIsAbsent] = useState(false);
   const checkChange = (e) => {
     setIsAbsent(e.target.checked);
-    console.log(e.target.checked);
   };
 
   return (
