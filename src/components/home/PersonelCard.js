@@ -9,6 +9,7 @@ import DeletePersonelDialog from "./DeletePersonelDialog";
 import AddIcon from "@material-ui/icons/Add";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
+import TokenVerifier from "../shared/TokenVerifier";
 
 function statusNode(value) {
   // separated this for cleaner render function
@@ -85,13 +86,13 @@ export default function PersonelCard({ data, deleteOne, newHistory }) {
         <Gbutton text="More" onClick={() => setShowMoreOpen(true)} />
 
         <Box display="flex" flexDirection="row-reverse" style={{ width: "100%" }}>
-          <IconButton size="small" title="Delete Personel Record" onClick={() => setDeleteDialog(true)}>
+          <IconButton size="small" title="Delete Personel Record" onClick={() => setDeleteDialog(true)} style={TokenVerifier(2) ? { display: "block" } : { display: "none" }}>
             <DeleteIcon />
           </IconButton>
-          <IconButton size="small" title="Edit Existing Appointments" onClick={() => setEditDialog(true)}>
+          <IconButton size="small" title="Edit Existing Appointments" onClick={() => setEditDialog(true)} style={TokenVerifier(1) ? { display: "block" } : { display: "none" }}>
             <EditIcon />
           </IconButton>
-          <IconButton size="small" title="Add Lastest Appointment" onClick={() => setAddDialog(true)}>
+          <IconButton size="small" title="Add Lastest Appointment" onClick={() => setAddDialog(true)} style={TokenVerifier(1) ? { display: "block" } : { display: "none" }}>
             <AddIcon />
           </IconButton>
         </Box>

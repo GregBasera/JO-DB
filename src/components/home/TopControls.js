@@ -6,6 +6,7 @@ import AddDepartmentDialog from "./AddDepartmentDialog";
 import { getOffices, getFundSources, search, filter } from "./APIcalls";
 import AddIcon from "@material-ui/icons/Add";
 import PrintIcon from "@material-ui/icons/Print";
+import TokenVerifier from "../shared/TokenVerifier";
 
 export default function TopControls({ append, setData, data }) {
   const [addPersonelDialog, setAddPersonelDialog] = useState(false);
@@ -49,10 +50,21 @@ export default function TopControls({ append, setData, data }) {
         </Grid>
         <Grid item xs={12} md={6}>
           <Box display="flex" flexDirection="row-reverse">
-            <Gbutton icon={<AddIcon />} size="medium" text="Personel" color="secondary" onClick={() => setAddPersonelDialog(true)} />
-            <Gbutton icon={<AddIcon />} size="medium" text="Office" onClick={() => setAddDepartmentDialog(true)} />
-            <Gbutton icon={<AddIcon />} size="medium" text="Funding" onClick={() => setFundingDialog(true)} />
-            <IconButton href={`${document.location.origin}/JOappreport`} target="_blank" onClick={printAppReport}>
+            <Box display={TokenVerifier(1) ? "block" : "none"}>
+              <Gbutton icon={<AddIcon />} size="medium" text="Personel" color="secondary" onClick={() => setAddPersonelDialog(true)} />
+            </Box>
+            <Box display={TokenVerifier(2) ? "block" : "none"}>
+              <Gbutton icon={<AddIcon />} size="medium" text="Office" onClick={() => setAddDepartmentDialog(true)} />
+            </Box>
+            <Box display={TokenVerifier(2) ? "block" : "none"}>
+              <Gbutton icon={<AddIcon />} size="medium" text="Funding" onClick={() => setFundingDialog(true)} />
+            </Box>
+            <IconButton
+              title="Print Appointment Report"
+              href={`${document.location.origin}/JOappreport`}
+              target="_blank"
+              onClick={printAppReport}
+              style={TokenVerifier(1) ? { display: "block" } : { display: "none" }}>
               <PrintIcon />
             </IconButton>
           </Box>
@@ -62,7 +74,6 @@ export default function TopControls({ append, setData, data }) {
       <AddPersonelDialog open={addPersonelDialog} handleClose={() => setAddPersonelDialog(false)} depts={depts} fundSources={fundSources} append={append} />
       <AddDepartmentDialog open={addDepartmentDialog} handleClose={() => setAddDepartmentDialog(false)} mode="offices" />
       <AddDepartmentDialog open={addFundingDialog} handleClose={() => setFundingDialog(false)} mode="funding" />
-      {/* <PrintReport open={print} handleClose={() => setPrint(false)} data={data} /> */}
     </React.Fragment>
   );
 }

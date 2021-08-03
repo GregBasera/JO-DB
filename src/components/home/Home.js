@@ -6,7 +6,7 @@ import HomeBody from "./HomeBody";
 
 export default function Home() {
   let history = useHistory();
-  if (!TokenVerifier(0, history)) history.push("/");
+  if (!TokenVerifier(0)) history.push("/");
 
   return (
     <div>

@@ -6,6 +6,7 @@ import { Gtextfield } from "../shared/FormElements";
 import qs from "qs";
 import CloseIcon from "@material-ui/icons/Close";
 import moment from "moment";
+import TokenVerifier from "../shared/TokenVerifier";
 
 const styles = (theme) => ({
   root: {
@@ -62,7 +63,8 @@ export default function MoreInfoDialog({ handleClose, open, data }) {
             designation: data.service_history[0].designation,
             status: data.service_history[0].appointment_status,
           })}`}
-          target="_blank">
+          target="_blank"
+          style={TokenVerifier(1) ? { display: "block" } : { display: "none" }}>
           EMPLOYMENT CERT
         </Button>
         <Button
@@ -76,7 +78,8 @@ export default function MoreInfoDialog({ handleClose, open, data }) {
             status: data.service_history[0].appointment_status,
             service_history: data.service_history,
           })}`}
-          target="_blank">
+          target="_blank"
+          style={TokenVerifier(1) ? { display: "block" } : { display: "none" }}>
           SERVICE RECORD
         </Button>
         <Button variant="contained" disableElevation onClick={handleClose}>

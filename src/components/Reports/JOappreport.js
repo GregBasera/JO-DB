@@ -22,6 +22,10 @@ const TableCell = withStyles({
 })(MuiTableCell);
 
 export default function JOappreport() {
+  useEffect(() => {
+    // Change the document.title for unique filename when downloaded
+    document.title = `AppointmentReport_${moment().format("YY-MM-DD-Hms")}`;
+  }, []);
   const [open, setOpen] = useState(true);
   const [dateRange, setDateRange] = useState({
     from: "",

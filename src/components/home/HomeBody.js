@@ -42,6 +42,10 @@ export default function HomeBody() {
           <Typography>No data found</Typography>
         )}
       </Grid>
+
+      <Typography>
+        <i>1000 personnel on record</i>
+      </Typography>
     </div>
   );
 }
