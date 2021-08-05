@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Grid, Typography } from "@material-ui/core";
 import TopControls from "./TopControls";
 import PersonelCard from "./PersonelCard";
-import { initialize } from "./APIcalls";
+import { initialize, onRecord } from "./APIcalls";
 
 export default function HomeBody() {
   const [data, setData] = useState([]);
+  const [onRecordState, setonRecordState] = useState(null);
   useEffect(() => {
     initialize(setData);
+    onRecord(setonRecordState);
     return () => {};
   }, []);
 
@@ -44,7 +46,7 @@ export default function HomeBody() {
       </Grid>
 
       <Typography>
-        <i>1000 personnel on record</i>
+        <i>{`${onRecordState} personnel on record`}</i>
       </Typography>
     </div>
   );

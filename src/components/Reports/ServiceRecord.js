@@ -163,7 +163,7 @@ export default function ServiceRecord() {
           {/* </TableContainer> */}
         </Grid>
 
-        <Grid item xs={6} style={{ marginTop: "10vh" }}>
+        <Grid item xs={6} style={{ marginTop: "5vh" }}>
           <Typography>Prepared by:</Typography>
           <Typography align="center" style={{ marginTop: "30px" }}>
             <b>NIDA A. NABUHAY</b>
@@ -172,7 +172,7 @@ export default function ServiceRecord() {
             <i>Administrative Aide II</i>
           </Typography>
         </Grid>
-        <Grid item xs={6} style={{ marginTop: "10vh" }}>
+        <Grid item xs={6} style={{ marginTop: "5vh" }}>
           <Typography>Reviewed and Attested by:</Typography>
           <Typography align="center" style={{ marginTop: "30px" }}>
             <b>MA. SARINA G. AÑONUEVO</b>

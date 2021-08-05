@@ -4,7 +4,7 @@ import { JOs, Departments, FundSources } from "../shared/endpoints";
 import headers from "../shared/headers";
 
 function initialize(callback) {
-  Axios.get(JOs, headers())
+  Axios.get(`${JOs}?_start=${0}&_limit=${9999}`, headers())
     .then((res) => {
       callback(res.data);
     })
@@ -145,4 +145,14 @@ function getFundSources(callback) {
     });
 }
 
-export { initialize, getOffices, newPersonel, search, filter, addDept, addFund, deletePersonel, pushNewAppoint, editExisting, getFundSources };
+function onRecord(callback) {
+  Axios.get(`${JOs}/count`, headers())
+    .then((res) => {
+      callback(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+export { initialize, getOffices, newPersonel, search, filter, addDept, addFund, deletePersonel, pushNewAppoint, editExisting, getFundSources, onRecord };
