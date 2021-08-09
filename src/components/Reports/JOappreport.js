@@ -110,7 +110,7 @@ export default function JOappreport() {
         </Grid>
       </Grid>
 
-      <Grid container spacing={0}>
+      <Grid container spacing={0} style={{ display: "block" }}>
         <Grid item xs={12} style={{ padding: "0px 10px 0px 10px" }}>
           {/* <TableContainer component={Paper} elevation={0}> */}
           <Table size="small">
@@ -174,7 +174,9 @@ export default function JOappreport() {
           </Table>
           {/* </TableContainer> */}
         </Grid>
+      </Grid>
 
+      <Grid container spacing={0}>
         <Grid item xs={12} style={{ padding: "0px 10px 0px 10px" }}>
           <Typography align="justify" style={{ textIndent: "5em", margin: "20px 0px 20px 0px", fontSize: "10pt" }}>
             The said job orders shall automatically cease upon the expiration as stipulated above, unless renewed. However, services of any or above-named can be terminated prior

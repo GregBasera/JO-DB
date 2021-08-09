@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Typography } from "@material-ui/core";
+import { Grid, Typography, CircularProgress } from "@material-ui/core";
 import TopControls from "./TopControls";
 import PersonelCard from "./PersonelCard";
-import { initialize, onRecord } from "./APIcalls";
+import { initialize, onRecord, getOffices, getFundSources } from "./APIcalls";
 
 export default function HomeBody() {
   const [data, setData] = useState([]);
   const [onRecordState, setonRecordState] = useState(null);
+  const [offices, setOffices] = useState(null);
+  const [funding, setFunding] = useState(null);
   useEffect(() => {
     initialize(setData);
+    getOffices(setOffices);
+    getFundSources(setFunding);
     onRecord(setonRecordState);
-    return () => {};
   }, []);
 
   const appendData = (newElem) => {
@@ -37,16 +40,18 @@ export default function HomeBody() {
         {data.length !== 0 ? (
           data.map((personel) => (
             <Grid key={personel._id} item xs={12} md={2}>
-              <PersonelCard data={personel} deleteOne={popOneOut} newHistory={addNewAppoint} />
+              <PersonelCard data={personel} deleteOne={popOneOut} newHistory={addNewAppoint} offices={offices} funding={funding} />
             </Grid>
           ))
         ) : (
-          <Typography>No data found</Typography>
+          <Typography>
+            <CircularProgress />
+          </Typography>
         )}
       </Grid>
 
       <Typography>
-        <i>{`${onRecordState} personnel on record`}</i>
+        <i>{`Showing ${data.length} of ${onRecordState} personnel on record`}</i>
       </Typography>
     </div>
   );

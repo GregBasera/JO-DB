@@ -39,7 +39,7 @@ function statusNode(value) {
   }
 }
 
-export default function PersonelCard({ data, deleteOne, newHistory }) {
+export default function PersonelCard({ data, deleteOne, newHistory, offices, funding }) {
   let { designation, rate_per_day, ep_start, ep_end, office_assignment, status } = data.service_history[0];
 
   const [showMoreOpen, setShowMoreOpen] = useState(false);
@@ -99,8 +99,8 @@ export default function PersonelCard({ data, deleteOne, newHistory }) {
       </CardActions>
 
       <MoreInfoDialog handleClose={() => setShowMoreOpen(false)} open={showMoreOpen} data={data} />
-      <AddAppointDialog handleClose={() => setAddDialog(false)} open={addDialog} data={data} newHistory={newHistory} />
-      <EditAppointsDialog handleClose={() => setEditDialog(false)} open={editDialog} data={data} />
+      <AddAppointDialog handleClose={() => setAddDialog(false)} open={addDialog} data={data} newHistory={newHistory} offices={offices} funding={funding} />
+      <EditAppointsDialog handleClose={() => setEditDialog(false)} open={editDialog} data={data} offices={offices} funding={funding} />
       <DeletePersonelDialog handleClose={() => setDeleteDialog(false)} open={deleteDialog} data={{ name: data.name, id: data._id }} deleteOne={deleteOne} />
     </Card>
   );

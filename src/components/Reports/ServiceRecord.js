@@ -17,7 +17,7 @@ const TableCell = withStyles({
     borderBottom: "1px solid black",
     borderLeft: "1px solid black",
     borderRight: "1px solid black",
-    padding: "5px",
+    padding: "0px",
   },
 })(MuiTableCell);
 
@@ -106,7 +106,9 @@ export default function ServiceRecord() {
             pertinent papers issued and approved by this Office and other Authorities concerned.
           </Typography>
         </Grid>
+      </Grid>
 
+      <Grid container spacing={0} style={{ display: "block" }}>
         <Grid item xs={12} style={{ padding: "0px 10px 0px 10px" }}>
           {/* <TableContainer component={Paper} elevation={0}> */}
           <Table size="small">
@@ -162,8 +164,10 @@ export default function ServiceRecord() {
           </Table>
           {/* </TableContainer> */}
         </Grid>
+      </Grid>
 
-        <Grid item xs={6} style={{ marginTop: "5vh" }}>
+      <Grid container spacing={0}>
+        <Grid item xs={6} style={{ marginTop: "30px" }}>
           <Typography>Prepared by:</Typography>
           <Typography align="center" style={{ marginTop: "30px" }}>
             <b>NIDA A. NABUHAY</b>
@@ -172,7 +176,7 @@ export default function ServiceRecord() {
             <i>Administrative Aide II</i>
           </Typography>
         </Grid>
-        <Grid item xs={6} style={{ marginTop: "5vh" }}>
+        <Grid item xs={6} style={{ marginTop: "30px" }}>
           <Typography>Reviewed and Attested by:</Typography>
           <Typography align="center" style={{ marginTop: "30px" }}>
             <b>MA. SARINA G. AÑONUEVO</b>

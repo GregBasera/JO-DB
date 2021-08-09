@@ -17,8 +17,9 @@ export default function TopControls({ append, setData, data }) {
   const [fundSources, setFundSources] = useState([]);
   useEffect(() => {
     getOffices(setDepts);
+  }, []);
+  useEffect(() => {
     getFundSources(setFundSources);
-    return () => {};
   }, []);
 
   const [offAssign, setOffAssign] = useState(null);
