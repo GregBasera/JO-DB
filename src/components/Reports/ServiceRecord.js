@@ -8,7 +8,7 @@ import moment from "moment";
 import tkLogo from "../../../src/logo lgu new 12x12 inches 300px.png";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
-import { Alert } from "@material-ui/lab";
+// import { Alert } from "@material-ui/lab";
 
 const TableCell = withStyles({
   root: {
@@ -231,16 +231,22 @@ const DialogTitle = withStyles(styles)((props) => {
 
 function FinishingDetails({ open, handleClose, isAbsent, isAbsentChange }) {
   return (
-    <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+    <Dialog
+      onClose={handleClose}
+      aria-labelledby="customized-dialog-title"
+      open={open}
+      onExited={() => {
+        window.print();
+      }}>
       <DialogTitle id="customized-dialog-title" onClose={handleClose}>
         Finish Employment Certificate
       </DialogTitle>
       <DialogContent dividers>
-        <Alert severity="warning">This page is better printed on Mozilla Firefox</Alert>
+        {/* <Alert severity="warning">This page is better printed on Mozilla Firefox</Alert> */}
         <FormControlLabel control={<Checkbox checked={isAbsent} onChange={isAbsentChange} />} label="Attester is absent" />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Save changes</Button>
+        <Button onClick={handleClose}>Print</Button>
       </DialogActions>
     </Dialog>
   );

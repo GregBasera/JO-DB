@@ -186,7 +186,13 @@ function FinishingDetails({ open, handleClose, details, changes, isAbsent, isAbs
   let { requestee, reason, prep, prep_position } = details;
 
   return (
-    <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+    <Dialog
+      onClose={handleClose}
+      aria-labelledby="customized-dialog-title"
+      open={open}
+      onExited={() => {
+        window.print();
+      }}>
       <DialogTitle id="customized-dialog-title" onClose={handleClose}>
         Finish Employment Certificate
       </DialogTitle>
@@ -198,7 +204,9 @@ function FinishingDetails({ open, handleClose, details, changes, isAbsent, isAbs
         <FormControlLabel control={<Checkbox checked={isAbsent} onChange={isAbsentChange} />} label="Attester is absent" />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Save changes</Button>
+        <Button disableRipple onClick={handleClose}>
+          Print
+        </Button>
       </DialogActions>
     </Dialog>
   );

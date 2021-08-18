@@ -8,7 +8,7 @@ import moment from "moment";
 import { Gtextfield } from "../shared/FormElements";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
-import { Alert } from "@material-ui/lab";
+// import { Alert } from "@material-ui/lab";
 
 const TableCell = withStyles({
   root: {
@@ -257,17 +257,23 @@ function FinishingDetails({ open, handleClose, dateRange, changes }) {
   let { from, to } = dateRange;
 
   return (
-    <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+    <Dialog
+      onClose={handleClose}
+      aria-labelledby="customized-dialog-title"
+      open={open}
+      onExited={() => {
+        window.print();
+      }}>
       <DialogTitle id="customized-dialog-title" onClose={handleClose}>
         Set Date Ranges
       </DialogTitle>
       <DialogContent dividers>
-        <Alert severity="warning">This page is better printed on Mozilla Firefox</Alert>
+        {/* <Alert severity="warning">This page is better printed on Mozilla Firefox</Alert> */}
         <Gtextfield type="date" id="from" label="From" value={from} onChange={changes} InputLabelProps={{ shrink: true }} />
         <Gtextfield type="date" id="to" label="To" value={to} onChange={changes} InputLabelProps={{ shrink: true }} />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Save changes</Button>
+        <Button onClick={handleClose}>Print</Button>
       </DialogActions>
     </Dialog>
   );
