@@ -33,10 +33,10 @@ export default function HomeBody() {
   };
 
   return (
-    <div style={{ width: "100vw" }}>
+    <React.Fragment>
       <TopControls append={appendData} setData={setData} data={data} />
 
-      <Grid container spacing={1} style={{ margin: "0px", width: "100vw", backgroundColor: "#eeeeee" }}>
+      <Grid container spacing={1} style={{ margin: "0px", backgroundColor: "#eeeeee" }}>
         {data.length !== 0 ? (
           data.map((personel) => (
             <Grid key={personel._id} item xs={12} md={2}>
@@ -53,6 +53,6 @@ export default function HomeBody() {
       <Typography>
         <i>{`Showing ${data.length} of ${onRecordState} personnel on record`}</i>
       </Typography>
-    </div>
+    </React.Fragment>
   );
 }

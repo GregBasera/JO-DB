@@ -42,7 +42,7 @@ export default function TopControls({ append, setData, data }) {
 
   return (
     <React.Fragment>
-      <Grid container spacing={1} style={{ margin: "0px", width: "100vw" }}>
+      <Grid container spacing={1} style={{ margin: "0px" }}>
         <Grid item xs={6} md={3}>
           <Gtextfield type="text" label="Search a Name" value={searchTerm ?? ""} onChange={handleSearch} onKeyDown={handleSearch} />
         </Grid>

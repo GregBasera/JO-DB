@@ -35,16 +35,21 @@ export default function JOappreport() {
     setDateRange({ ...dateRange, [e.target.id]: e.target.value });
   };
   const [data, setData] = useState(null);
+  const [males, setMales] = useState(null);
+  const [females, setFemales] = useState(null);
   useEffect(() => {
     let temp = JSON.parse(localStorage.getItem("forPrinting"));
+    let males = 0,
+      females = 0;
     temp.forEach((personnel, index) => {
       temp[index].service_history = personnel.service_history.filter((sh) => {
-        // return sh.ep_start >= "2021-07-01" && sh.ep_end <= "2021-09-31";
+        // remove all invalid date-range on each personel
         return sh.ep_start >= dateRange.from && sh.ep_end <= dateRange.to;
       });
     });
     temp = temp
       .filter((p) => {
+        // remove all personnel with no servicehistory; whats left is the personnels with VALID date-range
         return p.service_history.length !== 0;
       })
       .sort((a, b) => {
@@ -54,8 +59,13 @@ export default function JOappreport() {
           return a.service_history[0].office_assignment.localeCompare(b.service_history[0].office_assignment);
         return a.name.localeCompare(b.name);
       });
-    // console.log(temp);
+    temp.forEach((personnel, index) => {
+      personnel.sex === "Male" ? males++ : females++;
+    });
+    // put data from localStorage to temp -> state(data)
     setData(temp);
+    setMales(males);
+    setFemales(females);
   }, [dateRange]);
 
   const quarterMaker = (num) => {
@@ -170,6 +180,8 @@ export default function JOappreport() {
                   </TableRow>
                 );
               })}
+
+              <Typography color="textSecondary" style={{ fontSize: "10pt" }}>{`${males} Male, ${females} Female`}</Typography>
             </TableBody>
           </Table>
           {/* </TableContainer> */}
