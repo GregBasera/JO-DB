@@ -58,6 +58,11 @@ export default function AddPersonelDialog({ handleClose, open, depts, fundSource
     birthplace: "",
     address: "",
     appointment_status: "",
+    contact_num: "",
+    tin_num: "",
+    philhealth_num: "",
+    pagibig_num: "",
+    sss_num: "",
   });
   const handlePersonelDataChanges = (e, indx) => {
     let { name, id, value } = e.target;
@@ -68,6 +73,11 @@ export default function AddPersonelDialog({ handleClose, open, depts, fundSource
       case "birthdate":
       case "birthplace":
       case "address":
+      case "contact_no":
+      case "tin_num":
+      case "philhealth_num":
+      case "pagibig_num":
+      case "sss_num":
         setNewPersonelData({ ...newPersonelData, [id ?? name]: value });
         break;
       case "designation":
@@ -113,6 +123,11 @@ export default function AddPersonelDialog({ handleClose, open, depts, fundSource
         <Gtextfield id="birthdate" type="date" label="Birthdate" value={newPersonelData.birthdate} onChange={handlePersonelDataChanges} InputLabelProps={{ shrink: true }} />
         <Gtextfield id="birthplace" label="Birthplace" value={newPersonelData.birthplace} onChange={handlePersonelDataChanges} />
         <Gtextfield id="address" label="Address" value={newPersonelData.address} onChange={handlePersonelDataChanges} />
+        <Gtextfield id="contact_no" label="Contact No." value={newPersonelData.contact_no} onChange={handlePersonelDataChanges} />
+        <Gtextfield id="tin_num" type="number" label="TIN No." value={newPersonelData.tin_num} onChange={handlePersonelDataChanges} />
+        <Gtextfield id="philhealth_num" type="number" label="PHILHEALTH No." value={newPersonelData.philhealth_num} onChange={handlePersonelDataChanges} />
+        <Gtextfield id="pagibig_num" type="number" label="HDMF No." value={newPersonelData.pagibig_num} onChange={handlePersonelDataChanges} />
+        <Gtextfield id="sss_num" type="number" label="SSS No." value={newPersonelData.sss_num} onChange={handlePersonelDataChanges} />
 
         <Typography style={{ marginTop: "8px" }}>Service History</Typography>
         <Typography variant="caption" color="textSecondary">
@@ -216,7 +231,7 @@ function ServHisSet(props) {
           <Gdropdown
             label="Status / Remarks"
             menuItems={[
-              { _id: "New", value: "New" },
+              { _id: "New", value: "Newly Hired" },
               { _id: "Re-Appointed", value: "Re-Appointed" },
               { _id: "Resigned", value: "Resigned" },
               { _id: "Terminated", value: "Terminated" },

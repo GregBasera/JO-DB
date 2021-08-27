@@ -32,7 +32,7 @@ const DialogTitle = withStyles(styles)((props) => {
   );
 });
 
-export default function EditAppointsDialog({ handleClose, open, data, offices, funding }) {
+export default function EditAppointsDialog({ handleClose, open, data, offices, funding, editCallback }) {
   // const [depts, setDepts] = useState([]);
   // const [funding, setFunding] = useState([]);
   // useEffect(() => {
@@ -47,6 +47,11 @@ export default function EditAppointsDialog({ handleClose, open, data, offices, f
     birthplace: data.birthplace,
     address: data.address,
     service_history: data.service_history,
+    contact_no: data.contact_no,
+    tin_num: data.tin_num,
+    philhealth_num: data.philhealth_num,
+    pagibig_num: data.pagibig_num,
+    sss_num: data.sss_num,
   });
   const handleAlterations = (e, indx) => {
     let { name, id, value } = e.target;
@@ -57,6 +62,11 @@ export default function EditAppointsDialog({ handleClose, open, data, offices, f
       case "birthdate":
       case "birthplace":
       case "address":
+      case "contact_no":
+      case "tin_num":
+      case "philhealth_num":
+      case "pagibig_num":
+      case "sss_num":
         setAltered({ ...altered, [id ?? name]: value });
         break;
       case "designation":
@@ -79,7 +89,7 @@ export default function EditAppointsDialog({ handleClose, open, data, offices, f
   };
 
   const handleSubmit = () => {
-    editExisting(data._id, altered);
+    editExisting(data._id, altered, editCallback);
     handleClose();
   };
 
@@ -103,6 +113,11 @@ export default function EditAppointsDialog({ handleClose, open, data, offices, f
         <Gtextfield id="birthdate" type="date" label="Birthdate" value={altered.birthdate} onChange={handleAlterations} InputLabelProps={{ shrink: true }} />
         <Gtextfield id="birthplace" label="Birthplace" value={altered.birthplace} onChange={handleAlterations} />
         <Gtextfield id="address" label="Address" value={altered.address} onChange={handleAlterations} />
+        <Gtextfield id="contact_no" label="Contact No." value={altered.contact_no} onChange={handleAlterations} />
+        <Gtextfield id="tin_num" type="number" label="TIN No." value={altered.tin_num} onChange={handleAlterations} />
+        <Gtextfield id="philhealth_num" type="number" label="PHILHEALTH No." value={altered.philhealth_num} onChange={handleAlterations} />
+        <Gtextfield id="pagibig_num" type="number" label="HDMF No." value={altered.pagibig_num} onChange={handleAlterations} />
+        <Gtextfield id="sss_num" type="number" label="SSS No." value={altered.sss_num} onChange={handleAlterations} />
 
         <Typography style={{ marginTop: "8px" }}>Service History</Typography>
         <Typography variant="caption" color="textSecondary">
@@ -197,7 +212,7 @@ function ServHisSet(props) {
           <Gdropdown
             label="Status / Remarks"
             menuItems={[
-              { _id: "New", value: "New" },
+              { _id: "New", value: "Newly Hired" },
               { _id: "Re-Appointed", value: "Re-Appointed" },
               { _id: "Resigned", value: "Resigned" },
               { _id: "Terminated", value: "Terminated" },

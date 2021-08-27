@@ -100,7 +100,7 @@ export default function PersonelCard({ data, deleteOne, newHistory, offices, fun
 
       <MoreInfoDialog handleClose={() => setShowMoreOpen(false)} open={showMoreOpen} data={data} />
       <AddAppointDialog handleClose={() => setAddDialog(false)} open={addDialog} data={data} newHistory={newHistory} offices={offices} funding={funding} />
-      <EditAppointsDialog handleClose={() => setEditDialog(false)} open={editDialog} data={data} offices={offices} funding={funding} />
+      <EditAppointsDialog handleClose={() => setEditDialog(false)} open={editDialog} data={data} offices={offices} funding={funding} editCallback={newHistory} />
       <DeletePersonelDialog handleClose={() => setDeleteDialog(false)} open={deleteDialog} data={{ name: data.name, id: data._id }} deleteOne={deleteOne} />
     </Card>
   );

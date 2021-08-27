@@ -46,6 +46,11 @@ export default function MoreInfoDialog({ handleClose, open, data }) {
         <Gtextfield readOnly label="Birthdate" value={data.birthdate} />
         <Gtextfield readOnly label="Birthplace" value={data.birthplace} />
         <Gtextfield readOnly label="Address" value={data.address} />
+        <Gtextfield readOnly label="Contact No." value={data.contact_no} />
+        <Gtextfield readOnly label="TIN No." value={data.tin_num} />
+        <Gtextfield readOnly label="PHILHEALTH No." value={data.philhealth_num} />
+        <Gtextfield readOnly label="HDMF No." value={data.pagibig_num} />
+        <Gtextfield readOnly label="SSS No." value={data.sss_num} />
 
         <Typography style={{ marginTop: "8px" }}>Service History</Typography>
         {data.service_history.map((elem, index) => (

@@ -116,7 +116,7 @@ function pushNewAppoint(id, data, callback) {
 function editExisting(id, data, callback) {
   Axios.put(`${JOs}/${id}`, data, headers())
     .then((res) => {
-      console.log(res.data);
+      callback(id, res.data);
     })
     .catch((err) => {
       console.log(err);
