@@ -8,6 +8,7 @@ import tkLogo from "../../../src/logo lgu new 12x12 inches 300px.png";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import { Gtextfield } from "../shared/FormElements";
+import HRdocHeader from "./HRdocHeader";
 
 export default function EmploymentCert() {
   useEffect(() => {
@@ -34,28 +35,7 @@ export default function EmploymentCert() {
   return (
     <React.Fragment>
       <FinishingDetails open={open} handleClose={() => setOpen(false)} details={details} changes={handleDetailChange} isAbsent={isAbsent} isAbsentChange={checkChange} />
-      <Grid container spacing={0} style={{ borderBottom: "solid 2px black" }}>
-        <Grid item xs={10}>
-          <Typography style={{ fontSize: "10pt" }}>Republic of the Philippines</Typography>
-          <Typography style={{ fontSize: "10pt", marginTop: "-5px" }}>Province of Quezon</Typography>
-          <Typography style={{ fontSize: "10pt", marginTop: "-5px" }}>
-            <b>Municipality of Tagkawayan</b>
-          </Typography>
-
-          <Typography variant="h6" style={{ color: "darkblue", marginTop: "-5px" }}>
-            Human Resource Management & Development Office
-          </Typography>
-          <Typography style={{ fontSize: "9pt", marginTop: "-5px" }}>
-            <i>Contact Number: 0908-872-9964</i>
-          </Typography>
-          <Typography style={{ fontSize: "9pt", marginTop: "-5px" }}>
-            <i>Email Address: hrmo.lgutagkawayan@gmail.com</i>
-          </Typography>
-        </Grid>
-        <Grid item xs={2}>
-          <img src={tkLogo} alt="Tagkawayan Logo" style={{ height: "100px" }} />
-        </Grid>
-      </Grid>
+      <HRdocHeader paperSize="a4" />
 
       <Grid container spacing={0}>
         <Grid item xs={12}>

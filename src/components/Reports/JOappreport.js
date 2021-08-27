@@ -8,6 +8,7 @@ import moment from "moment";
 import { Gtextfield } from "../shared/FormElements";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
+import HRdocHeader from "./HRdocHeader";
 // import { Alert } from "@material-ui/lab";
 
 const TableCell = withStyles({
@@ -86,28 +87,7 @@ export default function JOappreport() {
   return (
     <React.Fragment>
       <FinishingDetails open={open} handleClose={() => setOpen(false)} dateRange={dateRange} changes={dateRangeChanges} />
-      <Grid container spacing={0} style={{ borderBottom: "solid 2px black" }}>
-        <Grid item xs={11}>
-          <Typography style={{ fontSize: "10pt" }}>Republic of the Philippines</Typography>
-          <Typography style={{ fontSize: "10pt", marginTop: "-5px" }}>Province of Quezon</Typography>
-          <Typography style={{ fontSize: "10pt", marginTop: "-5px" }}>
-            <b>Municipality of Tagkawayan</b>
-          </Typography>
-
-          <Typography variant="h6" style={{ color: "darkblue", marginTop: "-5px" }}>
-            Human Resource Management & Development Office
-          </Typography>
-          <Typography style={{ fontSize: "9pt", marginTop: "-5px" }}>
-            <i>Contact Number: 0908-872-9964</i>
-          </Typography>
-          <Typography style={{ fontSize: "9pt", marginTop: "-5px" }}>
-            <i>Email Address: hrmo.lgutagkawayan@gmail.com</i>
-          </Typography>
-        </Grid>
-        <Grid item xs={1}>
-          <img src={tkLogo} alt="Tagkawayan Logo" style={{ height: "100px" }} />
-        </Grid>
-      </Grid>
+      <HRdocHeader paperSize="long" />
 
       <Grid container spacing={0}>
         <Grid item xs={12}>

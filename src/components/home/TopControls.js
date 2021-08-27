@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Box, IconButton } from "@material-ui/core";
+import { Grid, Box, IconButton, Popover, Typography, Button, ButtonGroup } from "@material-ui/core";
 import { Gtextfield, Gdropdown, Gbutton } from "../shared/FormElements";
 import AddPersonelDialog from "./AddPersonelDialog";
 import AddDepartmentDialog from "./AddDepartmentDialog";
@@ -40,6 +40,16 @@ export default function TopControls({ append, setData, data }) {
     localStorage.setItem("forPrinting", JSON.stringify(data));
   };
 
+  const [anchorEl, setAnchorEl] = useState(null);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
+
   return (
     <React.Fragment>
       <Grid container spacing={1} style={{ margin: "0px" }}>
@@ -60,14 +70,32 @@ export default function TopControls({ append, setData, data }) {
             <Box display={TokenVerifier(2) ? "block" : "none"}>
               <Gbutton icon={<AddIcon />} size="medium" text="Funding" onClick={() => setFundingDialog(true)} />
             </Box>
-            <IconButton
-              title="Print Appointment Report"
-              href={`${document.location.origin}/JOappreport`}
-              target="_blank"
-              onClick={printAppReport}
-              style={TokenVerifier(1) ? { display: "block" } : { display: "none" }}>
+            <IconButton onClick={handleClick} style={TokenVerifier(1) ? { display: "block" } : { display: "none" }}>
               <PrintIcon />
             </IconButton>
+            <Popover
+              id={id}
+              open={open}
+              anchorEl={anchorEl}
+              onClose={handleClose}
+              elevation={2}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "center",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "center",
+              }}>
+              <ButtonGroup>
+                <Button href={`${document.location.origin}/JOappreport`} target="_blank" onClick={printAppReport}>
+                  Appointment Report
+                </Button>
+                <Button href={`${document.location.origin}/perinforeport`} target="_blank" onClick={printAppReport}>
+                  JO Information Report
+                </Button>
+              </ButtonGroup>
+            </Popover>
           </Box>
         </Grid>
       </Grid>
