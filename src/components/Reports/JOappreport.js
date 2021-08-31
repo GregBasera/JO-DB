@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Grid, Typography, Table, TableHead, TableRow, TableBody, Dialog, DialogContent, DialogActions, Button } from "@material-ui/core";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
-import tkLogo from "../../logo lgu new 12x12 inches 300px.png";
 import MuiTableCell from "@material-ui/core/TableCell";
 import moment from "moment";
 import { Gtextfield } from "../shared/FormElements";

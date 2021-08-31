@@ -4,7 +4,6 @@ import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import { Grid, Typography, Dialog, DialogContent, DialogActions, Button, Checkbox, FormControlLabel } from "@material-ui/core";
 import moment from "moment";
 import qs from "qs";
-import tkLogo from "../../../src/logo lgu new 12x12 inches 300px.png";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import { Gtextfield } from "../shared/FormElements";

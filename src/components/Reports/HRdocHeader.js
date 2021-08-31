@@ -6,7 +6,7 @@ export default function HRdocHeader({ paperSize }) {
   return (
     <React.Fragment>
       <Grid container spacing={0} style={{ borderBottom: "solid 2px black" }}>
-        <Grid item xs={11}>
+        <Grid item xs={paperSize === "long" ? 11 : 10}>
           <Typography style={{ fontSize: "10pt" }}>Republic of the Philippines</Typography>
           <Typography style={{ fontSize: "10pt", marginTop: "-5px" }}>Province of Quezon</Typography>
           <Typography style={{ fontSize: "10pt", marginTop: "-5px" }}>
@@ -23,7 +23,7 @@ export default function HRdocHeader({ paperSize }) {
             <i>Email Address: hrmo.lgutagkawayan@gmail.com</i>
           </Typography>
         </Grid>
-        <Grid item xs={paperSize === "long" ? 2 : 1}>
+        <Grid item xs={paperSize === "long" ? 1 : 2}>
           <img src={tkLogo} alt="Tagkawayan Logo" style={{ height: "100px" }} />
         </Grid>
       </Grid>

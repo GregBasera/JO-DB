@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Box, IconButton, Popover, Typography, Button, ButtonGroup } from "@material-ui/core";
+import { Grid, Box, IconButton, Popover, Button, ButtonGroup } from "@material-ui/core";
 import { Gtextfield, Gdropdown, Gbutton } from "../shared/FormElements";
 import AddPersonelDialog from "./AddPersonelDialog";
 import AddDepartmentDialog from "./AddDepartmentDialog";

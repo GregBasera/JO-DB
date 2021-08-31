@@ -5,7 +5,6 @@ import { Grid, Typography, Table, TableHead, TableRow, TableBody, Dialog, Dialog
 import MuiTableCell from "@material-ui/core/TableCell";
 import qs from "qs";
 import moment from "moment";
-import tkLogo from "../../../src/logo lgu new 12x12 inches 300px.png";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import HRdocHeader from "./HRdocHeader";
