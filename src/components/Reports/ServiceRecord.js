@@ -3,7 +3,6 @@ import { withStyles } from "@material-ui/core/styles";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import { Grid, Typography, Table, TableHead, TableRow, TableBody, Dialog, DialogContent, DialogActions, Button, FormControlLabel, Checkbox } from "@material-ui/core";
 import MuiTableCell from "@material-ui/core/TableCell";
-import qs from "qs";
 import moment from "moment";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
@@ -26,7 +25,8 @@ export default function ServiceRecord() {
     // Change the document.title for unique filename when downloaded
     document.title = `ServiceRecord_${moment().format("YY-MM-DD-Hms")}`;
   }, []);
-  let { name, service_history, birthdate, birthplace, address, status } = qs.parse(window.location.search.substring(1));
+  let useServiceRecord = JSON.parse(localStorage.getItem("serviceRecord"));
+  let { name, service_history, birthdate, birthplace, address, status } = useServiceRecord;
 
   const [open, setOpen] = useState(true);
   const [isAbsent, setIsAbsent] = useState(false);
@@ -131,7 +131,7 @@ export default function ServiceRecord() {
                     <TableCell align="center">{moment(q.ep_start).format("DD-MMM-YYYY")}</TableCell>
                     <TableCell align="center">{moment(q.ep_end).format("DD-MMM-YYYY")}</TableCell>
                     <TableCell align="center">{q.designation}</TableCell>
-                    <TableCell align="center">{status}</TableCell>
+                    <TableCell align="center">{`${status} / ${q.status}`}</TableCell>
                     <TableCell align="center">{`${q.rate_per_day}.00/day`}</TableCell>
                     <TableCell align="center" style={{ maxWidth: "20vw" }}>
                       {q.office_assignment}

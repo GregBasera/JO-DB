@@ -35,6 +35,10 @@ const DialogTitle = withStyles(styles)((props) => {
 });
 
 export default function MoreInfoDialog({ handleClose, open, data }) {
+  const prepServiceRecord = (data) => {
+    localStorage.setItem("serviceRecord", data);
+  };
+
   return (
     <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
       <DialogTitle id="customized-dialog-title" onClose={handleClose}>
@@ -75,16 +79,21 @@ export default function MoreInfoDialog({ handleClose, open, data }) {
         <Button
           variant="contained"
           disableElevation
-          href={`${document.location.origin}/servrecord?${qs.stringify({
-            name: data.name,
-            birthdate: data.birthdate,
-            birthplace: data.birthplace,
-            address: data.address,
-            status: data.service_history[0].appointment_status,
-            service_history: data.service_history,
-          })}`}
+          href={`${document.location.origin}/servrecord`}
           target="_blank"
-          style={TokenVerifier(1) ? { display: "block" } : { display: "none" }}>
+          style={TokenVerifier(1) ? { display: "block" } : { display: "none" }}
+          onClick={() =>
+            prepServiceRecord(
+              JSON.stringify({
+                name: data.name,
+                birthdate: data.birthdate,
+                birthplace: data.birthplace,
+                address: data.address,
+                status: data.service_history[0].appointment_status,
+                service_history: data.service_history,
+              })
+            )
+          }>
           SERVICE RECORD
         </Button>
         <Button variant="contained" disableElevation onClick={handleClose}>

@@ -148,7 +148,9 @@ export default function AddAppointDialog({ handleClose, open, data, newHistory, 
                 { _id: "Re-Appointed", value: "Re-Appointed" },
                 { _id: "Resigned", value: "Resigned" },
                 { _id: "Terminated", value: "Terminated" },
+                { _id: "Seperated", value: "Seperated" },
                 { _id: "Promoted", value: "Promoted" },
+                { _id: "Promoted to Permanent", value: "Promoted to Permanent" },
               ]}
               name="status"
               value={newAppoint.service_history[0].status ?? ""}

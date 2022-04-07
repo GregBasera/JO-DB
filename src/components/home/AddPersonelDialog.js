@@ -235,7 +235,9 @@ function ServHisSet(props) {
               { _id: "Re-Appointed", value: "Re-Appointed" },
               { _id: "Resigned", value: "Resigned" },
               { _id: "Terminated", value: "Terminated" },
+              { _id: "Seperated", value: "Seperated" },
               { _id: "Promoted", value: "Promoted" },
+              { _id: "Promoted to Permanent", value: "Promoted to Permanent" },
             ]}
             name="status"
             value={data.service_history[index].status ?? ""}
