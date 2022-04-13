@@ -6,9 +6,10 @@ import AddDepartmentDialog from "./AddDepartmentDialog";
 import { getOffices, getFundSources, search, filter } from "./APIcalls";
 import AddIcon from "@material-ui/icons/Add";
 import PrintIcon from "@material-ui/icons/Print";
+import SortByAlphaIcon from "@material-ui/icons/SortByAlpha";
 import TokenVerifier from "../shared/TokenVerifier";
 
-export default function TopControls({ append, setData, data }) {
+export default function TopControls({ append, setData, data, sort, isDesc }) {
   const [addPersonelDialog, setAddPersonelDialog] = useState(false);
   const [addDepartmentDialog, setAddDepartmentDialog] = useState(false);
   const [addFundingDialog, setFundingDialog] = useState(false);
@@ -72,6 +73,10 @@ export default function TopControls({ append, setData, data }) {
             </Box>
             <IconButton onClick={handleClick} style={TokenVerifier(1) ? { display: "block" } : { display: "none" }}>
               <PrintIcon />
+            </IconButton>
+
+            <IconButton onClick={() => sort(!isDesc)} color={isDesc ? "secondary" : "inherit"}>
+              <SortByAlphaIcon />
             </IconButton>
             <Popover
               id={id}

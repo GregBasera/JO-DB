@@ -3,8 +3,8 @@ import qs from "qs";
 import { JOs, Departments, FundSources } from "../shared/endpoints";
 import headers from "../shared/headers";
 
-function initialize(callback) {
-  Axios.get(`${JOs}?_start=${0}&_limit=${9999}`, headers())
+function initialize(sort, callback) {
+  Axios.get(`${JOs}?_start=${0}&_limit=${9999}&_sort=name:${sort}`, headers())
     .then((res) => {
       callback(res.data);
     })

@@ -9,12 +9,13 @@ export default function HomeBody() {
   const [onRecordState, setonRecordState] = useState(null);
   const [offices, setOffices] = useState(null);
   const [funding, setFunding] = useState(null);
+  const [isDesc, setIsDesc] = useState(true);
   useEffect(() => {
-    initialize(setData);
+    initialize(isDesc ? "desc" : "asc", setData);
     getOffices(setOffices);
     getFundSources(setFunding);
     onRecord(setonRecordState);
-  }, []);
+  }, [isDesc]);
 
   const appendData = (newElem) => {
     setData([...data, newElem]);
@@ -34,7 +35,7 @@ export default function HomeBody() {
 
   return (
     <React.Fragment>
-      <TopControls append={appendData} setData={setData} data={data} />
+      <TopControls append={appendData} setData={setData} data={data} sort={setIsDesc} isDesc={isDesc} />
 
       <Grid container spacing={1} style={{ margin: "0px", backgroundColor: "#eeeeee" }}>
         {data.length !== 0 ? (
