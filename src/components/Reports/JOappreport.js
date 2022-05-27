@@ -4,11 +4,12 @@ import { Grid, Typography, Table, TableHead, TableRow, TableBody, Dialog, Dialog
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import MuiTableCell from "@material-ui/core/TableCell";
 import moment from "moment";
-import { Gtextfield } from "../shared/FormElements";
+import { Gtextfield, Gdropdown } from "../shared/FormElements";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import HRdocHeader from "./HRdocHeader";
-// import { Alert } from "@material-ui/lab";
+import { getOffices } from "../home/APIcalls";
+import { empStatus } from "../shared/sharedVariables";
 
 const TableCell = withStyles({
   root: {
@@ -22,79 +23,89 @@ const TableCell = withStyles({
 })(MuiTableCell);
 
 export default function JOappreport() {
-  useEffect(() => {
-    // Change the document.title for unique filename when downloaded
-    document.title = `AppointmentReport_${moment().format("YY-MM-DD-Hms")}`;
-  }, []);
+  const [offices, setOffices] = useState([]);
+  const [data, setData] = useState(null);
+  const [males, setMales] = useState(null);
+  const [females, setFemales] = useState(null);
+  const [statusFilter, setStatusFilter] = useState("");
+  const [officeFilter, setOfficeFilter] = useState("");
   const [open, setOpen] = useState(true);
+  const [signatories, setSignatories] = useState({
+    prepby: "[prepby]",
+    prepbyPosition: "[prepbyposition]",
+    approvedby: "[approvedby]",
+    approvedbyPosition: "[approvedbyPosition]",
+  });
   const [dateRange, setDateRange] = useState({
     from: "",
     to: "",
   });
-  const dateRangeChanges = (e) => {
-    setDateRange({ ...dateRange, [e.target.id]: e.target.value });
-  };
-  const [data, setData] = useState(null);
-  const [males, setMales] = useState(null);
-  const [females, setFemales] = useState(null);
+
   useEffect(() => {
+    document.title = `AppointmentReport_${moment().format("YY-MM-DD-Hms")}`;
+    getOffices(setOffices);
     let temp = JSON.parse(localStorage.getItem("forPrinting"));
     let males = 0,
       females = 0;
-    temp.forEach((personnel, index) => {
-      temp[index].service_history = personnel.service_history.filter((sh) => {
-        // remove all invalid date-range on each personel
-        return sh.ep_start >= dateRange.from && sh.ep_end <= dateRange.to;
-      });
-    });
-    temp = temp
-      .filter((p) => {
-        // remove all personnel with no servicehistory; whats left is the personnels with VALID date-range
-        return p.service_history.length !== 0;
-      })
-      .sort((a, b) => {
-        if (a.service_history[0].funding_source !== b.service_history[0].funding_source)
-          return a.service_history[0].funding_source.localeCompare(b.service_history[0].funding_source);
-        else if (a.service_history[0].office_assignment !== b.service_history[0].office_assignment)
-          return a.service_history[0].office_assignment.localeCompare(b.service_history[0].office_assignment);
-        return a.name.localeCompare(b.name);
-      });
-    temp.forEach((personnel, index) => {
+
+    // filter raw data from localstorage againts daterange provided by users
+    let dateRangeFiltered = temp.filter(
+      (e) => moment(e.service_history[0].ep_start).isSameOrAfter(dateRange.from) && moment(e.service_history[0].ep_end).isSameOrBefore(dateRange.to)
+    );
+    // filter again against status from user; if undefined; dont
+    let statusFiltered = statusFilter !== "" ? dateRangeFiltered.filter((e) => e.service_history[0].status === statusFilter) : dateRangeFiltered;
+    // filter again against office from user; if undefined; dont
+    let officeFiltered = officeFilter !== "" ? statusFiltered.filter((e) => e.service_history[0].office_assignment === officeFilter) : statusFiltered;
+
+    officeFiltered.forEach((personnel, index) => {
       personnel.sex === "Male" ? males++ : females++;
     });
-    // put data from localStorage to temp -> state(data)
-    setData(temp);
+
+    setData(officeFiltered);
     setMales(males);
     setFemales(females);
-  }, [dateRange]);
+  }, [dateRange, officeFilter, statusFilter]);
 
-  const quarterMaker = (num) => {
-    switch (num) {
-      case 1:
-        return "FIRST";
-      case 2:
-        return "SECOND";
-      case 3:
-        return "THIRD";
-      case 4:
-        return "FOURTH";
-      default:
-        return "ERROR";
-    }
+  const settingStatus = (e) => {
+    setStatusFilter(e.target.value);
+  };
+  const settingOffice = (e) => {
+    setOfficeFilter(e.target.value);
+  };
+  const dateRangeChanges = (e) => {
+    setDateRange({ ...dateRange, [e.target.id]: e.target.value });
+  };
+  const signatoriesChanges = (e) => {
+    setSignatories({ ...signatories, [e.target.id]: e.target.value });
   };
 
   return (
     <React.Fragment>
-      <FinishingDetails open={open} handleClose={() => setOpen(false)} dateRange={dateRange} changes={dateRangeChanges} />
+      <FinishingDetails
+        open={open}
+        handleClose={() => setOpen(false)}
+        dateRange={dateRange}
+        changes={dateRangeChanges}
+        statusFilter={statusFilter}
+        setStatusFilter={settingStatus}
+        offices={offices}
+        officeFilter={officeFilter}
+        setOfficeFilter={settingOffice}
+        signatories={signatories}
+        signatoriesChanges={signatoriesChanges}
+      />
       <HRdocHeader paperSize="long" />
 
       <Grid container spacing={0}>
         <Grid item xs={12}>
-          <Typography align="center" variant="h6" style={{ margin: "20px 0px 0px 0px" }}>
+          <Typography align="center" variant="h5" style={{ margin: "20px 0px 0px 0px" }}>
             <b>{`JOB ORDER APPOINTMENT ${moment(dateRange.to).format("YYYY")}`}</b>
           </Typography>
+          <Typography align="center">
+            <b>{`${statusFilter ? (statusFilter + " Employees").toUpperCase() : ""} ${officeFilter}`}</b>
+          </Typography>
           <Typography align="center" style={{ fontSize: "13pt", color: "red", margin: "0px 0px 20px 0px" }}>
-            <b>{`${quarterMaker(moment(dateRange.from).quarter())} QUARTER (${moment(dateRange.from).format("MMMM")} - ${moment(dateRange.to).format("MMMM")})`}</b>
+            <b>{`(${moment(dateRange.from).format("MMMM")} - ${moment(dateRange.to).format("MMMM")})`}</b>
           </Typography>
         </Grid>
       </Grid>
@@ -180,10 +191,10 @@ export default function JOappreport() {
         <Grid item xs={6} style={{ marginTop: "20px" }}>
           <Typography>Prepared by:</Typography>
           <Typography align="center" style={{ marginTop: "20px" }}>
-            <b>MA. SARINA G AÑONUEVO</b>
+            <b>{signatories.prepby}</b>
           </Typography>
           <Typography align="center">
-            <i>MGDH I (HRMO V)</i>
+            <i>{signatories.prepbyPosition}</i>
           </Typography>
         </Grid>
         <Grid item xs={5}>
@@ -195,10 +206,10 @@ export default function JOappreport() {
         <Grid item xs={6}>
           <Typography>Approved by:</Typography>
           <Typography align="center" style={{ marginTop: "20px" }}>
-            <b>LUIS OSCAR T. ELEAZAR</b>
+            <b>{signatories.approvedby}</b>
           </Typography>
           <Typography align="center">
-            <i>Municipal Mayor</i>
+            <i>{signatories.approvedbyPosition}</i>
           </Typography>
           <Typography align="center">
             <i>Date: {moment().format("D MMM YYYY")}</i>
@@ -244,8 +255,9 @@ const DialogTitle = withStyles(styles)((props) => {
   );
 });
 
-function FinishingDetails({ open, handleClose, dateRange, changes }) {
+function FinishingDetails({ open, handleClose, dateRange, changes, offices, statusFilter, setStatusFilter, officeFilter, setOfficeFilter, signatories, signatoriesChanges }) {
   let { from, to } = dateRange;
+  let { prepby, prepbyPosition, approvedby, approvedbyPosition } = signatories;
 
   return (
     <Dialog
@@ -262,6 +274,12 @@ function FinishingDetails({ open, handleClose, dateRange, changes }) {
         {/* <Alert severity="warning">This page is better printed on Mozilla Firefox</Alert> */}
         <Gtextfield type="date" id="from" label="From" value={from} onChange={changes} InputLabelProps={{ shrink: true }} />
         <Gtextfield type="date" id="to" label="To" value={to} onChange={changes} InputLabelProps={{ shrink: true }} />
+        <Gdropdown label="Status / Remarks" menuItems={empStatus} name="status" value={statusFilter ?? ""} onChange={setStatusFilter} />
+        <Gdropdown label="Office Assignment" menuItems={offices} name="office_assignment" value={officeFilter ?? ""} onChange={setOfficeFilter} />
+        <Gtextfield type="text" id="prepby" label="Prepared by" value={prepby} onChange={signatoriesChanges} InputLabelProps={{ shrink: true }} />
+        <Gtextfield type="text" id="prepbyPosition" label="Position" value={prepbyPosition} onChange={signatoriesChanges} InputLabelProps={{ shrink: true }} />
+        <Gtextfield type="text" id="approvedby" label="Approved by" value={approvedby} onChange={signatoriesChanges} InputLabelProps={{ shrink: true }} />
+        <Gtextfield type="text" id="approvedbyPosition" label="Position" value={approvedbyPosition} onChange={signatoriesChanges} InputLabelProps={{ shrink: true }} />
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Print</Button>

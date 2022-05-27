@@ -3,8 +3,10 @@ import { withStyles } from "@material-ui/core/styles";
 import HRdocHeader from "./HRdocHeader";
 import { Grid, Table, TableHead, TableRow, TableBody, Typography, Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@material-ui/core";
 import MuiTableCell from "@material-ui/core/TableCell";
-import { Gtextfield } from "../shared/FormElements";
+import { Gtextfield, Gdropdown } from "../shared/FormElements";
 import moment from "moment";
+import { getOffices } from "../home/APIcalls";
+import { empStatus } from "../shared/sharedVariables";
 
 const TableCell = withStyles({
   root: {
@@ -18,87 +20,99 @@ const TableCell = withStyles({
 })(MuiTableCell);
 
 export default function PersonalInfoReport() {
-  useEffect(() => {
-    // Change the document.title for unique filename when downloaded
-    document.title = `PersonalInfoReport_${moment().format("YY-MM-DD-Hms")}`;
-  }, []);
+  const [offices, setOffices] = useState([]);
   const [open, setOpen] = useState(true);
+  const [statusFilter, setStatusFilter] = useState("");
+  const [officeFilter, setOfficeFilter] = useState("");
+  const [data, setData] = useState(null);
+  const [males, setMales] = useState(null);
+  const [females, setFemales] = useState(null);
   const [dateRange, setDateRange] = useState({
     from: "",
     to: "",
   });
+
+  const settingStatus = (e) => {
+    setStatusFilter(e.target.value);
+  };
+  const settingOffice = (e) => {
+    setOfficeFilter(e.target.value);
+  };
   const dateRangeChanges = (e) => {
     setDateRange({ ...dateRange, [e.target.id]: e.target.value });
   };
 
-  const [data, setData] = useState(null);
-  const [males, setMales] = useState(null);
-  const [females, setFemales] = useState(null);
   useEffect(() => {
+    // Change tab title
+    document.title = `PersonalInfoReport_${moment().format("YY-MM-DD-Hms")}`;
+    // get offices for filtering
+    getOffices(setOffices);
+    // get all employees from localstorage
     let temp = JSON.parse(localStorage.getItem("forPrinting"));
-    let males = 0,
-      females = 0;
-    temp.forEach((personnel, index) => {
-      temp[index].service_history = personnel.service_history.filter((sh) => {
-        // remove all invalid date-range on each personel
-        return sh.ep_start >= dateRange.from && sh.ep_end <= dateRange.to;
-      });
+    // counter for sexes
+    let males = 0;
+    let females = 0;
+
+    // filter raw data from localstorage againts daterange provided by users
+    let dateRangeFiltered = temp.filter(
+      (e) => moment(e.service_history[0].ep_start).isSameOrAfter(dateRange.from) && moment(e.service_history[0].ep_end).isSameOrBefore(dateRange.to)
+    );
+    // filter again against status from user; if undefined; dont
+    let statusFiltered = statusFilter !== "" ? dateRangeFiltered.filter((e) => e.service_history[0].status === statusFilter) : dateRangeFiltered;
+    // filter again against office from user; if undefined; dont
+    let officeFiltered = officeFilter !== "" ? statusFiltered.filter((e) => e.service_history[0].office_assignment === officeFilter) : statusFiltered;
+
+    // sort alphabetically by name
+    let sorted = officeFiltered.sort((a, b) => {
+      let x = a.name.toLowerCase();
+      let y = b.name.toLowerCase();
+      if (x < y) return -1;
+      if (x > y) return 1;
+      return 0;
     });
-    temp = temp
-      .filter((p) => {
-        // remove all personnel with no servicehistory; whats left is the personnels with VALID date-range
-        return p.service_history.length !== 0;
-      })
-      .sort((a, b) => {
-        if (a.service_history[0].funding_source !== b.service_history[0].funding_source)
-          return a.service_history[0].funding_source.localeCompare(b.service_history[0].funding_source);
-        else if (a.service_history[0].office_assignment !== b.service_history[0].office_assignment)
-          return a.service_history[0].office_assignment.localeCompare(b.service_history[0].office_assignment);
-        return a.name.localeCompare(b.name);
-      });
-    temp.forEach((personnel, index) => {
+
+    // count male and female
+    sorted.forEach((personnel, index) => {
       personnel.sex === "Male" ? males++ : females++;
     });
-    // put data from localStorage to temp -> state(data)
-    setData(temp);
+
+    // return data to respective states
+    setData(sorted);
     setMales(males);
     setFemales(females);
-  }, [dateRange]);
-
-  const quarterMaker = (num) => {
-    switch (num) {
-      case 1:
-        return "FIRST";
-      case 2:
-        return "SECOND";
-      case 3:
-        return "THIRD";
-      case 4:
-        return "FOURTH";
-      default:
-        return "ERROR";
-    }
-  };
+  }, [dateRange, statusFilter, officeFilter]);
 
   return (
     <React.Fragment>
-      <FinishingDetails open={open} handleClose={() => setOpen(false)} dateRange={dateRange} changes={dateRangeChanges} />
+      <FinishingDetails
+        open={open}
+        handleClose={() => setOpen(false)}
+        dateRange={dateRange}
+        changes={dateRangeChanges}
+        statusFilter={statusFilter}
+        setStatusFilter={settingStatus}
+        offices={offices}
+        officeFilter={officeFilter}
+        setOfficeFilter={settingOffice}
+      />
       <HRdocHeader paperSize="long" />
 
       <Grid container spacing={0}>
         <Grid item xs={12}>
-          <Typography align="center" variant="h6" style={{ margin: "20px 0px 0px 0px" }}>
-            <b>{`JOB ORDER PERSONAL INFORMATION ${moment(dateRange.to).format("YYYY")}`}</b>
+          <Typography align="center" variant="h5" style={{ margin: "20px 0px 0px 0px" }}>
+            <b>{`PERSONAL INFO REPORT ${moment(dateRange.to).format("YYYY")}`}</b>
+          </Typography>
+          <Typography align="center">
+            <b>{`${statusFilter ? (statusFilter + " Employees").toUpperCase() : ""} ${officeFilter}`}</b>
           </Typography>
           <Typography align="center" style={{ fontSize: "13pt", color: "red", margin: "0px 0px 20px 0px" }}>
-            <b>{`${quarterMaker(moment(dateRange.from).quarter())} QUARTER (${moment(dateRange.from).format("MMMM")} - ${moment(dateRange.to).format("MMMM")})`}</b>
+            <b>{`(${moment(dateRange.from).format("MMMM")} - ${moment(dateRange.to).format("MMMM")})`}</b>
           </Typography>
         </Grid>
       </Grid>
 
       <Grid container spacing={0} style={{ display: "block" }}>
         <Grid item xs={12} style={{ padding: "0px 10px 0px 10px" }}>
-          {/* <TableContainer component={Paper} elevation={0}> */}
           <Table size="small">
             <TableHead>
               <TableRow>
@@ -137,14 +151,13 @@ export default function PersonalInfoReport() {
               <Typography color="textSecondary" style={{ fontSize: "10pt" }}>{`${males} Male, ${females} Female`}</Typography>
             </TableBody>
           </Table>
-          {/* </TableContainer> */}
         </Grid>
       </Grid>
     </React.Fragment>
   );
 }
 
-function FinishingDetails({ open, handleClose, dateRange, changes }) {
+function FinishingDetails({ open, handleClose, dateRange, statusFilter, setStatusFilter, offices, officeFilter, setOfficeFilter, changes }) {
   let { from, to } = dateRange;
 
   return (
@@ -162,6 +175,8 @@ function FinishingDetails({ open, handleClose, dateRange, changes }) {
         {/* <Alert severity="warning">This page is better printed on Mozilla Firefox</Alert> */}
         <Gtextfield type="date" id="from" label="From" value={from} onChange={changes} InputLabelProps={{ shrink: true }} />
         <Gtextfield type="date" id="to" label="To" value={to} onChange={changes} InputLabelProps={{ shrink: true }} />
+        <Gdropdown label="Status / Remarks" menuItems={empStatus} name="status" value={statusFilter ?? ""} onChange={setStatusFilter} />
+        <Gdropdown label="Office Assignment" menuItems={offices} name="office_assignment" value={officeFilter ?? ""} onChange={setOfficeFilter} />
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Print</Button>
