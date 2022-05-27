@@ -2,11 +2,10 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import { Dialog, DialogContent, Typography, DialogActions, Button, IconButton, Paper, Grid } from "@material-ui/core";
-import { Gtextfield } from "../shared/FormElements";
-import qs from "qs";
+import { Gtextfield } from "../../shared/FormElements";
 import CloseIcon from "@material-ui/icons/Close";
 import moment from "moment";
-import TokenVerifier from "../shared/TokenVerifier";
+import TokenVerifier from "../../shared/TokenVerifier";
 
 const styles = (theme) => ({
   root: {
@@ -63,7 +62,7 @@ export default function MoreInfoDialog({ handleClose, open, data }) {
       </DialogContent>
 
       <DialogActions style={{ backgroundColor: "#5CB3FF" }}>
-        <Button
+        {/* <Button
           variant="contained"
           disableElevation
           href={`${document.location.origin}/employcert?${qs.stringify({
@@ -75,7 +74,7 @@ export default function MoreInfoDialog({ handleClose, open, data }) {
           target="_blank"
           style={TokenVerifier(1) ? { display: "block" } : { display: "none" }}>
           EMPLOYMENT CERT
-        </Button>
+        </Button> */}
         <Button
           variant="contained"
           disableElevation

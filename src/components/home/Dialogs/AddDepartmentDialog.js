@@ -3,8 +3,8 @@ import { withStyles } from "@material-ui/core/styles";
 import { Button, Dialog, DialogContent, Typography, DialogActions, IconButton } from "@material-ui/core";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import CloseIcon from "@material-ui/icons/Close";
-import { Gtextfield } from "../shared/FormElements";
-import { addDept, addFund } from "./APIcalls";
+import { Gtextfield } from "../../shared/FormElements";
+import { addDept, addFund } from "../APIcalls";
 
 const styles = (theme) => ({
   root: {

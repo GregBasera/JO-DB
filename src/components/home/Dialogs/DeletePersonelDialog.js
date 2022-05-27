@@ -2,7 +2,7 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Button, Dialog, DialogContent, Typography, DialogActions, IconButton } from "@material-ui/core";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
-import { deletePersonel } from "./APIcalls";
+import { deletePersonel } from "../APIcalls";
 import CloseIcon from "@material-ui/icons/Close";
 
 const styles = (theme) => ({

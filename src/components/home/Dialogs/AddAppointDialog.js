@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Button, Dialog, DialogContent, Typography, DialogActions, IconButton, Grid } from "@material-ui/core";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
-import { pushNewAppoint } from "./APIcalls";
-import { Gtextfield, Gdropdown } from "../shared/FormElements";
+import { pushNewAppoint } from "../APIcalls";
+import { Gtextfield, Gdropdown } from "../../shared/FormElements";
 import CloseIcon from "@material-ui/icons/Close";
+import { appointStatus, empStatus, genFunction } from "../../shared/sharedVariables";
 
 const styles = (theme) => ({
   root: {
@@ -79,11 +80,7 @@ export default function AddAppointDialog({ handleClose, open, data, newHistory, 
               label="Appointment Status"
               value={newAppoint.service_history[0].appointment_status ?? ""}
               onChange={handleChanges}
-              menuItems={[
-                { _id: "Job Order", value: "Job Order" },
-                { _id: "Contractual", value: "Contractual" },
-                { _id: "Locally Funded", value: "Locally Funded" },
-              ]}
+              menuItems={appointStatus}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -124,38 +121,14 @@ export default function AddAppointDialog({ handleClose, open, data, newHistory, 
           <Grid item xs={12} md={12}>
             <Gdropdown
               label="General Function"
-              menuItems={[
-                { _id: "IT Service", value: "IT Service" },
-                { _id: "Teaching Service", value: "Teaching Service" },
-                { _id: "Health and Allied Service", value: "Health and Allied Service" },
-                { _id: "Technical Service", value: "Technical Service" },
-                { _id: "Clerical Service", value: "Clerical Service" },
-                { _id: "Janitorial Service", value: "Janitorial Service" },
-                { _id: "Security Service", value: "Security Service" },
-                { _id: "Trade and Crafts / Laborer", value: "Trade and Crafts / Laborer" },
-                { _id: "Others", value: "Others" },
-              ]}
+              menuItems={genFunction}
               name="general_function"
               value={newAppoint.service_history[0].general_function ?? ""}
               onChange={handleChanges}
             />
           </Grid>
           <Grid item xs={12} md={12}>
-            <Gdropdown
-              label="Status / Remarks"
-              menuItems={[
-                { _id: "New", value: "New" },
-                { _id: "Re-Appointed", value: "Re-Appointed" },
-                { _id: "Resigned", value: "Resigned" },
-                { _id: "Terminated", value: "Terminated" },
-                { _id: "Seperated", value: "Seperated" },
-                { _id: "Promoted", value: "Promoted" },
-                { _id: "Promoted to Permanent", value: "Promoted to Permanent" },
-              ]}
-              name="status"
-              value={newAppoint.service_history[0].status ?? ""}
-              onChange={handleChanges}
-            />
+            <Gdropdown label="Status / Remarks" menuItems={empStatus} name="status" value={newAppoint.service_history[0].status ?? ""} onChange={handleChanges} />
           </Grid>
           <Grid item xs={12} md={12}>
             <Gdropdown label="Funding Source" menuItems={funding} name="funding_source" value={newAppoint.service_history[0].funding_source ?? ""} onChange={handleChanges} />

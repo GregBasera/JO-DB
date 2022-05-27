@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Button, Dialog, DialogContent, Typography, DialogActions, IconButton, Paper, Grid } from "@material-ui/core";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
-import { Gtextfield, Gdropdown } from "../shared/FormElements";
-import { newPersonel } from "./APIcalls";
+import { Gtextfield, Gdropdown } from "../../shared/FormElements";
+import { newPersonel } from "../APIcalls";
 import CloseIcon from "@material-ui/icons/Close";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
+import { appointStatus, empStatus, genFunction } from "../../shared/sharedVariables";
 
 const styles = (theme) => ({
   root: {
@@ -170,11 +171,7 @@ function ServHisSet(props) {
             label="Appointment Status"
             value={data.service_history[index].appointment_status ?? ""}
             onChange={onChange}
-            menuItems={[
-              { _id: "Job Order", value: "Job Order" },
-              { _id: "Contractual", value: "Contractual" },
-              { _id: "Locally Funded", value: "Locally Funded" },
-            ]}
+            menuItems={appointStatus}
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -207,42 +204,10 @@ function ServHisSet(props) {
           <Gdropdown label="Office Assignment" menuItems={depts} name="office_assignment" value={data.service_history[index].office_assignment ?? ""} onChange={onChange} />
         </Grid>
         <Grid item xs={12} md={12}>
-          <Gdropdown
-            label="General Function"
-            menuItems={[
-              { _id: "IT Service", value: "IT Service" },
-              { _id: "Teaching Service", value: "Teaching Service" },
-              { _id: "Health and Allied Service", value: "Health and Allied Service" },
-              { _id: "Technical Service", value: "Technical Service" },
-              { _id: "Clerical Service", value: "Clerical Service" },
-              { _id: "Janitorial Service", value: "Janitorial Service" },
-              { _id: "Security Service", value: "Security Service" },
-              { _id: "Trade and Crafts/Laborer", value: "Trade and Crafts/Laborer" },
-              { _id: "Driving/Support Service", value: "Driving/Support Service" },
-              { _id: "Janitorial/Messengerial", value: "Janitorial/Messengerial" },
-              { _id: "Others", value: "Others" },
-            ]}
-            name="general_function"
-            value={data.service_history[index].general_function ?? ""}
-            onChange={onChange}
-          />
+          <Gdropdown label="General Function" menuItems={genFunction} name="general_function" value={data.service_history[index].general_function ?? ""} onChange={onChange} />
         </Grid>
         <Grid item xs={12} md={12}>
-          <Gdropdown
-            label="Status / Remarks"
-            menuItems={[
-              { _id: "New", value: "Newly Hired" },
-              { _id: "Re-Appointed", value: "Re-Appointed" },
-              { _id: "Resigned", value: "Resigned" },
-              { _id: "Terminated", value: "Terminated" },
-              { _id: "Seperated", value: "Seperated" },
-              { _id: "Promoted", value: "Promoted" },
-              { _id: "Promoted to Permanent", value: "Promoted to Permanent" },
-            ]}
-            name="status"
-            value={data.service_history[index].status ?? ""}
-            onChange={onChange}
-          />
+          <Gdropdown label="Status / Remarks" menuItems={empStatus} name="status" value={data.service_history[index].status ?? ""} onChange={onChange} />
         </Grid>
         <Grid item xs={12} md={12}>
           <Gdropdown label="Funding Source" menuItems={fundSources} name="funding_source" value={data.service_history[index].funding_source ?? ""} onChange={onChange} />
