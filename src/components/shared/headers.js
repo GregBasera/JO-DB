@@ -1,5 +1,5 @@
 export default function headers() {
-  let raw = JSON.parse(sessionStorage.getItem("auth"));
+  let raw = JSON.parse(sessionStorage.getItem("auth") ?? localStorage.getItem("auth"));
 
   return {
     headers: {
