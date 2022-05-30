@@ -11,14 +11,14 @@ export default function PrintDialog({ open, handleClose, data }) {
     <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
       <DialogContent dividers>
         <Button variant="contained" color="primary" href={`${document.location.origin}/JOappreport`} target="_blank" onClick={printAppReport} style={{ margin: "2px" }}>
-          Print Appointment Report
+          Appointment Report
         </Button>
         <Button variant="contained" color="primary" href={`${document.location.origin}/perinforeport`} target="_blank" onClick={printAppReport} style={{ margin: "2px" }}>
-          Print JO Information Report
+          JO Information Report
         </Button>
 
         <Button variant="contained" color="primary" href={`${document.location.origin}/employcert`} target="_blank" style={{ margin: "2px" }}>
-          Print EMPLOYMENT CERTificate
+          Employment Certificate
         </Button>
       </DialogContent>
     </Dialog>
