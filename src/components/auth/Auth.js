@@ -28,7 +28,7 @@ function Desktop({ tabState, handleTabChange }) {
             <b>LGU-Tagkawayan </b>
           </Typography>
           <Typography variant="h3" style={{ color: "white" }}>
-            <b>Job Order Personel Database </b>
+            <b>Job Order Personnel Database </b>
           </Typography>
         </Box>
       </Grid>
