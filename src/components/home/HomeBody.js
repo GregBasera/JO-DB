@@ -63,7 +63,7 @@ export default function HomeBody() {
         {data.length !== 0 ? (
           <List dense={true} disablePadding={true} style={{ width: "100%" }}>
             {data.map((personel) => (
-              <ListItem>
+              <ListItem key={personel._id}>
                 <EmployeeList data={personel} deleteOne={popOneOut} newHistory={addNewAppoint} offices={offices} funding={funding} />
               </ListItem>
             ))}
@@ -72,9 +72,7 @@ export default function HomeBody() {
             </Grid> */}
           </List>
         ) : (
-          <Typography>
-            <CircularProgress />
-          </Typography>
+          <CircularProgress />
         )}
       </Grid>
 

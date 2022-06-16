@@ -51,7 +51,9 @@ export default function EmployeeList({ data, deleteOne, newHistory, offices, fun
     <React.Fragment>
       <Grid container spacing={1} style={{ backgroundColor: "white", marginBottom: "1px" }}>
         <Grid item xs={3} style={{ borderLeft: "1px lightgray solid" }}>
-          <Typography>{data.name}</Typography>
+          <Typography>
+            <b>{data.name}</b>
+          </Typography>
         </Grid>
         <Grid item xs={2} style={{ borderLeft: "1px lightgray solid" }}>
           <Typography>{designation}</Typography>

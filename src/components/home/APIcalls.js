@@ -3,7 +3,7 @@ import qs from "qs";
 import { JOs, Departments, FundSources } from "../shared/endpoints";
 import headers from "../shared/headers";
 
-function initialize(sort, callback) {
+export function initialize(sort, callback) {
   Axios.get(`${JOs}?_start=${0}&_limit=${9999}&_sort=name:${sort}`, headers())
     .then((res) => {
       callback(res.data);
@@ -13,7 +13,7 @@ function initialize(sort, callback) {
     });
 }
 
-function getOffices(callback) {
+export function getOffices(callback) {
   Axios.get(`${Departments}/count`, headers())
     .then((res) => {
       // callback(res.data);
@@ -35,7 +35,7 @@ function getOffices(callback) {
     });
 }
 
-function newPersonel(data, callback) {
+export function newPersonel(data, callback) {
   Axios.post(JOs, data, headers())
     .then((res) => {
       callback(res.data);
@@ -45,7 +45,7 @@ function newPersonel(data, callback) {
     });
 }
 
-function search(searchTerm, callback) {
+export function search(searchTerm, callback) {
   // for personel name and sex; nothing else
   let query = qs.stringify({ _where: { _or: [{ name_contains: searchTerm }, { sex_contains: searchTerm }] } });
 
@@ -58,7 +58,7 @@ function search(searchTerm, callback) {
     });
 }
 
-function filter(data, callback) {
+export function filter(data, callback) {
   Axios.get(JOs, headers())
     .then((res) => {
       if (data[1] !== "all") {
@@ -73,7 +73,7 @@ function filter(data, callback) {
     });
 }
 
-function addDept(data, callback) {
+export function addDept(data, callback) {
   Axios.post(Departments, data, headers())
     .then((res) => {
       console.log(res.data);
@@ -83,7 +83,7 @@ function addDept(data, callback) {
     });
 }
 
-function addFund(data, callback) {
+export function addFund(data, callback) {
   Axios.post(FundSources, data, headers())
     .then((res) => {
       console.log(res.data);
@@ -93,7 +93,7 @@ function addFund(data, callback) {
     });
 }
 
-function deletePersonel(id, callback) {
+export function deletePersonel(id, callback) {
   Axios.delete(`${JOs}/${id}`, headers())
     .then((res) => {
       callback(res.data._id);
@@ -103,7 +103,7 @@ function deletePersonel(id, callback) {
     });
 }
 
-function pushNewAppoint(id, data, callback) {
+export function pushNewAppoint(id, data, callback) {
   Axios.put(`${JOs}/${id}`, data, headers())
     .then((res) => {
       callback(id, data);
@@ -113,7 +113,7 @@ function pushNewAppoint(id, data, callback) {
     });
 }
 
-function editExisting(id, data, callback) {
+export function editExisting(id, data, callback) {
   Axios.put(`${JOs}/${id}`, data, headers())
     .then((res) => {
       callback(id, res.data);
@@ -123,7 +123,7 @@ function editExisting(id, data, callback) {
     });
 }
 
-function getFundSources(callback) {
+export function getFundSources(callback) {
   Axios.get(`${FundSources}/count`, headers())
     .then((res) => {
       // callback(res.data);
@@ -145,7 +145,7 @@ function getFundSources(callback) {
     });
 }
 
-function onRecord(callback) {
+export function onRecord(callback) {
   Axios.get(`${JOs}/count`, headers())
     .then((res) => {
       callback(res.data);
@@ -155,4 +155,4 @@ function onRecord(callback) {
     });
 }
 
-export { initialize, getOffices, newPersonel, search, filter, addDept, addFund, deletePersonel, pushNewAppoint, editExisting, getFundSources, onRecord };
+// export { initialize, getOffices, newPersonel, search, filter, addDept, addFund, deletePersonel, pushNewAppoint, editExisting, getFundSources, onRecord };
