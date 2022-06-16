@@ -5,6 +5,7 @@ import Home from "./components/home/Home";
 import Auth from "./components/auth/Auth";
 import EmploymentCert from "./components/Reports/EmploymentCert";
 import ServiceRecord from "./components/Reports/ServiceRecord";
+import JOappcert from "./components/Reports/JOappcert";
 import JOappreport from "./components/Reports/JOappreport";
 import PersonalInfoReport from "./components/Reports/PersonalInfoReport";
 import NotFound from "./components/shared/NotFound";
@@ -19,6 +20,7 @@ function App() {
         <Route path="/servrecord" exact component={ServiceRecord} />
         <Route path="/joappreport" exact component={JOappreport} />
         <Route path="/perinforeport" exact component={PersonalInfoReport} />
+        <Route path="/joappcert" exact component={JOappcert} />
         {/* <Route path="/admin" exact component={Admin} /> */}
         <Route component={NotFound} /> {/* 404 */}
       </Switch>

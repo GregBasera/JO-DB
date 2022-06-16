@@ -78,6 +78,26 @@ export default function MoreInfoDialog({ handleClose, open, data }) {
         <Button
           variant="contained"
           disableElevation
+          href={`${document.location.origin}/joappcert`}
+          target="_blank"
+          style={TokenVerifier(1) ? { display: "block" } : { display: "none" }}
+          onClick={() =>
+            prepServiceRecord(
+              JSON.stringify({
+                name: data.name,
+                birthdate: data.birthdate,
+                birthplace: data.birthplace,
+                address: data.address,
+                status: data.service_history[0].appointment_status,
+                service_history: data.service_history,
+              })
+            )
+          }>
+          LASTEST APPOINTMENT CERT
+        </Button>
+        <Button
+          variant="contained"
+          disableElevation
           href={`${document.location.origin}/servrecord`}
           target="_blank"
           style={TokenVerifier(1) ? { display: "block" } : { display: "none" }}
