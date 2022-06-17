@@ -88,6 +88,7 @@ export default function MoreInfoDialog({ handleClose, open, data }) {
                 birthdate: data.birthdate,
                 birthplace: data.birthplace,
                 address: data.address,
+                sex: data.sex,
                 status: data.service_history[0].appointment_status,
                 service_history: data.service_history,
               })

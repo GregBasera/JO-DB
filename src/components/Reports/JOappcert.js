@@ -31,8 +31,18 @@ export default function JOappcert() {
         copy = storage.name.split(" ");
         cap1stLetter = copy.map((q) => q[0].toUpperCase() + q.slice(1).toLowerCase());
         return cap1stLetter[0].replace(/,/g, "");
+      case "sex":
+        if (storage.sex === "Male") return "Mr.";
+        if (storage.sex === "Female") return "Ms.";
+        break;
       case "position":
         return storage.service_history[0].designation;
+      case "office":
+        return storage.service_history[0].office_assignment;
+      case "from":
+        return storage.service_history[0].ep_start;
+      case "to":
+        return storage.service_history[0].ep_end;
       default:
         break;
     }
@@ -40,10 +50,13 @@ export default function JOappcert() {
 
   const [open, setOpen] = useState(true);
   const [details, setDetails] = useState({
+    emp_name: straightFromStorage("name"),
+    surname: straightFromStorage("surname"),
+    address: straightFromStorage("address"),
     position: straightFromStorage("position"),
-    location: "[location]",
+    location: straightFromStorage("office"),
     rate: "one hundred pesos (Php 100.00)",
-    expiration: "[expiration]",
+    issue_date: "[issue_date]",
     supervisor: "[supervisor]",
     super_position: "[super_position]",
     mayor: "LUIS OSCAR T. ELEAZAR",
@@ -60,41 +73,42 @@ export default function JOappcert() {
       <OMMdocHeader paperSize="a4" />
       <Grid container spacing={0}>
         <Grid item xs={12}>
-          <Typography align="right" style={{ margin: "30px 20px 0px 20px", fontFamily: "Times New Roman" }}>
-            {moment().format("MMMM DD, YYYY")}
+          <Typography align="right" style={{ margin: "30px 60px", fontFamily: "Times New Roman" }}>
+            {moment(details.issue_date).format("MMMM DD, YYYY")}
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography align="left" style={{ fontSize: "12pt", lineHeight: "normal", margin: "20px 20px 0px 20px", fontFamily: "Times New Roman" }}>
-            {straightFromStorage("name")}
+          <Typography align="left" style={{ fontSize: "12pt", lineHeight: "normal", margin: "0px 60px", fontFamily: "Times New Roman" }}>
+            {details.emp_name}
           </Typography>
-          <Typography align="left" style={{ fontSize: "12pt", lineHeight: "normal", margin: "0px 20px 0px 20px", fontFamily: "Times New Roman" }}>
-            {straightFromStorage("address")}
+          <Typography align="left" style={{ fontSize: "12pt", lineHeight: "normal", margin: "0px 60px", fontFamily: "Times New Roman" }}>
+            {details.address}
           </Typography>
-          <Typography align="left" style={{ fontSize: "12pt", lineHeight: "normal", margin: "0px 20px 0px 20px", fontFamily: "Times New Roman" }}>
+          <Typography align="left" style={{ fontSize: "12pt", lineHeight: "normal", margin: "0px 60px", fontFamily: "Times New Roman" }}>
             Tagkawayan, Quezon
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography align="left" style={{ margin: "30px 20px 0px 20px", fontFamily: "Times New Roman" }}>
-            {`Dear Mr./Ms. ${straightFromStorage("surname")}:`}
+          <Typography align="left" style={{ margin: "25px 60px 0px", fontFamily: "Times New Roman" }}>
+            {`Dear ${straightFromStorage("sex")} ${details.surname}:`}
           </Typography>
         </Grid>
 
         <Grid item xs={12}>
-          <Typography align="justify" style={{ fontSize: "12pt", lineHeight: "normal", margin: "10px 20px 10px 20px", textIndent: "5em", fontFamily: "Times New Roman" }}>
-            {`You are hereby directed to perform the job of a `}
+          <Typography align="justify" style={{ fontSize: "12pt", lineHeight: "normal", margin: "15px 60px", textIndent: "5em", fontFamily: "Times New Roman" }}>
+            {`You are hereby directed to perform the job of `}
             <b>{details.position}</b>
-            {` at the ${details.location}, at the rate of `}
+            {` at the ${details.location}, at the daily rate of `}
             <b>{details.rate}</b>
-            {` daily, which will be released every 5th
-            and 20th day of the month. This will take effect from the date stated above until ${moment(details.expiration).format("MMMM DD, YYYY")}`}
+            {` only, which will be released every 5th
+            and 20th day of the month. This will take effect from ${moment(straightFromStorage("from")).format("MMM DD, YYYY")}
+            until ${moment(straightFromStorage("to")).format("MMM DD, YYYY")}.`}
           </Typography>
-          <Typography align="justify" style={{ fontSize: "12pt", lineHeight: "normal", margin: "0px 20px 10px 20px", textIndent: "5em", fontFamily: "Times New Roman" }}>
+          <Typography align="justify" style={{ fontSize: "12pt", lineHeight: "normal", margin: "15px 60px", textIndent: "5em", fontFamily: "Times New Roman" }}>
             {`Please be noted that this order automatically ceases upon its expiration or you can be terminated prior to the expiration of this
             Job Order for the following reasons:`}
           </Typography>
-          <Typography align="justify" style={{ fontSize: "12pt", lineHeight: "normal", margin: "0px 20px 10px 80px", fontFamily: "Times New Roman" }}>
+          <Typography align="justify" style={{ fontSize: "12pt", lineHeight: "normal", margin: "15px 60px", fontFamily: "Times New Roman" }}>
             <ul>
               <li>Lack of funds or when your service is no longer needed;</li>
               <li>False entry on your Daily Time Record;</li>
@@ -105,14 +119,14 @@ export default function JOappcert() {
               <li>Other violation of the Norms of Conduct of Public Officials and Employees, Section 4 of the Republic Act No. 6713.</li>
             </ul>
           </Typography>
-          <Typography align="justify" style={{ fontSize: "12pt", lineHeight: "normal", margin: "0px 20px 10px 20px", textIndent: "5em", fontFamily: "Times New Roman" }}>
+          <Typography align="justify" style={{ fontSize: "12pt", lineHeight: "normal", margin: "15px 60px", textIndent: "5em", fontFamily: "Times New Roman" }}>
             {`Furthermore, your services rendered are not considered or will not be accredited as government service, and you cannot enjoy the benifits
             enjoyed by government employees such as ACA, PERA, and other benefits.`}
           </Typography>
-          <Typography align="justify" style={{ fontSize: "12pt", lineHeight: "normal", margin: "0px 20px 10px 20px", textIndent: "5em", fontFamily: "Times New Roman" }}>
+          <Typography align="justify" style={{ fontSize: "12pt", lineHeight: "normal", margin: "15px 60px", textIndent: "5em", fontFamily: "Times New Roman" }}>
             {`You are hereby instructed to report to ${details.supervisor}, ${details.super_position} of ${details.location}, for briefing and orientation on your job descriptions.`}
           </Typography>
-          <Typography align="justify" style={{ fontSize: "12pt", lineHeight: "normal", margin: "0px 20px 10px 20px", textIndent: "5em", fontFamily: "Times New Roman" }}>
+          <Typography align="justify" style={{ fontSize: "12pt", lineHeight: "normal", margin: "15px 60px", textIndent: "5em", fontFamily: "Times New Roman" }}>
             {`It is expected that you will work diligently, conscientiously, and without reservation for the good of the people and public service.`}
           </Typography>
         </Grid>
@@ -121,7 +135,7 @@ export default function JOappcert() {
           {/* Spacer */}
         </Grid>
         <Grid item xs={6}>
-          <Typography align="center" style={{ fontSize: "14pt", lineHeight: "normal", marginTop: "50px", fontFamily: "Times New Roman" }}>
+          <Typography align="center" style={{ fontSize: "14pt", lineHeight: "normal", margin: "50px 0px 0px", fontFamily: "Times New Roman" }}>
             <b>{details.mayor}</b>
           </Typography>
           <Typography align="center" style={{ fontSize: "12pt", lineHeight: "normal", fontFamily: "Times New Roman" }}>
@@ -129,26 +143,29 @@ export default function JOappcert() {
           </Typography>
         </Grid>
 
-        <Grid item xs={12} style={{ marginTop: "10px" }}>
-          <Typography align="left" style={{ fontSize: "6pt", lineHeight: "normal", fontFamily: "Times New Roman" }}>
+        <Grid item xs={6} style={{ marginTop: "30px" }}>
+          <Typography align="left" style={{ fontSize: "6pt", lineHeight: "normal", margin: "0px 60px", fontFamily: "Times New Roman" }}>
             <b>
               <i>Copy Furnished:</i>
             </b>
           </Typography>
-          <Typography align="left" style={{ fontSize: "6pt", lineHeight: "normal", fontFamily: "Times New Roman" }}>
-            <i>Office where JO will be assigned</i>
-          </Typography>
-          <Typography align="left" style={{ fontSize: "6pt", lineHeight: "normal", fontFamily: "Times New Roman" }}>
-            <i>Office of the Municipal Budget Officer</i>
-          </Typography>
-          <Typography align="left" style={{ fontSize: "6pt", lineHeight: "normal", fontFamily: "Times New Roman" }}>
-            <i>Office of the Municipal Accountant</i>
-          </Typography>
-          <Typography align="left" style={{ fontSize: "6pt", lineHeight: "normal", fontFamily: "Times New Roman" }}>
-            <i>Office of the Municipal Treasurer</i>
-          </Typography>
-          <Typography align="left" style={{ fontSize: "6pt", lineHeight: "normal", fontFamily: "Times New Roman" }}>
+          <Typography align="left" style={{ fontSize: "6pt", lineHeight: "normal", margin: "0px 60px", fontFamily: "Times New Roman" }}>
             <i>Office of the HRMO</i>
+          </Typography>
+          <Typography align="left" style={{ fontSize: "6pt", lineHeight: "normal", margin: "0px 60px", fontFamily: "Times New Roman" }}>
+            <i>File</i>
+          </Typography>
+        </Grid>
+
+        <Grid item xs={6} style={{ marginTop: "30px" }}>
+          <Typography align="right" color="textSecondary" style={{ fontSize: "6pt", marginRight: "60px" }}>
+            <i>(Not valid without DRY SEAL and STAMP DATE of RELEASE, and</i>
+          </Typography>
+          <Typography align="right" color="textSecondary" style={{ fontSize: "6pt", marginRight: "60px" }}>
+            <i>if document bears any visible physical tampering and erasures)</i>
+          </Typography>
+          <Typography align="right" color="textSecondary" style={{ fontSize: "6pt", marginRight: "60px" }}>
+            <i>{`Print date: ${moment().format("MMM DD, YYYY HH:mm a")}`}</i>
           </Typography>
         </Grid>
       </Grid>
@@ -184,7 +201,7 @@ const DialogTitle = withStyles(styles)((props) => {
 });
 
 function FinishingDetails({ open, handleClose, details, changes }) {
-  let { position, location, rate, expiration, supervisor, super_position, mayor } = details;
+  let { emp_name, surname, address, position, location, rate, issue_date, supervisor, super_position, mayor } = details;
 
   return (
     <Dialog
@@ -198,10 +215,13 @@ function FinishingDetails({ open, handleClose, details, changes }) {
         Finish JO Appointment Certificate
       </DialogTitle>
       <DialogContent dividers>
+        <Gtextfield id="issue_date" type="date" label="Issue date" value={issue_date} onChange={changes} InputLabelProps={{ shrink: true }} />
+        <Gtextfield id="emp_name" label="change this to: Firstname MI Lastname" value={emp_name} onChange={changes} />
+        <Gtextfield id="surname" label="Surname: for letter greeting" value={surname} onChange={changes} />
+        <Gtextfield id="address" label="Address" value={address} onChange={changes} />
         <Gtextfield id="position" label="Position" value={position} onChange={changes} />
-        <Gtextfield id="location" label="Location" value={location} onChange={changes} />
+        <Gtextfield id="location" label="Office" value={location} onChange={changes} />
         <Gtextfield id="rate" label="Rate" value={rate} onChange={changes} />
-        <Gtextfield id="expiration" type="date" label="Expiration" value={expiration} onChange={changes} InputLabelProps={{ shrink: true }} />
         <Gtextfield id="supervisor" label="Supervisor" value={supervisor} onChange={changes} />
         <Gtextfield id="super_position" label="Supervisor Position" value={super_position} onChange={changes} />
         <Gtextfield id="mayor" label="Mayor" value={mayor} onChange={changes} />

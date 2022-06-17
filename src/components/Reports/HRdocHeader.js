@@ -36,7 +36,7 @@ export function OMMdocHeader({ paperSize }) {
     <React.Fragment>
       <Grid container spacing={0} style={{ borderBottom: "solid 2px black" }}>
         <Grid item xs={paperSize === "long" ? 1 : 2}>
-          <img src={tkLogo} alt="Tagkawayan Logo" style={{ height: "80px" }} />
+          <img src={tkLogo} alt="Tagkawayan Logo" style={{ height: "90px" }} />
         </Grid>
 
         <Grid item xs={paperSize === "long" ? 10 : 8}>
@@ -52,6 +52,9 @@ export function OMMdocHeader({ paperSize }) {
 
           <Typography align="center" variant="h6" style={{ color: "darkblue", fontFamily: "Times New Roman" }}>
             <b>OFFICE OF THE MUNICIPAL MAYOR</b>
+          </Typography>
+          <Typography align="center" style={{ fontSize: "10pt", marginTop: "-5px", fontFamily: "Times New Roman" }}>
+            {`e-mail address: omm_lgutagkawayan@yahoo.com / Mobile No.: 0917-830-2903`}
           </Typography>
         </Grid>
 
