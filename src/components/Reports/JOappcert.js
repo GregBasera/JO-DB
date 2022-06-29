@@ -101,8 +101,8 @@ export default function JOappcert() {
             {` at the ${details.location}, at the daily rate of `}
             <b>{details.rate}</b>
             {` only, which will be released every 5th
-            and 20th day of the month. This will take effect from ${moment(straightFromStorage("from")).format("MMM DD, YYYY")}
-            until ${moment(straightFromStorage("to")).format("MMM DD, YYYY")}.`}
+            and 20th day of the month. This will take effect from ${moment(straightFromStorage("from")).format("MMMM DD, YYYY")}
+            until ${moment(straightFromStorage("to")).format("MMMM DD, YYYY")}.`}
           </Typography>
           <Typography align="justify" style={{ fontSize: "12pt", lineHeight: "normal", margin: "15px 60px", textIndent: "5em", fontFamily: "Times New Roman" }}>
             {`Please be noted that this order automatically ceases upon its expiration or you can be terminated prior to the expiration of this
@@ -120,7 +120,7 @@ export default function JOappcert() {
             </ul>
           </Typography>
           <Typography align="justify" style={{ fontSize: "12pt", lineHeight: "normal", margin: "15px 60px", textIndent: "5em", fontFamily: "Times New Roman" }}>
-            {`Furthermore, your services rendered are not considered or will not be accredited as government service, and you cannot enjoy the benifits
+            {`Furthermore, your services rendered are not considered or will not be accredited as government service, and you cannot enjoy the benefits
             enjoyed by government employees such as ACA, PERA, and other benefits.`}
           </Typography>
           <Typography align="justify" style={{ fontSize: "12pt", lineHeight: "normal", margin: "15px 60px", textIndent: "5em", fontFamily: "Times New Roman" }}>
