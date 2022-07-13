@@ -13,6 +13,7 @@ import TokenVerifier from "../shared/TokenVerifier";
 
 function statusNode(value) {
   // separated this for cleaner render function
+  if (!value) return;
   switch (value.toLowerCase()) {
     case "new":
     case "re-appointed":
@@ -78,7 +79,7 @@ export default function EmployeeList({ data, deleteOne, newHistory, offices, fun
             <IconButton size="small" title="Edit Existing Appointments" onClick={() => setEditDialog(true)} style={TokenVerifier(1) ? { display: "inline" } : { display: "none" }}>
               <EditIcon />
             </IconButton>
-            <IconButton size="small" title="Add Lastest Appointment" onClick={() => setAddDialog(true)} style={TokenVerifier(1) ? { display: "inline" } : { display: "none" }}>
+            <IconButton size="small" title="Add Latest Appointment" onClick={() => setAddDialog(true)} style={TokenVerifier(1) ? { display: "inline" } : { display: "none" }}>
               <AddIcon />
             </IconButton>
             <IconButton size="small" title="More" onClick={() => setShowMoreOpen(true)}>
