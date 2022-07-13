@@ -62,7 +62,7 @@ export function filter(data, callback) {
   Axios.get(JOs, headers())
     .then((res) => {
       if (data[1] !== "all") {
-        // we filter all personel only looking on thier lastest appointment
+        // we filter all personel only looking on thier latest appointment
         callback(res.data.filter((person) => person.service_history[0][data[0]] === data[1]));
       } else {
         callback(res.data);

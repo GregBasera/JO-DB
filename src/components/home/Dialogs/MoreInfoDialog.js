@@ -94,7 +94,7 @@ export default function MoreInfoDialog({ handleClose, open, data }) {
               })
             )
           }>
-          LASTEST APPOINTMENT CERT
+          LATEST APPOINTMENT CERT
         </Button>
         <Button
           variant="contained"

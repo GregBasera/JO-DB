@@ -46,7 +46,7 @@ export default function HomeBody() {
           <Typography align="center">Position</Typography>
         </Grid>
         <Grid item xs={2}>
-          <Typography align="center">Lastest Appoint</Typography>
+          <Typography align="center">Latest Appoint</Typography>
         </Grid>
         <Grid item xs={3}>
           <Typography align="center">Office/Department</Typography>

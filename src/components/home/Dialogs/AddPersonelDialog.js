@@ -132,7 +132,7 @@ export default function AddPersonelDialog({ handleClose, open, depts, fundSource
 
         <Typography style={{ marginTop: "8px" }}>Service History</Typography>
         <Typography variant="caption" color="textSecondary">
-          from lastest to oldest
+          from latest to oldest
         </Typography>
 
         {servHisArray.map((node, index) => (
@@ -166,13 +166,7 @@ function ServHisSet(props) {
           <Gtextfield type="number" size="small" label="Rate per Day" id="rate_per_day" value={data.service_history[index].rate_per_day ?? ""} onChange={onChange} />
         </Grid>
         <Grid item xs={12} md={12}>
-          <Gdropdown
-            name="appointment_status"
-            label="Appointment Status"
-            value={data.service_history[index].appointment_status ?? ""}
-            onChange={onChange}
-            menuItems={appointStatus}
-          />
+          <Gdropdown name="appointment_status" label="Appointment Status" value={data.service_history[index].appointment_status ?? ""} onChange={onChange} menuItems={appointStatus} />
         </Grid>
         <Grid item xs={12} md={6}>
           <Gtextfield

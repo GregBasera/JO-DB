@@ -92,7 +92,7 @@ export default function PersonelCard({ data, deleteOne, newHistory, offices, fun
           <IconButton size="small" title="Edit Existing Appointments" onClick={() => setEditDialog(true)} style={TokenVerifier(1) ? { display: "block" } : { display: "none" }}>
             <EditIcon />
           </IconButton>
-          <IconButton size="small" title="Add Lastest Appointment" onClick={() => setAddDialog(true)} style={TokenVerifier(1) ? { display: "block" } : { display: "none" }}>
+          <IconButton size="small" title="Add Latest Appointment" onClick={() => setAddDialog(true)} style={TokenVerifier(1) ? { display: "block" } : { display: "none" }}>
             <AddIcon />
           </IconButton>
         </Box>
