@@ -8,6 +8,8 @@ import ServiceRecord from "./components/Reports/ServiceRecord";
 import JOappcert from "./components/Reports/JOappcert";
 import JOappreport from "./components/Reports/JOappreport";
 import PersonalInfoReport from "./components/Reports/PersonalInfoReport";
+import ListJoCos from "./components/Reports/ListJoCos";
+import ListJoCosIMP from "./components/Reports/ListJoCosIMP";
 import NotFound from "./components/shared/NotFound";
 
 function App() {
@@ -21,6 +23,8 @@ function App() {
         <Route path="/joappreport" exact component={JOappreport} />
         <Route path="/perinforeport" exact component={PersonalInfoReport} />
         <Route path="/joappcert" exact component={JOappcert} />
+        <Route path="/listJoCos" exact component={ListJoCos} />
+        <Route path="/listJoCosIMP" exact component={ListJoCosIMP} />
         {/* <Route path="/admin" exact component={Admin} /> */}
         <Route component={NotFound} /> {/* 404 */}
       </Switch>
