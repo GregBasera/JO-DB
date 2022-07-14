@@ -29,7 +29,7 @@ export default function PrintDialog({ open, handleClose, data }) {
             </Button>
           </Grid>
           <Grid item xs={6}>
-            <Typography variant="caption">This is just an Information report on each employee; Basic info, contact number, Identification numbers</Typography>
+            <Typography variant="caption">This is just an Information report on each employee; Basic info, contact number, Identification numbers, etc.</Typography>
           </Grid>
 
           <Grid item xs={6}>
@@ -49,11 +49,11 @@ export default function PrintDialog({ open, handleClose, data }) {
               List of Casual/Contractual
             </Button>
             <Button variant="contained" color="primary" href={`${document.location.origin}/listJoCosIMP`} target="_blank" onClick={printAppReport} style={{ margin: "2px" }}>
-              Excel Import
+              Copy to Excel
             </Button>
           </Grid>
           <Grid item xs={6}>
-            <Typography variant="caption">???</Typography>
+            <Typography variant="caption">A list of active employees and their number of years in service. Data generated here is meant to be copied to excel and submited to regional office and/or printed</Typography>
           </Grid>
         </Grid>
       </DialogContent>
