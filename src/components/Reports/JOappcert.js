@@ -100,8 +100,7 @@ export default function JOappcert() {
             <b>{details.position}</b>
             {` at the ${details.location}, at the daily rate of `}
             <b>{details.rate}</b>
-            {` only, which will be released every 5th
-            and 20th day of the month. This will take effect from ${moment(straightFromStorage("from")).format("MMMM DD, YYYY")}
+            {` only, which will be released 5 working days after 15th and 30th days of the month. This will take effect from ${moment(straightFromStorage("from")).format("MMMM DD, YYYY")}
             until ${moment(straightFromStorage("to")).format("MMMM DD, YYYY")}.`}
           </Typography>
           <Typography align="justify" style={{ fontSize: "12pt", lineHeight: "normal", margin: "15px 60px", textIndent: "5em", fontFamily: "Times New Roman" }}>
